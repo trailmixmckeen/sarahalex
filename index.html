@@ -388,6 +388,25 @@
 
 </div>
 
+<div style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;">
+    <iframe name="hidden_iframe_1" id="hidden_iframe_1"></iframe>
+    <iframe name="hidden_iframe_2" id="hidden_iframe_2"></iframe>
+    <iframe name="hidden_iframe_3" id="hidden_iframe_3"></iframe>
+
+    <form id="google-target-form-1" target="hidden_iframe_1" action="https://docs.google.com/forms/d/e/1FAIpQLSdkd4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAAg/formResponse" method="POST">
+        <input type="hidden" name="entry.1778839092" id="gfield-name-1">
+        <input type="hidden" name="entry.188586000" id="gfield-status-1">
+    </form>
+    <form id="google-target-form-2" target="hidden_iframe_2" action="https://docs.google.com/forms/d/e/1FAIpQLSdkd4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAAg/formResponse" method="POST">
+        <input type="hidden" name="entry.1778839092" id="gfield-name-2">
+        <input type="hidden" name="entry.188586000" id="gfield-status-2">
+    </form>
+    <form id="google-target-form-3" target="hidden_iframe_3" action="https://docs.google.com/forms/d/e/1FAIpQLSdkd4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAAg/formResponse" method="POST">
+        <input type="hidden" name="entry.1778839092" id="gfield-name-3">
+        <input type="hidden" name="entry.188586000" id="gfield-status-3">
+    </form>
+</div>
+
 <script>
     // GUEST DATABASE
     const guestDatabase = [
@@ -449,15 +468,21 @@
     function submitRSVP(event) {
         event.preventDefault();
         
-        currentParty.forEach(guest => {
+        currentParty.forEach((guest, index) => {
             const statusElement = document.querySelector(`input[name="guest-${guest.id}"]:checked`);
             if (statusElement) {
                 const status = statusElement.value;
-                
-                // UPDATED: Correct form action target URL and mapped name fields matching live Form parameters
-                const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdkiDd4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAAg/formResponse?entry.1778839092=${encodeURIComponent(guest.name)}&entry.188586000=${encodeURIComponent(status)}&submit=Submit`;
-                
-                fetch(formUrl, { mode: 'no-cors' });
+                const slot = index + 1;
+
+                const nameInput = document.getElementById(`gfield-name-${slot}`);
+                const statusInput = document.getElementById(`gfield-status-${slot}`);
+                const targetForm = document.getElementById(`google-target-form-${slot}`);
+
+                if (nameInput && statusInput && targetForm) {
+                    nameInput.value = guest.name;
+                    statusInput.value = status;
+                    targetForm.submit();
+                }
             }
         });
 
