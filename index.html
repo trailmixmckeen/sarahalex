@@ -422,27 +422,6 @@
 
 </div>
 
-<div style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;">
-    <iframe name="hidden_iframe_1" id="hidden_iframe_1"></iframe>
-    <iframe name="hidden_iframe_2" id="hidden_iframe_2"></iframe>
-    <iframe name="hidden_iframe_3" id="hidden_iframe_3"></iframe>
-
-    <form id="google-target-form-1" target="hidden_iframe_1" action="https://docs.google.com/forms/d/e/1FAIpQLSdkD4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAag/formResponse" method="POST">
-        <input type="hidden" name="entry.1085150188" id="gfield-name-1">
-        <input type="hidden" name="entry.1042248892" id="gfield-status-1">
-    </form>
-    
-    <form id="google-target-form-2" target="hidden_iframe_2" action="https://docs.google.com/forms/d/e/1FAIpQLSdkD4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAag/formResponse" method="POST">
-        <input type="hidden" name="entry.1085150188" id="gfield-name-2">
-        <input type="hidden" name="entry.1042248892" id="gfield-status-2">
-    </form>
-    
-    <form id="google-target-form-3" target="hidden_iframe_3" action="https://docs.google.com/forms/d/e/1FAIpQLSdkD4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAag/formResponse" method="POST">
-        <input type="hidden" name="entry.1085150188" id="gfield-name-3">
-        <input type="hidden" name="entry.1042248892" id="gfield-status-3">
-    </form>
-</div>
-
 <script>
     // ==========================================
     // PASTE YOUR PUBLISHED GOOGLE SHEET CSV LINK HERE
@@ -552,25 +531,35 @@
     function submitRSVP(event) {
         event.preventDefault();
         
+        const googleFormActionUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdkD4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAag/formResponse";
+        
         currentParty.forEach((guest, index) => {
             const statusElement = document.querySelector(`input[name="guest-${guest.id}"]:checked`);
             if (statusElement) {
                 const status = statusElement.value;
-                const slot = index + 1;
 
-                const nameInput = document.getElementById(`gfield-name-${slot}`);
-                const statusInput = document.getElementById(`gfield-status-${slot}`);
-                const targetForm = document.getElementById(`google-target-form-${slot}`);
-
-                if (nameInput && statusInput && targetForm) {
-                    nameInput.value = guest.name;
-                    statusInput.value = status;
-                    
-                    // Crucial timeout chain to ensure multiple iframes hit Google Services sequentially
-                    setTimeout(() => {
-                        targetForm.submit();
-                    }, index * 400);
-                }
+                // Build modern url-encoded payload directly in memory
+                const formData = new URLSearchParams();
+                formData.append('entry.1085150188', guest.name);
+                formData.append('entry.1042248892', status);
+                
+                // Stagger each guest submission sequentially by 500ms
+                setTimeout(() => {
+                    fetch(googleFormActionUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: formData.toString()
+                    })
+                    .then(() => {
+                        console.log(`Successfully recorded response for ${guest.name}`);
+                    })
+                    .catch((err) => {
+                        console.error(`Error sending data for ${guest.name}:`, err);
+                    });
+                }, index * 500);
 
                 guest.hasRSVPd = true;
             }
