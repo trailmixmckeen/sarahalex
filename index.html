@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Proposal Afters RSVP</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+
     <style>
         /* Typography Definitions */
         @font-face {
@@ -127,7 +130,6 @@
             line-height: 1.6;
         }
 
-        /* Spacing adjustment for Step 3 sub-header text block */
         .sub-header-line.spaced-block {
             margin-bottom: 45px; 
         }
@@ -142,22 +144,21 @@
         }
 
         /* Clean black thin line pin drop icon layout */
-        .location-header-wrapper {
+        .location-block-wrapper {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
+            align-items: flex-start;
+            gap: 10px;
         }
 
         .pin-drop-icon {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             border: 2px solid #111111;
             border-radius: 50% 50% 50% 0;
             transform: rotate(-45deg);
             display: inline-block;
-            position: relative;
-            margin-top: -4px;
+            margin-top: 6px; /* Positions perfectly with the text row */
+            flex-shrink: 0;
         }
         .pin-drop-icon::after {
             content: '';
@@ -166,8 +167,8 @@
             background: #111111;
             position: absolute;
             border-radius: 50%;
-            top: 5px;
-            left: 5px;
+            top: 4px;
+            left: 4px;
         }
 
         p {
@@ -237,15 +238,14 @@
             display: none !important;
         }
 
+        /* Cleaned Error Message: No box background, text turns red */
         .error-msg {
             font-family: var(--primary-font);
             text-transform: uppercase;
             font-size: 0.8rem;
             font-weight: 700;
-            color: #ffffff;
-            background-color: #111111;
-            border: var(--border-thick);
-            padding: 12px;
+            color: #d93025; /* Warning Red */
+            padding: 0;
             margin-top: 20px;
             letter-spacing: 0.05em;
             text-align: center;
@@ -316,7 +316,6 @@
 </head>
 <body>
 
-<!-- --- HEADER & LOGO AREA --- -->
 <div class="header-container">
     <div class="header-side header-side-left">
         <div class="main-txt">The Proposal</div>
@@ -333,146 +332,14 @@
     </div>
 </div>
 
-<!-- --- RSVP CONTAINER --- -->
 <div class="hinge-container">
     
-    <!-- STEP 1: FIND INVITATION -->
     <div id="step-find">
         <h1 class="form-header">Your name is</h1> 
         <div class="input-group">
-            <input type="text" id="search-name" placeholder="First & Last Name" autocomplete="name">
+            <input type="text" id="search-name" placeholder="First & Last Name" autocomplete="name" onkeypress="handleKeyPress(event)">
         </div>
         <div class="btn-center-wrapper">
             <button class="action-btn lowercase" onclick="findInvitation()">search</button>
         </div>
-        <div id="find-error" class="error-msg hidden">Error: Name not found. Please double-check spelling.</div>
-    </div>
-
-    <!-- STEP 2: INDIVIDUAL RSVP STATUS -->
-    <div id="step-rsvp" class="hidden">
-        <h1 class="form-header">Let's chat about</h1>
-        <div class="sub-header-line">You and anyone with you.</div>
-        
-        <form id="rsvp-form" onsubmit="submitRSVP(event)">
-            <div id="guest-list-container">
-                <!-- Dynamic guest choices drop here -->
-            </div>
-            <div class="btn-center-wrapper">
-                <button type="submit" class="action-btn lowercase">submit</button>
-            </div>
-        </form>
-    </div>
-
-    <!-- STEP 3: REVEAL DETAILS -->
-    <div id="step-details" class="hidden">
-        <h1 class="form-header">Thanks! Two truths and please lie</h1>
-        <div class="sub-header-line spaced-block">Your details have been saved. Please keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.</div>
-        
-        <!-- Section 1: The Plan -->
-        <div class="details-section">
-            <h3 class="section-title">The plan</h3>
-            <p style="margin-bottom: 12px;">Saturday, August 8th, 2026 from 6:00pm-9:00pm</p>
-            <p>Sarah will believe we have dinner plans in the evening. The proposal will happen privately on our drive back to the city from our afternoon plans. That's all you need to know... for now.</p>
-        </div>
-
-        <!-- Inline Structural Reminder Callout -->
-        <div class="arrival-alert">
-            PROMPTLY ARRIVE BY 6:00PM
-        </div>
-
-        <!-- Section 2: Bar Location -->
-        <div class="details-section">
-            <div class="location-header-wrapper">
-                <span class="pin-drop-icon"></span>
-                <h3 class="section-title" style="margin-bottom: 0;">Bar location</h3>
-            </div>
-            <p><strong>Haswell Green's</strong><br>240 W 52nd St, New York, NY 10019</p>
-            <p>Sarah and Alex will plan to arrive around 6:30pm for the reveal of the surprise. We will have a space on the 2nd floor with drinks and food.</p>
-        </div>
-
-        <!-- Calendar Integration Trigger -->
-        <div class="btn-center-wrapper" style="margin-top: 40px;">
-            <button class="action-btn lowercase" onclick="addToCalendar()">add to calendar</button>
-        </div>
-    </div>
-
-</div>
-
-<script>
-    // GUEST DATABASE
-    const guestDatabase = [
-        { id: 1, name: "John Doe", partyID: 101 },
-        { id: 2, name: "Jane Doe", partyID: 101 },
-        { id: 3, name: "Alice Smith", partyID: 102 },
-        { id: 4, name: "Bob Smith", partyID: 102 },
-        { id: 5, name: "Charlie Brown", partyID: 103 }
-    ];
-
-    let currentParty = [];
-
-    function findInvitation() {
-        const searchInput = document.getElementById('search-name').value.trim().toLowerCase();
-        const errorDiv = document.getElementById('find-error');
-        
-        const foundGuest = guestDatabase.find(g => g.name.toLowerCase() === searchInput);
-
-        if (foundGuest) {
-            errorDiv.classList.add('hidden');
-            currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
-            setupRSVPForm(currentParty);
-        } else {
-            errorDiv.classList.remove('hidden');
-        }
-    }
-
-    function setupRSVPForm(party) {
-        const container = document.getElementById('guest-list-container');
-        container.innerHTML = ''; 
-
-        party.forEach(guest => {
-            const row = document.createElement('div');
-            row.className = 'guest-row';
-            row.innerHTML = `
-                <div class="guest-name">${guest.name}</div>
-                <div class="radio-group">
-                    <label>
-                        <input type="radio" name="guest-${guest.id}" value="attending" required> I will be attending
-                    </label>
-                    <label>
-                        <input type="radio" name="guest-${guest.id}" value="declined" required> I won't be able to attend
-                    </label>
-                </div>
-            `;
-            container.appendChild(row);
-        });
-
-        document.getElementById('step-find').classList.add('hidden');
-        document.getElementById('step-rsvp').classList.remove('hidden');
-    }
-
-    function submitRSVP(event) {
-        event.preventDefault();
-        document.getElementById('step-rsvp').classList.add('hidden');
-        document.getElementById('step-details').classList.remove('hidden');
-    }
-
-    function addToCalendar() {
-        const title = encodeURIComponent("The Proposal Afters (Surprise!)");
-        // End time truncated to 9:00pm Eastern (01:00 AM UTC on Aug 9)
-        const dates = "20260808T220000Z/20260809T010000Z"; 
-        const location = encodeURIComponent("Haswell Green's, 240 W 52nd St, New York, NY 10019");
-        const details = encodeURIComponent(
-            "REMINDER: KEEP THIS A COMPLETE SECRET FROM SARAH.\n\n" +
-            "The Plan:\nSarah will believe we have dinner plans in the evening. " +
-            "The proposal will happen privately on our drive back to the city from our afternoon plans.\n\n" +
-            "Timeline:\n- Promptly arrive by 6:00 PM.\n- Sarah and Alex arrive around 6:30 PM for the surprise reveal.\n\n" +
-            "We have a space on the 2nd floor with drinks and food!"
-        );
-
-        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`;
-        window.open(googleCalendarUrl, '_blank');
-    }
-</script>
-
-</body>
-</html>
+        <div id="find-error" class="
