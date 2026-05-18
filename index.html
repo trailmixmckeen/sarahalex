@@ -24,6 +24,7 @@
             --bg-color: #fcfbfa; 
             --text-color: #111111;
             --border-thick: 3px solid #111111; 
+            --hinge-purple: #54345c; /* Exact Hinge button color from your reference image */
         }
 
         body {
@@ -209,30 +210,62 @@
             margin-top: 20px;
         }
 
-        button.action-btn {
-            background-color: #111111;
+        /* Unified layout for side-by-side components */
+        .btn-split-wrapper {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        /* Updated to completely rounded pill look with custom Hinge deep violet background */
+        button.action-btn, a.action-btn-link {
+            background-color: var(--hinge-purple);
             color: #ffffff;
-            border: var(--border-thick);
-            border-radius: 0px;
-            padding: 12px 35px; 
+            border: none;
+            border-radius: 30px;
+            padding: 14px 45px; 
             font-size: 0.95rem;
             font-weight: 700;
             font-family: var(--primary-font);
             cursor: pointer;
             width: auto; 
-            transition: transform 0.1s, box-shadow 0.1s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.15s ease, transform 0.1s ease;
+            box-sizing: border-box;
         }
 
-        button.action-btn.lowercase {
+        button.action-btn.lowercase, a.action-btn-link.lowercase {
             text-transform: lowercase;
         }
 
-        button.action-btn:hover {
-            background-color: #222222;
+        button.action-btn:hover, a.action-btn-link:hover {
+            background-color: #402647;
         }
 
-        button.action-btn:active {
-            transform: translate(2px, 2px);
+        button.action-btn:active, a.action-btn-link:active {
+            transform: scale(0.98);
+        }
+
+        /* Custom link wrapper layout for 'That's not me' utility action */
+        .not-me-btn {
+            background: none;
+            border: none;
+            color: #555555;
+            font-family: var(--primary-font);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: lowercase;
+            text-decoration: underline;
+            margin-top: 15px;
+            cursor: pointer;
+            width: auto;
+        }
+        .not-me-btn:hover {
+            color: #111111;
+            background: none;
         }
 
         .hidden {
@@ -285,7 +318,7 @@
         }
 
         .radio-group input[type="radio"] {
-            accent-color: #111111;
+            accent-color: var(--hinge-purple);
             transform: scale(1.1);
         }
 
@@ -350,17 +383,17 @@
         <div class="sub-header-line">You and anyone with you.</div>
         
         <form id="rsvp-form" onsubmit="submitRSVP(event)">
-            <div id="guest-list-container">
-                </div>
-            <div class="btn-center-wrapper">
+            <div id="guest-list-container"></div>
+            <div class="btn-center-wrapper" style="flex-direction: column; align-items: center;">
                 <button type="submit" class="action-btn lowercase">submit</button>
+                <button type="button" class="not-me-btn" onclick="resetSearchForm()">that's not me</button>
             </div>
         </form>
     </div>
 
     <div id="step-details" class="hidden">
         <h1 class="form-header">Thanks! Two truths and please lie</h1>
-        <div class="sub-header-line spaced-block">Your details have been saved. Please keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.</div>
+        <div class="sub-header-line spaced-block" id="confirmation-subtitle">Your details have been saved. Please keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.</div>
         
         <div class="details-section">
             <h3 class="section-title">The plan</h3>
@@ -381,8 +414,9 @@
             <p style="margin-bottom: 0;">Sarah and Alex will plan to arrive around 6:30pm for the reveal of the surprise. We will have a space on the 2nd floor with drinks and food.</p>
         </div>
 
-        <div class="btn-center-wrapper" style="margin-top: 40px;">
-            <button class="action-btn lowercase" onclick="addToCalendar()">add to calendar</button>
+        <div class="btn-split-wrapper">
+            <button class="action-btn lowercase" style="flex: 1;" onclick="addGoogleCalendar()">add google cal</button>
+            <a id="ical-download-link" class="action-btn-link lowercase" style="flex: 1;" href="#">add iCal</a>
         </div>
     </div>
 
@@ -408,13 +442,13 @@
 </div>
 
 <script>
-    // GUEST DATABASE
+    // GUEST DATABASE WITH RSVP FILTER FLAGS
     const guestDatabase = [
-        { id: 1, name: "John Doe", partyID: 101 },
-        { id: 2, name: "Jane Doe", partyID: 101 },
-        { id: 3, name: "Alice Smith", partyID: 102 },
-        { id: 4, name: "Bob Smith", partyID: 102 },
-        { id: 5, name: "Charlie Brown", partyID: 103 }
+        { id: 1, name: "John Doe", partyID: 101, hasRSVPd: false },
+        { id: 2, name: "Jane Doe", partyID: 101, hasRSVPd: false },
+        { id: 3, name: "Alice Smith", partyID: 102, hasRSVPd: false },
+        { id: 4, name: "Bob Smith", partyID: 102, hasRSVPd: false },
+        { id: 5, name: "Charlie Brown", partyID: 103, hasRSVPd: false }
     ];
 
     let currentParty = [];
@@ -434,7 +468,15 @@
         if (foundGuest) {
             errorDiv.classList.add('hidden');
             currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
-            setupRSVPForm(currentParty);
+
+            // Bypasses the input options completely if they have already RSVP'd
+            if (foundGuest.hasRSVPd) {
+                document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed or you need to update anything, please contact us directly.";
+                document.getElementById('step-find').classList.add('hidden');
+                document.getElementById('step-details').classList.remove('hidden');
+            } else {
+                setupRSVPForm(currentParty);
+            }
         } else {
             errorDiv.classList.remove('hidden');
         }
@@ -465,6 +507,14 @@
         document.getElementById('step-rsvp').classList.remove('hidden');
     }
 
+    // "That's not me" routing logic
+    function resetSearchForm() {
+        document.getElementById('search-name').value = '';
+        document.getElementById('step-rsvp').classList.add('hidden');
+        document.getElementById('step-find').classList.remove('hidden');
+        document.getElementById('find-error').classList.add('hidden');
+    }
+
     function submitRSVP(event) {
         event.preventDefault();
         
@@ -483,28 +533,64 @@
                     statusInput.value = status;
                     targetForm.submit();
                 }
+
+                // Sets local status tracker to true to avoid double registry entries
+                guest.hasRSVPd = true;
             }
         });
 
+        // Set default text back if a new fresh party submitted responses
+        document.getElementById('confirmation-subtitle').innerText = "Your details have been saved. Please keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.";
+        
         document.getElementById('step-rsvp').classList.add('hidden');
         document.getElementById('step-details').classList.remove('hidden');
     }
 
-    function addToCalendar() {
-        const title = encodeURIComponent("The Proposal Afters (Surprise!)");
-        const dates = "20260808T220000Z/20260809T010000Z"; 
-        const location = encodeURIComponent("Haswell Green's, 240 W 52nd St, New York, NY 10019");
-        const details = encodeURIComponent(
-            "REMINDER: KEEP THIS A COMPLETE SECRET FROM SARAH.\n\n" +
-            "The Plan:\nSarah will believe we have dinner plans in the evening. " +
-            "The proposal will happen privately on our drive back to the city from our afternoon plans.\n\n" +
-            "Timeline:\n- Promptly arrive by 6:00 PM.\n- Sarah and Alex arrive around 6:30 PM for the surprise reveal.\n\n" +
-            "We have a space on the 2nd floor with drinks and food!"
-        );
+    // Shared Event Parameters
+    const eventConfig = {
+        title: "The Proposal Afters (Surprise!)",
+        location: "Haswell Green's, 240 W 52nd St, New York, NY 10019",
+        start: "20260808T220000Z",
+        end: "20260809T010000Z",
+        details: "REMINDER: KEEP THIS A COMPLETE SECRET FROM SARAH.\n\n" +
+                 "The Plan:\nSarah will believe we have dinner plans in the evening. " +
+                 "The proposal will happen privately on our drive back to the city from our afternoon plans.\n\n" +
+                 "Timeline:\n- Promptly arrive by 6:00 PM.\n- Sarah and Alex arrive around 6:30 PM for the surprise reveal.\n\n" +
+                 "We have a space on the 2nd floor with drinks and food!"
+    };
 
-        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`;
+    // ACTION 1: Google Calendar Web Link Generator
+    function addGoogleCalendar() {
+        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventConfig.title)}&dates=${eventConfig.start}/${eventConfig.end}&details=${encodeURIComponent(eventConfig.details)}&location=${encodeURIComponent(eventConfig.location)}&sf=true&output=xml`;
         window.open(googleCalendarUrl, '_blank');
     }
+
+    // ACTION 2: Apple iCal (.ics) Download Object Engine
+    function buildIcsDownload() {
+        const icsData = [
+            "BEGIN:VCALENDAR",
+            "VERSION:2.0",
+            "PRODID:-//Sarah and Alex//RSVP Application//EN",
+            "BEGIN:VEVENT",
+            `UID:proposal-afters-2026@sarah-alex.info`,
+            `DTSTAMP:${eventConfig.start}`,
+            `DTSTART:${eventConfig.start}`,
+            `DTEND:${eventConfig.end}`,
+            `SUMMARY:${eventConfig.title}`,
+            `DESCRIPTION:${eventConfig.details.replace(/\n/g, "\\n")}`,
+            `LOCATION:${eventConfig.location}`,
+            "END:VEVENT",
+            "END:VCALENDAR"
+        ].join("\r\n");
+
+        const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8;' });
+        const downloadElement = document.getElementById('ical-download-link');
+        downloadElement.href = URL.createObjectURL(blob);
+        downloadElement.download = 'proposal-afters.ics';
+    }
+
+    // Build the dynamic blob attachment instantly on file runtime
+    buildIcsDownload();
 </script>
 
 </body>
