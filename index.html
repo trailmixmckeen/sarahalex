@@ -143,11 +143,12 @@
             margin-bottom: 8px;
         }
 
-        /* Clean black thin line pin drop icon layout */
-        .location-block-wrapper {
+        /* Alignment wrapper for just the pin and address row */
+        .address-row-wrapper {
             display: flex;
             align-items: flex-start;
             gap: 10px;
+            margin-bottom: 15px;
         }
 
         .pin-drop-icon {
@@ -157,7 +158,7 @@
             border-radius: 50% 50% 50% 0;
             transform: rotate(-45deg);
             display: inline-block;
-            margin-top: 6px; 
+            margin-top: 5px; 
             flex-shrink: 0;
         }
         .pin-drop-icon::after {
@@ -238,7 +239,6 @@
             display: none !important;
         }
 
-        /* Cleaned Error Message: Transparent background with red text */
         .error-msg {
             font-family: var(--primary-font);
             text-transform: uppercase;
@@ -374,13 +374,11 @@
 
         <div class="details-section">
             <h3 class="section-title">Bar location</h3>
-            <div class="location-block-wrapper">
+            <div class="address-row-wrapper">
                 <span class="pin-drop-icon"></span>
-                <div>
-                    <p style="margin-top: 0; margin-bottom: 15px;"><strong>Haswell Green's</strong><br>240 W 52nd St, New York, NY 10019</p>
-                    <p style="margin-bottom: 0;">Sarah and Alex will plan to arrive around 6:30pm for the reveal of the surprise. We will have a space on the 2nd floor with drinks and food.</p>
-                </div>
+                <p style="margin: 0;"><strong>Haswell Green's</strong><br>240 W 52nd St, New York, NY 10019</p>
             </div>
+            <p style="margin-bottom: 0;">Sarah and Alex will plan to arrive around 6:30pm for the reveal of the surprise. We will have a space on the 2nd floor with drinks and food.</p>
         </div>
 
         <div class="btn-center-wrapper" style="margin-top: 40px;">
@@ -456,7 +454,7 @@
             if (statusElement) {
                 const status = statusElement.value;
                 
-                // Form action endpoint with your verified query entry tokens
+                // Form action endpoint with entry tokens
                 const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdkd4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAAg/formResponse?entry.1085150188=${encodeURIComponent(guest.name)}&entry.875128=${encodeURIComponent(status)}&submit=Submit`;
                 
                 fetch(formUrl, { mode: 'no-cors' });
@@ -469,7 +467,7 @@
 
     function addToCalendar() {
         const title = encodeURIComponent("The Proposal Afters (Surprise!)");
-        const dates = "20260808T220000Z/20260809T010000Z"; // Ends at 9:00 PM Eastern / 01:00 AM UTC
+        const dates = "20260808T220000Z/20260809T010000Z"; 
         const location = encodeURIComponent("Haswell Green's, 240 W 52nd St, New York, NY 10019");
         const details = encodeURIComponent(
             "REMINDER: KEEP THIS A COMPLETE SECRET FROM SARAH.\n\n" +
