@@ -392,7 +392,7 @@
     </div>
 
     <div id="step-details" class="hidden">
-        <h1 class="form-header">Thanks! Two truths and please lie</h1>
+        <h1 class="form-header" id="details-title">Thanks! Two truths and please lie</h1>
         <div class="sub-header-line spaced-block" id="confirmation-subtitle">Your details have been saved. Please keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.</div>
         
         <div class="details-section">
@@ -424,7 +424,7 @@
 
 <script>
     // ==========================================
-    // PASTE YOUR SPREADSHEET READ & WRITE ENDPOINTS HERE
+    // SPREADSHEET READ & WRITE ENDPOINTS
     // ==========================================
     const PUBLIC_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSP1U6ncH7fCFo4UsSKyxDQWFiNollafgKLsjrbuCdbnSE4TImVt5kW8TuyNBK-GKiq13Lyd9YF2OO/pub?output=csv";
     const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxnfHhoPz67zfB5vBqG-St4dxAoc54-ofvEkqeccFfPGsSIvW5uBUgE-rP0MQBV29rA/exec";
@@ -485,7 +485,9 @@
             currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
 
             if (foundGuest.hasRSVPd) {
-                document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed or you need to update anything, please contact Alex directly. Please keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.";
+                // If they have already RSVP'd, drop the "Thanks!" from the title and adjust the message text
+                document.getElementById('details-title').innerText = "Two truths and please lie";
+                document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed or you need to update anything, please contact us directly.";
                 document.getElementById('step-find').classList.add('hidden');
                 document.getElementById('step-details').classList.remove('hidden');
             } else {
@@ -536,7 +538,7 @@
             if (statusElement) {
                 const status = statusElement.value;
 
-                // Send a clean text/plain JSON package to avoid browser cross-origin blocking parameters entirely
+                // Send clean text package to prevent layout adjustments from being broken across environments
                 fetch(APPS_SCRIPT_WEBAPP_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -555,6 +557,8 @@
             }
         });
 
+        // Ensure fresh submissions retain the full standard onboarding title configuration
+        document.getElementById('details-title').innerText = "Thanks! Two truths and please lie";
         document.getElementById('confirmation-subtitle').innerText = "Your details have been saved. Please keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.";
         
         document.getElementById('step-rsvp').classList.add('hidden');
