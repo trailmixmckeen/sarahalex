@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
     <title>Sarah & Alex - RSVP</title>
     <style>
         :root {
@@ -35,6 +39,7 @@
             color: var(--accent);
             font-weight: 300;
             margin-bottom: 5px;
+            margin-top: 0;
         }
         .subtitle {
             font-size: 0.9rem;
@@ -53,7 +58,7 @@
             border-radius: 6px;
             box-sizing: border-box;
             font-size: 1rem;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
         button {
             background-color: var(--primary);
@@ -70,12 +75,12 @@
             background-color: #2D3748;
         }
         .hidden {
-            display: none;
+            display: none !important;
         }
         .error-msg {
             color: var(--accent);
             font-size: 0.9rem;
-            margin-top: 5px;
+            margin-top: 10px;
         }
         .guest-option {
             background: #EDF2F7;
@@ -91,12 +96,13 @@
         }
         .radio-group {
             display: flex;
-            gap: 15px;
+            flex-direction: column;
+            gap: 10px;
         }
         .radio-label {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
             cursor: pointer;
         }
     </style>
@@ -109,7 +115,7 @@
 
     <div id="searchSection" class="search-box">
         <p>Please enter your full name to find your invitation:</p>
-        <input type="text" id="nameInput" placeholder="e.g., John Doe">
+        <input type="text" id="nameInput" placeholder="e.g., Charlie Brown">
         <button onclick="findGuest()">Find Invitation</button>
         <p id="errorMsg" class="error-msg hidden">Name not found. Please try again or contact us.</p>
     </div>
@@ -121,10 +127,10 @@
             <span class="guest-name" id="displayName">Guest Name</span>
             <div class="radio-group">
                 <label class="radio-label">
-                    <input type="radio" name="attendance" value="Accepts with Pleasure" checked> Accepts with Pleasure
+                    <input type="radio" name="attendance" value="I will be attending" checked> I will be attending
                 </label>
                 <label class="radio-label">
-                    <input type="radio" name="attendance" value="Declines with Regret"> Declines with Regret
+                    <input type="radio" name="attendance" value="I won't be able to attend"> I won't be able to attend
                 </label>
             </div>
         </div>
@@ -138,20 +144,19 @@
     </div>
 </div>
 
-<form action="https://docs.google.com/forms/d/1PD9w9mEn8QvBSGgdCj_9_lfBB8xlOEqzvmsKIJlS3G0/formResponse" method="POST" target="hidden_iframe" id="rsvpForm">
-    <input type="hidden" name="entry.1778839092" id="formGuestName">
-    <input type="hidden" name="entry.188586000" id="formAttendance">
+<form action="https://docs.google.com/forms/d/e/1FAIpQLSdkD4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAAg/formResponse" method="POST" target="hidden_iframe" id="rsvpForm">
+    <input type="hidden" name="entry.1085150188" id="formGuestName">
+    <input type="hidden" name="entry.875120" id="formAttendance">
 </form>
 
 <iframe name="hidden_iframe" id="hidden_iframe" class="hidden"></iframe>
 
 <script>
-    // Guest Database - exact match required
+    // Guest Database - Replace these with your actual guests' names
     const guestDatabase = [
-        "John Doe",
+        "Charlie Brown",
         "Jane Smith",
-        "Alex Jones",
-        "Sarah Miller"
+        "John Doe"
     ];
 
     let matchedGuest = "";
@@ -160,31 +165,27 @@
         const inputName = document.getElementById('nameInput').value.trim();
         const errorMsg = document.getElementById('errorMsg');
         
-        // Case-insensitive exact name checking
         const found = guestDatabase.find(guest => guest.toLowerCase() === inputName.toLowerCase());
 
         if (found) {
-            matchedGuest = found; // Use the properly capitalized name from database
+            matchedGuest = found; 
             document.getElementById('displayName').innerText = matchedGuest;
             document.getElementById('searchSection').classList.add('hidden');
             document.getElementById('rsvpSection').classList.remove('hidden');
             errorMsg.classList.add('hidden');
         } else {
-            errorMsg.classList.remove('hidden');
+            errorMsg.removeClassName ? errorMsg.className = "error-msg" : errorMsg.classList.remove('hidden');
         }
     }
 
     function submitRSVP() {
         const selectedAttendance = document.querySelector('input[name="attendance"]:checked').value;
 
-        // Set values into the hidden Google Form input fields
         document.getElementById('formGuestName').value = matchedGuest;
         document.getElementById('formAttendance').value = selectedAttendance;
 
-        // Submit the form programmatically to the hidden iframe
         document.getElementById('rsvpForm').submit();
 
-        // Reveal the success window UI element
         document.getElementById('rsvpSection').classList.add('hidden');
         document.getElementById('successSection').classList.remove('hidden');
     }
