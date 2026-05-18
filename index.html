@@ -1,207 +1,478 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Proposal Afters RSVP</title>
+    <style>
+        /* Typography Definitions */
+        @font-face {
+            font-family: 'Modern Era';
+            src: local('Modern Era'), local('ModernEra'), sans-serif;
+        }
+        @font-face {
+            font-family: 'Tiempos';
+            src: local('Tiempos Text'), local('TiemposHeadline'), serif;
+        }
+
+        :root {
+            --primary-font: 'Modern Era', 'Helvetica Neue', sans-serif;
+            --secondary-font: 'Tiempos', 'Georgia', serif;
+            --bg-color: #fcfbfa; 
+            --text-color: #111111;
+            --border-thick: 3px solid #111111; 
+        }
+
+        body {
+            font-family: var(--secondary-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* --- HEADER LOGO AREA --- */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 650px; 
+            margin: 50px 0 30px 0;
+        }
+
+        .header-side {
+            font-family: var(--primary-font);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            flex: 1;
+        }
+
+        .header-side-left {
+            text-align: center; 
+            padding-right: 10px;
+        }
+
+        .header-side-right {
+            text-align: center; 
+            padding-left: 10px;
+        }
+
+        .header-side .main-txt {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .header-side .sub-txt {
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: #555;
+        }
+
+        .logo-center {
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .logo-center img {
+            max-height: 155px; 
+            width: auto;
+            display: block;
+        }
+
+        @media (max-width: 650px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+                margin: 20px 0;
+            }
+        }
+
+        /* --- HINGE-STYLE RSVP CONTAINER --- */
+        .hinge-container {
+            background: #ffffff;
+            padding: 50px; 
+            border: var(--border-thick);
+            border-radius: 0px; 
+            box-shadow: 6px 6px 0px #111111; 
+            max-width: 650px; 
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 50px;
+        }
+
+        h1.form-header, h2.form-header { 
+            font-family: var(--primary-font);
+            font-weight: 700;
+            font-size: 1.5rem; 
+            margin-bottom: 10px; 
+            text-align: left;
+            text-transform: none; 
+            letter-spacing: 0;
+        }
+
+        .sub-header-line {
+            font-family: var(--secondary-font);
+            font-size: 1.1rem;
+            color: #222;
+            text-align: left;
+            margin-bottom: 35px; 
+            margin-top: 0;
+            line-height: 1.6;
+        }
+
+        /* Spacing adjustment for Step 3 sub-header text block */
+        .sub-header-line.spaced-block {
+            margin-bottom: 45px; 
+        }
+
+        h3.section-title {
+            font-family: var(--primary-font);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: none; 
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        /* Clean black thin line pin drop icon layout */
+        .location-header-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .pin-drop-icon {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #111111;
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+            display: inline-block;
+            position: relative;
+            margin-top: -4px;
+        }
+        .pin-drop-icon::after {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: #111111;
+            position: absolute;
+            border-radius: 50%;
+            top: 5px;
+            left: 5px;
+        }
+
+        p {
+            font-family: var(--secondary-font);
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #222;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            border: var(--border-thick);
+            border-radius: 0px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            font-family: var(--primary-font);
+            text-transform: none; 
+            letter-spacing: 0em;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            background-color: #fdfdfd;
+        }
+
+        .btn-center-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button.action-btn {
+            background-color: #111111;
+            color: #ffffff;
+            border: var(--border-thick);
+            border-radius: 0px;
+            padding: 12px 35px; 
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: var(--primary-font);
+            cursor: pointer;
+            width: auto; 
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+
+        button.action-btn.lowercase {
+            text-transform: lowercase;
+        }
+
+        button.action-btn:hover {
+            background-color: #222222;
+        }
+
+        button.action-btn:active {
+            transform: translate(2px, 2px);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .error-msg {
+            font-family: var(--primary-font);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            background-color: #111111;
+            border: var(--border-thick);
+            padding: 12px;
+            margin-top: 20px;
+            letter-spacing: 0.05em;
+            text-align: center;
+        }
+
+        /* --- RSVP GUEST ROWS STYLING --- */
+        .guest-row {
+            padding: 22px 0;
+            text-align: left;
+        }
+        .guest-row:first-child {
+            border-top: var(--border-thick); 
+        }
+
+        .guest-name {
+            font-family: var(--primary-font);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            letter-spacing: 0.03em;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column; 
+            gap: 12px;
+        }
+
+        .radio-group label {
+            font-family: var(--secondary-font);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .radio-group input[type="radio"] {
+            accent-color: #111111;
+            transform: scale(1.1);
+        }
+
+        /* --- DETAILS DISPLAY PANEL --- */
+        .details-section {
+            text-align: left;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px dashed #111111;
+        }
+
+        .details-section:first-of-type {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .arrival-alert {
+            font-family: var(--primary-font);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 35px 0;
+            color: #111111;
+        }
+    </style>
+</head>
+<body>
+
+<!-- --- HEADER & LOGO AREA --- -->
+<div class="header-container">
+    <div class="header-side header-side-left">
+        <div class="main-txt">The Proposal</div>
+        <div class="sub-txt">Afters</div>
+    </div>
     
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>GETTING STARTED WITH BRACKETS</title>
-        <meta name="description" content="An interactive getting started guide for Brackets.">
-        <link rel="stylesheet" href="main.css">
-    </head>
-    <body>
+    <div class="logo-center">
+        <img src="SF-AM_Vert_Transparent.png" alt="SF-AM Logo">
+    </div>
+    
+    <div class="header-side header-side-right">
+        <div class="main-txt">Sat, Aug 8th</div>
+        <div class="sub-txt">6:00 PM</div>
+    </div>
+</div>
+
+<!-- --- RSVP CONTAINER --- -->
+<div class="hinge-container">
+    
+    <!-- STEP 1: FIND INVITATION -->
+    <div id="step-find">
+        <h1 class="form-header">Your name is</h1> 
+        <div class="input-group">
+            <input type="text" id="search-name" placeholder="First & Last Name" autocomplete="name">
+        </div>
+        <div class="btn-center-wrapper">
+            <button class="action-btn lowercase" onclick="findInvitation()">search</button>
+        </div>
+        <div id="find-error" class="error-msg hidden">Error: Name not found. Please double-check spelling.</div>
+    </div>
+
+    <!-- STEP 2: INDIVIDUAL RSVP STATUS -->
+    <div id="step-rsvp" class="hidden">
+        <h1 class="form-header">Let's chat about</h1>
+        <div class="sub-header-line">You and anyone with you.</div>
         
-        <h1>GETTING STARTED WITH BRACKETS</h1>
-        <h2>This is your guide!</h2>
+        <form id="rsvp-form" onsubmit="submitRSVP(event)">
+            <div id="guest-list-container">
+                <!-- Dynamic guest choices drop here -->
+            </div>
+            <div class="btn-center-wrapper">
+                <button type="submit" class="action-btn lowercase">submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- STEP 3: REVEAL DETAILS -->
+    <div id="step-details" class="hidden">
+        <h1 class="form-header">Thanks! Two truths and please lie</h1>
+        <div class="sub-header-line spaced-block">Your details have been saved. Please keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.</div>
         
-        <!--
-            MADE WITH <3 AND JAVASCRIPT
-        -->
+        <!-- Section 1: The Plan -->
+        <div class="details-section">
+            <h3 class="section-title">The plan</h3>
+            <p style="margin-bottom: 12px;">Saturday, August 8th, 2026 from 6:00pm-9:00pm</p>
+            <p>Sarah will believe we have dinner plans in the evening. The proposal will happen privately on our drive back to the city from our afternoon plans. That's all you need to know... for now.</p>
+        </div>
+
+        <!-- Inline Structural Reminder Callout -->
+        <div class="arrival-alert">
+            PROMPTLY ARRIVE BY 6:00PM
+        </div>
+
+        <!-- Section 2: Bar Location -->
+        <div class="details-section">
+            <div class="location-header-wrapper">
+                <span class="pin-drop-icon"></span>
+                <h3 class="section-title" style="margin-bottom: 0;">Bar location</h3>
+            </div>
+            <p><strong>Haswell Green's</strong><br>240 W 52nd St, New York, NY 10019</p>
+            <p>Sarah and Alex will plan to arrive around 6:30pm for the reveal of the surprise. We will have a space on the 2nd floor with drinks and food.</p>
+        </div>
+
+        <!-- Calendar Integration Trigger -->
+        <div class="btn-center-wrapper" style="margin-top: 40px;">
+            <button class="action-btn lowercase" onclick="addToCalendar()">add to calendar</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // GUEST DATABASE
+    const guestDatabase = [
+        { id: 1, name: "John Doe", partyID: 101 },
+        { id: 2, name: "Jane Doe", partyID: 101 },
+        { id: 3, name: "Alice Smith", partyID: 102 },
+        { id: 4, name: "Bob Smith", partyID: 102 },
+        { id: 5, name: "Charlie Brown", partyID: 103 }
+    ];
+
+    let currentParty = [];
+
+    function findInvitation() {
+        const searchInput = document.getElementById('search-name').value.trim().toLowerCase();
+        const errorDiv = document.getElementById('find-error');
         
-        <p>
-            Welcome to Brackets, a modern open-source code editor that understands web design. It's a lightweight,
-            yet powerful, code editor that blends visual tools into the editor so you get the right amount of help
-            when you want it.
-        </p>
-        
-        <!--
-            WHAT IS BRACKETS?
-        -->
-        <p>
-            <em>Brackets is a different type of editor.</em>
-            Brackets has some unique features like Quick Edit, Live Preview and others that you may not find in other
-            editors. Brackets is written in JavaScript, HTML and CSS. That means that most of you using Brackets
-            have the skills necessary to modify and extend the editor. In fact, we use Brackets every day to build
-            Brackets. To learn more about how to use the key features, read on.
-        </p>
-        
-        <!--
-            GET STARTED WITH YOUR OWN FILES
-        -->
-        
-        <h3>Projects in Brackets</h3>
-        <p>
-            In order to edit your own code using Brackets, you can just open the folder containing your files.
-            Brackets treats the currently open folder as a "project"; features like Code Hints, Live Preview and
-            Quick Edit only use files within the currently open folder.
-        </p>
-        
-        <samp>
-            Once you're ready to get out of this sample project and edit your own code, you can use the dropdown
-            in the left sidebar to switch folders. Right now, the dropdown says "Getting Started" - that's the
-            folder containing the file you're looking at right now. Click on the dropdown and choose "Open Folder…"
-            to open your own folder.
-            You can also use the dropdown later to switch back to folders you've opened previously, including this
-            sample project.
-        </samp>
-        
-        <!--
-            THE RELATIONSHIP BETWEEN HTML, CSS AND JAVASCRIPT
-        -->
-        <h3>Quick Edit for CSS and JavaScript</h3>
-        <p>
-            No more switching between documents and losing your context. When editing HTML, use the
-            <kbd>Cmd/Ctrl + E</kbd> shortcut to open a quick inline editor that displays all the related CSS.
-            Make a tweak to your CSS, hit <kbd>ESC</kbd> and you're back to editing HTML, or just leave the
-            CSS rules open and they'll become part of your HTML editor. If you hit <kbd>ESC</kbd> outside of
-            a quick inline editor, they'll all collapse. Quick Edit will also find rules defined in LESS and
-            SCSS files, including nested rules.
-        </p>
-        
-        <samp>
-            Want to see it in action? Place your cursor on the <!-- <samp> --> tag above and press
-            <kbd>Cmd/Ctrl + E</kbd>. You should see a CSS quick editor appear above, showing the CSS rule that
-            applies to it. Quick Edit works in class and id attributes as well. You can use it with your
-            LESS and SCSS files also.
-            
-            You can create new rules the same way. Click in one of the <!-- <p> --> tags above and press
-            <kbd>Cmd/Ctrl + E</kbd>. There are no rules for it right now, but you can click the New Rule
-            button to add a new rule for <!-- <p> -->.
-        </samp>
-        
-        <a href="screenshots/quick-edit.png">
-            <img alt="A screenshot showing CSS Quick Edit" src="screenshots/quick-edit.png" />
-        </a>
-        
-        <p>
-            You can use the same shortcut to edit other things as well - like functions in JavaScript,
-            colors, and animation timing functions - and we're adding more and more all the time.
-        </p>
-        <p>
-            For now inline editors cannot be nested, so you can only use Quick Edit while the cursor
-            is in a "full size" editor.
-        </p>
-        
-        <!--
-            LIVE PREVIEW
-        -->
-        <h3>Preview HTML and CSS changes live in the browser</h3>
-        <p>
-            You know that "save/reload dance" we've been doing for years? The one where you make changes in
-            your editor, hit save, switch to the browser and then refresh to finally see the result?
-            With Brackets, you don't have to do that dance.
-        </p>
-        <p>
-            Brackets will open a <em>live connection</em> to your local browser and push HTML and CSS updates as you
-            type! You might already be doing something like this today with browser-based tools, but with Brackets
-            there is no need to copy and paste the final code back into the editor. Your code runs in the
-            browser, but lives in your editor!
-        </p>
-        
-        <h3>Live Highlight HTML elements and CSS rules</h3>
-        <p>
-            Brackets makes it easy to see how your changes in HTML and CSS will affect the page. When your cursor
-            is on a CSS rule, Brackets will highlight all affected elements in the browser. Similarly, when editing
-            an HTML file, Brackets will highlight the corresponding HTML elements in the browser.
-        </p>
-        
-        <samp>
-            If you have Google Chrome installed, you can try this out yourself. Click on the lightning bolt
-            icon in the top right corner of your Brackets window or hit <kbd>Cmd/Ctrl + Alt + P</kbd>. When
-            Live Preview is enabled on an HTML document, all linked CSS documents can be edited in real-time.
-            The icon will change from gray to gold when Brackets establishes a connection to your browser.
-            
-            Now, place your cursor on the <!-- <img> --> tag above. Notice the blue highlight that appears
-            around the image in Chrome. Next, use <kbd>Cmd/Ctrl + E</kbd> to open up the defined CSS rules.
-            Try changing the size of the border from 10px to 20px or change the background
-            color from "transparent" to "hotpink". If you have Brackets and your browser running side-by-side, you
-            will see your changes instantly reflected in your browser. Cool, right?
-        </samp>
-        
-        <p class="note">
-            Today, Brackets only supports Live Preview for HTML and CSS. However, in the current version, changes to
-            JavaScript files are automatically reloaded when you save. We are currently working on Live Preview
-            support for JavaScript. Live previews are also only possible with Google Chrome, but we hope
-            to bring this functionality to all major browsers in the future.
-        </p>
-        
-        <h3>Quick View</h3>
-        <p>
-            For those of us who haven't yet memorized the color equivalents for HEX or RGB values, Brackets makes
-            it quick and easy to see exactly what color is being used. In either CSS or HTML, simply hover over any
-            color value or gradient and Brackets will display a preview of that color/gradient automatically. The
-            same goes for images: simply hover over the image link in the Brackets editor and it will display a
-            thumbnail preview of that image.
-        </p>
-        
-        <samp>
-            To try out Quick View for yourself, place your cursor on the <!-- <body> --> tag at the top of this
-            document and press <kbd>Cmd/Ctrl + E</kbd> to open a CSS quick editor. Now simply hover over any of the
-            color values within the CSS. You can also see it in action on gradients by opening a CSS quick editor
-            on the <!-- <html> --> tag and hovering over any of the background image values. To try out the image
-            preview, place your cursor over the screenshot image included earlier in this document.
-        </samp>
-        
-        <h3>Need something else? Try an extension!</h3>
-        <p>
-            In addition to all the goodness that's built into Brackets, our large and growing community of
-            extension developers has built hundreds of extensions that add useful functionality. If there's
-            something you need that Brackets doesn't offer, more than likely someone has built an extension for
-            it. To browse or search the list of available extensions, choose <strong>File > Extension
-            Manager…</strong> and click on the "Available" tab. When you find an extension you want, just click
-            the "Install" button next to it.
-        </p>
-        
-        <!--
-            LET US KNOW WHAT YOU THINK
-        -->
-        <h2>Get involved</h2>
-        <p>
-            Brackets is an open-source project. Web developers from around the world are contributing to build
-            a better code editor. Many more are building extensions that expand the capabilities of Brackets.
-            Let us know what you think, share your ideas or contribute directly to the project.
-        </p>
-        <ul>
-            <li><a href="http://brackets.io">Brackets.io</a></li>
-            <li><a href="http://blog.brackets.io">Brackets Team Blog</a></li>
-            <li><a href="https://github.com/adobe/brackets">Brackets on GitHub</a></li>
-            <li><a href="https://brackets-registry.aboutweb.com">Brackets Extension Registry</a></li>
-            <li><a href="https://github.com/adobe/brackets/wiki">Brackets Wiki</a></li>
-            <li><a href="https://groups.google.com/forum/#!forum/brackets-dev">Brackets Developer Mailing List</a></li>
-            <li><a href="https://twitter.com/brackets">@brackets on Twitter</a></li>
-            <li>Chat with Brackets developers on IRC in <a href="http://webchat.freenode.net/?channels=brackets&uio=d4">#brackets on Freenode</a></li>
-        </ul>
-        
-    </body>
+        const foundGuest = guestDatabase.find(g => g.name.toLowerCase() === searchInput);
+
+        if (foundGuest) {
+            errorDiv.classList.add('hidden');
+            currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
+            setupRSVPForm(currentParty);
+        } else {
+            errorDiv.classList.remove('hidden');
+        }
+    }
+
+    function setupRSVPForm(party) {
+        const container = document.getElementById('guest-list-container');
+        container.innerHTML = ''; 
+
+        party.forEach(guest => {
+            const row = document.createElement('div');
+            row.className = 'guest-row';
+            row.innerHTML = `
+                <div class="guest-name">${guest.name}</div>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="guest-${guest.id}" value="attending" required> I will be attending
+                    </label>
+                    <label>
+                        <input type="radio" name="guest-${guest.id}" value="declined" required> I won't be able to attend
+                    </label>
+                </div>
+            `;
+            container.appendChild(row);
+        });
+
+        document.getElementById('step-find').classList.add('hidden');
+        document.getElementById('step-rsvp').classList.remove('hidden');
+    }
+
+    function submitRSVP(event) {
+        event.preventDefault();
+        document.getElementById('step-rsvp').classList.add('hidden');
+        document.getElementById('step-details').classList.remove('hidden');
+    }
+
+    function addToCalendar() {
+        const title = encodeURIComponent("The Proposal Afters (Surprise!)");
+        // End time truncated to 9:00pm Eastern (01:00 AM UTC on Aug 9)
+        const dates = "20260808T220000Z/20260809T010000Z"; 
+        const location = encodeURIComponent("Haswell Green's, 240 W 52nd St, New York, NY 10019");
+        const details = encodeURIComponent(
+            "REMINDER: KEEP THIS A COMPLETE SECRET FROM SARAH.\n\n" +
+            "The Plan:\nSarah will believe we have dinner plans in the evening. " +
+            "The proposal will happen privately on our drive back to the city from our afternoon plans.\n\n" +
+            "Timeline:\n- Promptly arrive by 6:00 PM.\n- Sarah and Alex arrive around 6:30 PM for the surprise reveal.\n\n" +
+            "We have a space on the 2nd floor with drinks and food!"
+        );
+
+        const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`;
+        window.open(googleCalendarUrl, '_blank');
+    }
+</script>
+
+</body>
 </html>
-<!--
-
-    [[[[[[[[[[[[[[[      ]]]]]]]]]]]]]]]
-    [::::::::::::::      ::::::::::::::]
-    [::::::::::::::      ::::::::::::::]
-    [::::::[[[[[[[:      :]]]]]]]::::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[     CODE THE WEB     ]:::::]
-    [:::::[  http://brackets.io  ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [:::::[                      ]:::::]
-    [::::::[[[[[[[:      :]]]]]]]::::::]
-    [::::::::::::::      ::::::::::::::]
-    [::::::::::::::      ::::::::::::::]
-    [[[[[[[[[[[[[[[      ]]]]]]]]]]]]]]]
-
--->
