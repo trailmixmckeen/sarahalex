@@ -454,8 +454,8 @@
             if (statusElement) {
                 const status = statusElement.value;
                 
-                // CORRECTED: Fixed form ID and fully completed entry string tokens
-                const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdkd4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAAg/formResponse?entry.1085150188=${encodeURIComponent(guest.name)}&entry.875128014=${encodeURIComponent(status)}&submit=Submit`;
+                // FIXED: Populated with correct form ID and specific field keys from form source code
+                const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdkd4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAAg/formResponse?entry.1778839092=${encodeURIComponent(guest.name)}&entry.188586000=${encodeURIComponent(status)}&submit=Submit`;
                 
                 fetch(formUrl, { mode: 'no-cors' });
             }
