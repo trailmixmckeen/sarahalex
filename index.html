@@ -422,15 +422,12 @@
 
 </div>
 
-<div style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;" id="hidden-submission-pool">
-    <iframe name="secure_google_iframe" id="secure_google_iframe"></iframe>
-</div>
-
 <script>
     // ==========================================
-    // PASTE YOUR PUBLISHED GOOGLE SHEET CSV LINK HERE
+    // PASTE YOUR SPREADSHEET READ & WRITE ENDPOINTS HERE
     // ==========================================
     const PUBLIC_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSP1U6ncH7fCFo4UsSKyxDQWFiNollafgKLsjrbuCdbnSE4TImVt5kW8TuyNBK-GKiq13Lyd9YF2OO/pub?output=csv";
+    const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxnfHhoPz67zfB5vBqG-St4dxAoc54-ofvEkqeccFfPGsSIvW5uBUgE-rP0MQBV29rA/exec";
 
     let guestDatabase = [];
     let currentParty = [];
@@ -447,7 +444,6 @@
             for (let i = 1; i < lines.length; i++) {
                 if (!lines[i].trim()) continue;
                 
-                // Splitting columns safely, handling wrapping quotes from Google CSV sheets nicely
                 const columns = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
                 if (columns.length >= 4) {
                     const cleanName = columns[1].replace(/^"|"$/g, '').trim();
@@ -535,40 +531,25 @@
     function submitRSVP(event) {
         event.preventDefault();
         
-        const pool = document.getElementById('hidden-submission-pool');
-        const googleFormActionUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdkD4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAag/formResponse";
-        
-        currentParty.forEach((guest, index) => {
+        currentParty.forEach((guest) => {
             const statusElement = document.querySelector(`input[name="guest-${guest.id}"]:checked`);
             if (statusElement) {
                 const status = statusElement.value;
 
-                // Generates a dynamic HTML form programmatically to force clean browser variable packaging
-                const dynamicForm = document.createElement('form');
-                dynamicForm.action = googleFormActionUrl;
-                dynamicForm.method = 'POST';
-                dynamicForm.target = 'secure_google_iframe';
-
-                const nameInput = document.createElement('input');
-                nameInput.type = 'hidden';
-                nameInput.name = 'entry.1085150188';
-                nameInput.value = guest.name;
-
-                const statusInput = document.createElement('input');
-                statusInput.type = 'hidden';
-                statusInput.name = 'entry.1042248892';
-                statusInput.value = status;
-
-                dynamicForm.appendChild(nameInput);
-                dynamicForm.appendChild(statusInput);
-                pool.appendChild(dynamicForm);
-                
-                // Stagger submission cleanly to allow Google servers time to drop values sequentially
-                setTimeout(() => {
-                    dynamicForm.submit();
-                    // Clear the generated element out of DOM memory shortly after firing
-                    setTimeout(() => dynamicForm.remove(), 1000);
-                }, index * 600);
+                // Send a clean text/plain JSON package to avoid browser cross-origin blocking parameters entirely
+                fetch(APPS_SCRIPT_WEBAPP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'text/plain'
+                    },
+                    body: JSON.stringify({
+                        name: guest.name,
+                        status: status
+                    })
+                })
+                .then(() => console.log(`Data successfully broadcasted for ${guest.name}`))
+                .catch(err => console.error(`Failed payload transmission:`, err));
 
                 guest.hasRSVPd = true;
             }
