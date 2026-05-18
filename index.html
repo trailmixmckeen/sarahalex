@@ -24,7 +24,7 @@
             --bg-color: #fcfbfa; 
             --text-color: #111111;
             --border-thick: 3px solid #111111; 
-            --hinge-purple: #54345c; /* Exact Hinge button color from your reference image */
+            --hinge-purple: #54345c; 
         }
 
         body {
@@ -486,8 +486,8 @@
 
             if (foundGuest.hasRSVPd) {
                 // If they have already RSVP'd, drop the "Thanks!" from the title and adjust the message text
-                document.getElementById('details-title').innerText = "Two truths and please lie";
-                document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed or you need to update anything, please contact us directly.";
+                document.getElementById('details-title').innerText = "Two truths and please (continue to) lie";
+                document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed, please contact Alex directly. Please continue to keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.";
                 document.getElementById('step-find').classList.add('hidden');
                 document.getElementById('step-details').classList.remove('hidden');
             } else {
