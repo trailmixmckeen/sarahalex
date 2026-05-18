@@ -240,7 +240,6 @@
             display: none !important;
         }
 
-        /* Cleaned Error Message: Transparent background with red text */
         .error-msg {
             font-family: var(--primary-font);
             text-transform: uppercase;
@@ -402,7 +401,6 @@
 
     let currentParty = [];
 
-    // Case-matched search routing listener for keyboard actions
     function handleKeyPress(event) {
         if (event.key === 'Enter') {
             findInvitation();
@@ -435,10 +433,10 @@
                 <div class="guest-name">${guest.name}</div>
                 <div class="radio-group">
                     <label>
-                        <input type="radio" name="guest-${guest.id}" value="attending" required> I will be attending
+                        <input type="radio" name="guest-${guest.id}" value="I will be attending" required> I will be attending
                     </label>
                     <label>
-                        <input type="radio" name="guest-${guest.id}" value="declined" required> I won't be able to attend
+                        <input type="radio" name="guest-${guest.id}" value="I won't be able to attend" required> I won't be able to attend
                     </label>
                 </div>
             `;
@@ -457,8 +455,8 @@
             if (statusElement) {
                 const status = statusElement.value;
                 
-                // Form action endpoint with entry tokens
-                const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdkD4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAag/formResponse?entry.1085150188=${encodeURIComponent(guest.name)}&entry.875128=${encodeURIComponent(status)}&submit=Submit`;
+                // Form action endpoint with entry tokens matching structural string outputs
+                const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSdkd4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAAg/formResponse?entry.1085150188=${encodeURIComponent(guest.name)}&entry.875128=${encodeURIComponent(status)}&submit=Submit`;
                 
                 fetch(formUrl, { mode: 'no-cors' });
             }
