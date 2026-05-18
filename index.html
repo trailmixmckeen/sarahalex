@@ -422,6 +422,10 @@
 
 </div>
 
+<div style="position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden;" id="hidden-submission-pool">
+    <iframe name="secure_google_iframe" id="secure_google_iframe"></iframe>
+</div>
+
 <script>
     // ==========================================
     // PASTE YOUR PUBLISHED GOOGLE SHEET CSV LINK HERE
@@ -531,6 +535,7 @@
     function submitRSVP(event) {
         event.preventDefault();
         
+        const pool = document.getElementById('hidden-submission-pool');
         const googleFormActionUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdkD4syklh-nBskogfB0Qtb8uUmUw1bY8-pOnRRt3iDPANAag/formResponse";
         
         currentParty.forEach((guest, index) => {
@@ -538,28 +543,32 @@
             if (statusElement) {
                 const status = statusElement.value;
 
-                // Build modern url-encoded payload directly in memory
-                const formData = new URLSearchParams();
-                formData.append('entry.1085150188', guest.name);
-                formData.append('entry.1042248892', status);
+                // Generates a dynamic HTML form programmatically to force clean browser variable packaging
+                const dynamicForm = document.createElement('form');
+                dynamicForm.action = googleFormActionUrl;
+                dynamicForm.method = 'POST';
+                dynamicForm.target = 'secure_google_iframe';
+
+                const nameInput = document.createElement('input');
+                nameInput.type = 'hidden';
+                nameInput.name = 'entry.1085150188';
+                nameInput.value = guest.name;
+
+                const statusInput = document.createElement('input');
+                statusInput.type = 'hidden';
+                statusInput.name = 'entry.1042248892';
+                statusInput.value = status;
+
+                dynamicForm.appendChild(nameInput);
+                dynamicForm.appendChild(statusInput);
+                pool.appendChild(dynamicForm);
                 
-                // Stagger each guest submission sequentially by 500ms
+                // Stagger submission cleanly to allow Google servers time to drop values sequentially
                 setTimeout(() => {
-                    fetch(googleFormActionUrl, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: formData.toString()
-                    })
-                    .then(() => {
-                        console.log(`Successfully recorded response for ${guest.name}`);
-                    })
-                    .catch((err) => {
-                        console.error(`Error sending data for ${guest.name}:`, err);
-                    });
-                }, index * 500);
+                    dynamicForm.submit();
+                    // Clear the generated element out of DOM memory shortly after firing
+                    setTimeout(() => dynamicForm.remove(), 1000);
+                }, index * 600);
 
                 guest.hasRSVPd = true;
             }
