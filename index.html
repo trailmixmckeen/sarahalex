@@ -160,6 +160,7 @@
             display: inline-block;
             margin-top: 5px; 
             flex-shrink: 0;
+            position: relative;
         }
         .pin-drop-icon::after {
             content: '';
@@ -239,6 +240,7 @@
             display: none !important;
         }
 
+        /* Cleaned Error Message: Transparent background with red text */
         .error-msg {
             font-family: var(--primary-font);
             text-transform: uppercase;
@@ -400,6 +402,7 @@
 
     let currentParty = [];
 
+    // Case-matched search routing listener for keyboard actions
     function handleKeyPress(event) {
         if (event.key === 'Enter') {
             findInvitation();
