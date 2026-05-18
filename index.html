@@ -442,16 +442,50 @@
 </div>
 
 <script>
-    // GUEST DATABASE WITH RSVP FILTER FLAGS
-    const guestDatabase = [
-        { id: 1, name: "John Doe", partyID: 101, hasRSVPd: false },
-        { id: 2, name: "Jane Doe", partyID: 101, hasRSVPd: false },
-        { id: 3, name: "Alice Smith", partyID: 102, hasRSVPd: false },
-        { id: 4, name: "Bob Smith", partyID: 102, hasRSVPd: false },
-        { id: 5, name: "Charlie Brown", partyID: 103, hasRSVPd: false }
-    ];
+    // ==========================================
+    // PASTE YOUR PUBLISHED GOOGLE SHEET CSV LINK HERE
+    // ==========================================
+    const PUBLIC_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSP1U6ncH7fCFo4UsSKyxDQWFiNollafgKLsjrbuCdbnSE4TImVt5kW8TuyNBK-GKiq13Lyd9YF2OO/pub?output=csv";
 
+    let guestDatabase = [];
     let currentParty = [];
+
+    // Downloads and parses the public spreadsheet layout automatically on runtime
+    async function loadGuestDatabase() {
+        try {
+            const response = await fetch(PUBLIC_SHEET_CSV_URL);
+            const dataText = await response.text();
+            
+            const lines = dataText.split(/\r?\n/);
+            const parsedDatabase = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                
+                // Splitting columns safely, handling wrapping quotes from Google CSV sheets nicely
+                const columns = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                if (columns.length >= 4) {
+                    const cleanName = columns[1].replace(/^"|"$/g, '').trim();
+                    const cleanStatus = columns[2].replace(/^"|"$/g, '').trim();
+                    const cleanParty = columns[3].replace(/^"|"$/g, '').trim();
+
+                    if (cleanName) {
+                        parsedDatabase.push({
+                            id: i, 
+                            name: cleanName,
+                            partyID: cleanParty || `row-${i}`,
+                            hasRSVPd: cleanStatus.length > 0
+                        });
+                    }
+                }
+            }
+            guestDatabase = parsedDatabase;
+        } catch (error) {
+            console.error("Could not load data from Google Sheet:", error);
+        }
+    }
+    
+    loadGuestDatabase();
 
     function handleKeyPress(event) {
         if (event.key === 'Enter') {
@@ -469,7 +503,6 @@
             errorDiv.classList.add('hidden');
             currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
 
-            // Bypasses the input options completely if they have already RSVP'd
             if (foundGuest.hasRSVPd) {
                 document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed or you need to update anything, please contact us directly.";
                 document.getElementById('step-find').classList.add('hidden');
@@ -507,7 +540,6 @@
         document.getElementById('step-rsvp').classList.remove('hidden');
     }
 
-    // "That's not me" routing logic
     function resetSearchForm() {
         document.getElementById('search-name').value = '';
         document.getElementById('step-rsvp').classList.add('hidden');
@@ -534,19 +566,16 @@
                     targetForm.submit();
                 }
 
-                // Sets local status tracker to true to avoid double registry entries
                 guest.hasRSVPd = true;
             }
         });
 
-        // Set default text back if a new fresh party submitted responses
         document.getElementById('confirmation-subtitle').innerText = "Your details have been saved. Please keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.";
         
         document.getElementById('step-rsvp').classList.add('hidden');
         document.getElementById('step-details').classList.remove('hidden');
     }
 
-    // Shared Event Parameters
     const eventConfig = {
         title: "The Proposal Afters (Surprise!)",
         location: "Haswell Green's, 240 W 52nd St, New York, NY 10019",
@@ -559,13 +588,11 @@
                  "We have a space on the 2nd floor with drinks and food!"
     };
 
-    // ACTION 1: Google Calendar Web Link Generator
     function addGoogleCalendar() {
         const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventConfig.title)}&dates=${eventConfig.start}/${eventConfig.end}&details=${encodeURIComponent(eventConfig.details)}&location=${encodeURIComponent(eventConfig.location)}&sf=true&output=xml`;
         window.open(googleCalendarUrl, '_blank');
     }
 
-    // ACTION 2: Apple iCal (.ics) Download Object Engine
     function buildIcsDownload() {
         const icsData = [
             "BEGIN:VCALENDAR",
@@ -589,7 +616,6 @@
         downloadElement.download = 'proposal-afters.ics';
     }
 
-    // Build the dynamic blob attachment instantly on file runtime
     buildIcsDownload();
 </script>
 
