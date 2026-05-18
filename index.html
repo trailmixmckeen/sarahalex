@@ -485,7 +485,7 @@
             currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
 
             if (foundGuest.hasRSVPd) {
-                document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed or you need to update anything, please contact us directly.";
+                document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed or you need to update anything, please contact Alex directly. Please keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.";
                 document.getElementById('step-find').classList.add('hidden');
                 document.getElementById('step-details').classList.remove('hidden');
             } else {
