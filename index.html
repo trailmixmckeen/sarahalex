@@ -563,7 +563,11 @@
                 if (nameInput && statusInput && targetForm) {
                     nameInput.value = guest.name;
                     statusInput.value = status;
-                    targetForm.submit();
+                    
+                    // Crucial timeout chain to ensure multiple iframes hit Google Services sequentially
+                    setTimeout(() => {
+                        targetForm.submit();
+                    }, index * 400);
                 }
 
                 guest.hasRSVPd = true;
