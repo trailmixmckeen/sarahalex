@@ -416,8 +416,8 @@
         </div>
 
         <div class="btn-split-wrapper">
-            <button class="action-btn lowercase" style="flex: 1;" onclick="addGoogleCalendar()">add google cal</button>
-            <a id="ical-download-link" class="action-btn-link lowercase" style="flex: 1;" href="#">add iCal</a>
+            <button class="action-btn lowercase" style="flex: 1;" onclick="addGoogleCalendar()">add to google cal</button>
+            <a id="ical-download-link" class="action-btn-link lowercase" style="flex: 1;" href="#">add to iCal</a>
         </div>
     </div>
 
@@ -487,7 +487,7 @@
 
             if (foundGuest.hasRSVPd) {
                 // If they have already RSVP'd, drop the "Thanks!" from the title and adjust the message text
-                document.getElementById('details-title').innerText = "Two truths and please (continue to) lie";
+                document.getElementById('details-title').innerText = "Two truths and please (keep the) lie";
                 document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed, contact Alex directly. Please continue to keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.";
                 document.getElementById('step-find').classList.add('hidden');
                 document.getElementById('step-details').classList.remove('hidden');
