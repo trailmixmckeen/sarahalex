@@ -368,7 +368,8 @@
 <div class="hinge-container">
     
     <div id="step-find">
-        <h1 class="form-header">Your name is</h1> 
+        <h1 class="form-header">Your name is</h1>
+        <div class="sub-header-line">Important as these plans are Top Secret.</div>
         <div class="input-group">
             <input type="text" id="search-name" placeholder="First & Last Name" autocomplete="name" onkeypress="handleKeyPress(event)">
         </div>
@@ -398,7 +399,7 @@
         <div class="details-section">
             <h3 class="section-title">The plan</h3>
             <p style="margin-bottom: 12px;">Saturday, August 8th, 2026 from 6:00pm-9:00pm</p>
-            <p>Sarah will believe we have dinner plans in the evening. The proposal will happen privately on our drive back to the city from our afternoon plans. That's all you need to know... for now.</p>
+            <p>The proposal will happen privately on our drive back to the city from our afternoon plans. That's all you need to know about that... for now. Join us to celebrate and surprise Sarah, as she will think this is just dinner.</p>
         </div>
 
         <div class="arrival-alert">
@@ -411,7 +412,7 @@
                 <span class="pin-drop-icon"></span>
                 <p style="margin: 0;"><strong>Haswell Green's</strong><br>240 W 52nd St, New York, NY 10019</p>
             </div>
-            <p style="margin-bottom: 0;">Sarah and Alex will plan to arrive around 6:30pm for the reveal of the surprise. We will have a space on the 2nd floor with drinks and food.</p>
+            <p style="margin-bottom: 0;">Sarah and Alex will plan to arrive around 6:30pm for the reveal of the party. We will have a space on the 2nd floor with drinks and food.</p>
         </div>
 
         <div class="btn-split-wrapper">
@@ -487,7 +488,7 @@
             if (foundGuest.hasRSVPd) {
                 // If they have already RSVP'd, drop the "Thanks!" from the title and adjust the message text
                 document.getElementById('details-title').innerText = "Two truths and please (continue to) lie";
-                document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed, please contact Alex directly. Please continue to keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.";
+                document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed, contact Alex directly. Please continue to keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.";
                 document.getElementById('step-find').classList.add('hidden');
                 document.getElementById('step-details').classList.remove('hidden');
             } else {
