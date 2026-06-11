@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sarah & Alex — The Wedding</title>
         
-        <!-- Pulls favicon from the main root folder -->
         <link rel="icon" type="image/png" href="../favicon.png">
     
         <style>
@@ -164,10 +163,6 @@
                 line-height: 1.6;
             }
     
-            .sub-header-line.spaced-block {
-                margin-bottom: 45px; 
-            }
-    
             h3.section-title {
                 font-family: var(--primary-font);
                 font-weight: 700;
@@ -243,7 +238,7 @@
                 margin-top: 20px;
             }
     
-            button.action-btn, a.action-btn-link {
+            button.action-btn {
                 background-color: var(--hinge-purple);
                 color: #ffffff;
                 border: none;
@@ -255,21 +250,19 @@
                 cursor: pointer;
                 width: auto; 
                 text-align: center;
-                text-decoration: none;
-                display: inline-block;
                 transition: background-color 0.15s ease, transform 0.1s ease;
                 box-sizing: border-box;
             }
     
-            button.action-btn.lowercase, a.action-btn-link.lowercase {
+            button.action-btn.lowercase {
                 text-transform: lowercase;
             }
     
-            button.action-btn:hover, a.action-btn-link:hover {
+            button.action-btn:hover {
                 background-color: #402647;
             }
     
-            button.action-btn:active, a.action-btn-link:active {
+            button.action-btn:active {
                 transform: scale(0.98);
             }
     
@@ -376,13 +369,15 @@
 
             .timeline-dot {
                 position: absolute;
-                left: -37px;
+                /* Centers exactly on top of the 2px vertical line width */
+                left: -37px; 
                 top: 5px;
                 width: 12px;
                 height: 12px;
                 background: var(--bg-color);
                 border: 2px solid #111111;
                 border-radius: 50%;
+                box-sizing: border-box;
             }
 
             .timeline-time {
@@ -393,6 +388,16 @@
                 letter-spacing: 0.05em;
                 color: var(--hinge-purple);
                 margin-bottom: 5px;
+            }
+
+            /* Timeline Optional Image Blocks */
+            .timeline-img {
+                width: 100%;
+                max-width: 100%;
+                height: auto;
+                border: var(--border-thick);
+                margin: 12px 0 18px 0;
+                display: block;
             }
         </style>
     </head>
@@ -405,7 +410,6 @@
             </div>
         
             <div class="logo-center">
-                <!-- Pulls logo image from the main root folder -->
                 <img src="../SF-AM_Vert_Transparent.png" alt="SF-AM Logo">
             </div>
         
@@ -415,7 +419,6 @@
             </div>
         </div>
 
-        <!-- SITE NAVIGATION (Revealed only after entering name) -->
         <nav id="wedding-nav" class="nav-menu hidden">
             <button class="nav-tab active-tab" onclick="switchTab('about')">about us</button>
             <button class="nav-tab" onclick="switchTab('details')">details</button>
@@ -424,7 +427,6 @@
         </nav>
     
         <div class="hinge-container">
-            <!-- ENTRY PAGE: GATEWAY -->
             <div id="step-find">
                 <h1 class="form-header">Your name is</h1>
                 <div class="sub-header-line">Please enter your name to view our wedding website.</div>
@@ -437,7 +439,6 @@
                 <div id="find-error" class="error-msg hidden">Error: Name not found. Please double-check spelling.</div>
             </div>
     
-            <!-- TAB A: ABOUT US (Timeline Design) -->
             <div id="tab-about" class="hidden">
                 <h1 class="form-header">Our story</h1>
                 <div class="sub-header-line">How we got from match to the altar.</div>
@@ -447,8 +448,12 @@
                         <div class="timeline-dot"></div>
                         <div class="timeline-time">October 2022</div>
                         <h3 class="section-title">The First Match</h3>
+                        
+                        <img src="../story-match.jpg" alt="Our First Match" class="timeline-img">
+                        
                         <p style="margin-bottom: 0;">Met on Hinge! Instant chemistry, deep conversations, and realized we lived blocks apart.</p>
                     </div>
+                    
                     <div class="timeline-event">
                         <div class="timeline-dot"></div>
                         <div class="timeline-time">August 2026</div>
@@ -458,7 +463,6 @@
                 </div>
             </div>
     
-            <!-- TAB B: DETAILS (Timeline Infrastructure like Info Page) -->
             <div id="tab-details" class="hidden">
                 <h1 class="form-header">The details</h1>
                 <div class="sub-header-line">Times, locations, and schedules for our big celebration.</div>
@@ -483,7 +487,6 @@
                 </div>
             </div>
 
-            <!-- TAB C: RSVP SYSTEM -->
             <div id="tab-rsvp" class="hidden">
                 <h1 class="form-header" id="rsvp-title">Let's chat about</h1>
                 <div class="sub-header-line" id="rsvp-subtitle">You and anyone with you.</div>
@@ -496,13 +499,16 @@
                     </div>
                 </form>
 
-                <div id="rsvp-success-confirmation" class="hidden" style="text-align: left; margin-top: 30px; padding-top: 25px; border-top: 1px dashed #111111;">
-                    <h3 class="section-title" style="color: var(--hinge-purple);">Response Logged!</h3>
-                    <p style="margin-bottom: 0;">Your selections have been safely compiled into our planners' ledger. You can adjust your options at any point leading up to the celebration by resubmitting above.</p>
+                <div id="rsvp-locked-message" class="hidden">
+                    <p style="margin-bottom: 0; font-family: var(--secondary-font); font-size: 1.1rem;">
+                        If your plans change down the line or you need to adjust your immediate party details, please reach out to us directly.
+                    </p>
+                    <div class="btn-center-wrapper">
+                        <button type="button" class="not-me-btn" onclick="resetSearchForm()">lock system</button>
+                    </div>
                 </div>
             </div>
     
-            <!-- TAB D: FAQ (Simple Text Layout matching Info Style) -->
             <div id="tab-faq" class="hidden">
                 <h1 class="form-header">Frequently asked questions</h1>
                 <div class="sub-header-line">Answers to help you coordinate your plans.</div>
@@ -520,19 +526,16 @@
         </div>
     
         <script>
-            // DATA INGESTION PIPELINES (Reuses your existing master spreadsheet system!)
             const PUBLIC_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSP1U6ncH7fCFo4UsSKyxDQWFiNollafgKLsjrbuCdbnSE4TImVt5kW8TuyNBK-GKiq13Lyd9YF2OO/pub?output=csv";
             const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxnfHhoPz67zfB5vBqG-St4dxAoc54-ofvEkqeccFfPGsSIvW5uBUgE-rP0MQBV29rA/exec";
         
             let guestDatabase = [];
             let currentParty = [];
         
-            // LOAD GUEST DATABASE
             async function loadGuestDatabase() {
                 try {
                     const response = await fetch(PUBLIC_SHEET_CSV_URL);
                     const dataText = await response.text();
-                    
                     const lines = dataText.split(/\r?\n/);
                     const parsedDatabase = [];
         
@@ -579,28 +582,31 @@
                     errorDiv.classList.add('hidden');
                     currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
         
-                    // 1. Hide Login View
                     document.getElementById('step-find').classList.add('hidden');
-
-                    // 2. Build out the current RSVP framework inside its respective panel
-                    setupRSVPForm(currentParty);
-
-                    // 3. Unveil navigation tabs and default to the "About Us" section
                     document.getElementById('wedding-nav').classList.remove('hidden');
                     switchTab('about');
-
-                    // If they have already RSVP'd previously, append information updates cleanly 
+        
                     if (foundGuest.hasRSVPd) {
-                        document.getElementById('rsvp-title').innerText = "Thanks! Adjust your plans?";
-                        document.getElementById('rsvp-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed, feel free to update your selection below or contact us directly.";
-                        document.getElementById('rsvp-success-confirmation').classList.remove('hidden');
+                        // Scenario A: User already responded -> Alter text headers and hide form
+                        document.getElementById('rsvp-title').innerText = "Thanks! Your response is logged.";
+                        document.getElementById('rsvp-subtitle').innerText = "We have received your details on the master spreadsheet file.";
+                        
+                        document.getElementById('rsvp-form').classList.add('hidden');
+                        document.getElementById('rsvp-locked-message').classList.remove('hidden');
+                    } else {
+                        // Scenario B: Clean slate -> Setup interactive forms
+                        document.getElementById('rsvp-title').innerText = "Let's chat about";
+                        document.getElementById('rsvp-subtitle').innerText = "You and anyone with you.";
+                        
+                        setupRSVPForm(currentParty);
+                        document.getElementById('rsvp-form').classList.remove('hidden');
+                        document.getElementById('rsvp-locked-message').classList.add('hidden');
                     }
                 } else {
                     errorDiv.classList.remove('hidden');
                 }
             }
 
-            // GLOBAL TAB ROUTER MACHINE
             function switchTab(targetTab) {
                 const tabs = ['about', 'details', 'rsvp', 'faq'];
                 
@@ -613,7 +619,6 @@
                     }
                 });
 
-                // Toggles selection highlights gracefully across nav menus
                 const navButtons = document.querySelectorAll('.nav-tab');
                 const activeIndex = tabs.indexOf(targetTab);
                 navButtons.forEach((btn, index) => {
@@ -654,18 +659,12 @@
                 document.getElementById('search-name').value = '';
                 document.getElementById('wedding-nav').classList.add('hidden');
                 
-                // Sweep clear all active view tabs out of sight
                 ['about', 'details', 'rsvp', 'faq'].forEach(tab => {
                     document.getElementById(`tab-${tab}`).classList.add('hidden');
                 });
 
                 document.getElementById('step-find').classList.remove('hidden');
                 document.getElementById('find-error').classList.add('hidden');
-                document.getElementById('rsvp-success-confirmation').classList.add('hidden');
-
-                // Return RSVP titles to clean defaults
-                document.getElementById('rsvp-title').innerText = "Let's chat about";
-                document.getElementById('rsvp-subtitle').innerText = "You and anyone with you.";
             }
         
             function submitRSVP(event) {
@@ -679,24 +678,21 @@
                         fetch(APPS_SCRIPT_WEBAPP_URL, {
                             method: 'POST',
                             mode: 'no-cors',
-                            headers: {
-                                'Content-Type': 'text/plain'
-                            },
-                            body: JSON.stringify({
-                                name: guest.name,
-                                status: status
-                            })
+                            headers: { 'Content-Type': 'text/plain' },
+                            body: JSON.stringify({ name: guest.name, status: status })
                         })
-                        .then(() => console.log(`Data successfully broadcasted for ${guest.name}`))
-                        .catch(err => console.error(`Failed payload transmission:`, err));
+                        .then(() => console.log(`Data recorded for ${guest.name}`))
+                        .catch(err => console.error(`Failed transmission:`, err));
         
                         guest.hasRSVPd = true;
                     }
                 });
         
-                document.getElementById('rsvp-title').innerText = "Thanks! Adjust your plans?";
-                document.getElementById('rsvp-subtitle').innerText = "Your details have been saved. If your plans change down the line, feel free to update your selections at any time.";
-                document.getElementById('rsvp-success-confirmation').classList.remove('hidden');
+                // After submission completes successfully, instantly trigger lock state view styles
+                document.getElementById('rsvp-title').innerText = "Thanks! Your response is logged.";
+                document.getElementById('rsvp-subtitle').innerText = "We have received your details on the master spreadsheet file.";
+                document.getElementById('rsvp-form').classList.add('hidden');
+                document.getElementById('rsvp-locked-message').classList.remove('hidden');
             }
         </script>
     </body>
