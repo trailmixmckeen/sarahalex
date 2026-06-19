@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sarah & Alex — The Wedding</title>
         
+        <!-- Pulls favicon from the main root folder -->
         <link rel="icon" type="image/png" href="../favicon.png">
     
         <style>
@@ -24,6 +25,8 @@
                 --text-color: #111111;
                 --border-thick: 3px solid #111111; 
                 --hinge-purple: #54345c; 
+                --hinge-grey-bubble: #e8e8e8;
+                --hinge-pink-accent: #f2e3e1;
             }
     
             body {
@@ -140,6 +143,12 @@
                 width: 100%;
                 box-sizing: border-box;
                 margin-bottom: 50px;
+            }
+            
+            @media (max-width: 500px) {
+                .hinge-container {
+                    padding: 25px 20px;
+                }
             }
     
             h1.form-header, h2.form-header { 
@@ -349,7 +358,7 @@
                 padding-top: 0;
             }
 
-            /* --- TIMELINE STYLING (For About Us & Details pages) --- */
+            /* --- TIMELINE STYLING (For Details Page Only) --- */
             .timeline {
                 position: relative;
                 padding-left: 30px;
@@ -369,7 +378,6 @@
 
             .timeline-dot {
                 position: absolute;
-                /* Centers exactly on top of the 2px vertical line width */
                 left: -37px; 
                 top: 5px;
                 width: 12px;
@@ -390,14 +398,123 @@
                 margin-bottom: 5px;
             }
 
-            /* Timeline Optional Image Blocks */
-            .timeline-img {
+            /* --- HINGE CHAT UI STYLING (For About Us) --- */
+            .chat-container {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
                 width: 100%;
-                max-width: 100%;
+                margin: 20px 0;
+                box-sizing: border-box;
+            }
+
+            .chat-date {
+                font-family: var(--primary-font);
+                font-size: 0.85rem;
+                color: #666666;
+                text-align: center;
+                width: 100%;
+                margin: 10px 0;
+                font-weight: 500;
+            }
+
+            .chat-row {
+                display: flex;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .chat-row.left {
+                justify-content: flex-start;
+            }
+
+            .chat-row.right {
+                justify-content: flex-end;
+            }
+
+            .chat-row.center {
+                justify-content: center;
+            }
+
+            /* Inbound (Sarah) Grey Bubbles */
+            .bubble-left {
+                background-color: var(--hinge-grey-bubble);
+                color: #111111;
+                font-family: var(--primary-font);
+                font-size: 1.05rem;
+                padding: 14px 20px;
+                border-radius: 18px 18px 18px 4px;
+                max-width: 75%;
+                line-height: 1.4;
+                text-align: left;
+                word-wrap: break-word;
+            }
+
+            /* Outbound (Alex) Purple Bubbles */
+            .bubble-right {
+                background-color: var(--hinge-purple);
+                color: #ffffff;
+                font-family: var(--primary-font);
+                font-size: 1.05rem;
+                padding: 14px 20px;
+                border-radius: 18px 18px 4px 18px;
+                max-width: 75%;
+                line-height: 1.4;
+                text-align: left;
+                word-wrap: break-word;
+            }
+
+            /* Center System Pill (Start the chat...) */
+            .bubble-system {
+                background-color: var(--hinge-grey-bubble);
+                color: #111111;
+                font-family: var(--primary-font);
+                font-size: 1rem;
+                font-style: italic;
+                padding: 10px 24px;
+                border-radius: 25px;
+                max-width: 85%;
+                text-align: center;
+            }
+
+            /* Hinge Image/Prompt Container Card */
+            .hinge-prompt-card {
+                background: #ffffff;
+                border: 1px solid #dddddd;
+                border-radius: 16px;
+                max-width: 80%;
+                width: 100%;
+                overflow: hidden;
+                box-shadow: 0px 2px 8px rgba(0,0,0,0.04);
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+            }
+
+            .prompt-header-text {
+                font-family: var(--primary-font);
+                font-weight: 700;
+                font-size: 1.1rem;
+                padding: 20px 20px 15px 20px;
+                line-height: 1.3;
+                color: #111111;
+            }
+
+            .prompt-main-image {
+                width: 100%;
                 height: auto;
-                border: var(--border-thick);
-                margin: 12px 0 18px 0;
                 display: block;
+            }
+
+            .prompt-pink-like-tag {
+                background-color: var(--hinge-pink-accent);
+                color: #111111;
+                font-family: var(--primary-font);
+                font-size: 1rem;
+                font-style: italic;
+                padding: 12px 20px;
+                border-radius: 0 0 16px 16px;
+                text-align: left;
             }
         </style>
     </head>
@@ -419,6 +536,7 @@
             </div>
         </div>
 
+        <!-- SITE NAVIGATION -->
         <nav id="wedding-nav" class="nav-menu hidden">
             <button class="nav-tab active-tab" onclick="switchTab('about')">about us</button>
             <button class="nav-tab" onclick="switchTab('details')">details</button>
@@ -427,6 +545,7 @@
         </nav>
     
         <div class="hinge-container">
+            <!-- ENTRY PAGE: GATEWAY -->
             <div id="step-find">
                 <h1 class="form-header">Your name is</h1>
                 <div class="sub-header-line">Please enter your name to view our wedding website.</div>
@@ -439,30 +558,54 @@
                 <div id="find-error" class="error-msg hidden">Error: Name not found. Please double-check spelling.</div>
             </div>
     
+            <!-- TAB A: ABOUT US (Hinge Chat System) -->
             <div id="tab-about" class="hidden">
                 <h1 class="form-header">Our story</h1>
-                <div class="sub-header-line">How we got from match to the altar.</div>
+                <div class="sub-header-line">How it went down in the DMs.</div>
                 
-                <div class="timeline">
-                    <div class="timeline-event">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-time">October 2022</div>
-                        <h3 class="section-title">The First Match</h3>
-                        
-                        <img src="images/20230718.jpg" alt="Our First Match" class="timeline-img">
-                        
-                        <p style="margin-bottom: 0;">Met on Hinge! Instant chemistry, deep conversations, and realized we lived blocks apart.</p>
+                <div class="chat-container">
+                    <!-- Centered Date -->
+                    <div class="chat-date">Fri 14, Jul 20:14</div>
+                    
+                    <!-- Hinge Image / Like Prompt Card -->
+                    <div class="chat-row left">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">As seen on my Mom's fridge</div>
+                            <!-- Verbatim image filename from reference -->
+                            <img src="../images/20230718.jpg" alt="Alex and friend" class="prompt-main-image">
+                            <div class="prompt-pink-like-tag">Liked your photo</div>
+                        </div>
+                    </div>
+
+                    <!-- Centered Date -->
+                    <div class="chat-date">Sat 15, Jul 00:09</div>
+
+                    <!-- Center System Invitation Pill -->
+                    <div class="chat-row center">
+                        <div class="bubble-system">Start the chat with Sarah</div>
+                    </div>
+
+                    <!-- Centered Date -->
+                    <div class="chat-date">Sat 15, Jul 00:09</div>
+
+                    <!-- Outbound (Alex) Purple Bubble -->
+                    <div class="chat-row right">
+                        <div class="bubble-right">So whats #1 on your want to go to list?</div>
+                    </div>
+
+                    <!-- Centered Date -->
+                    <div class="chat-date">Sat 15, Jul 09:17</div>
+
+                    <!-- Inbound (Sarah) Grey Bubble -->
+                    <div class="chat-row left">
+                        <div class="bubble-left">That's such a tough question omg</div>
                     </div>
                     
-                    <div class="timeline-event">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-time">August 2026</div>
-                        <h3 class="section-title">The Proposal</h3>
-                        <p style="margin-bottom: 0;">Alex pulled off the ultimate surprise celebration in the city after popping the question.</p>
-                    </div>
+                    <!-- Feel free to stack additional chat blocks using this format! -->
                 </div>
             </div>
     
+            <!-- TAB B: DETAILS -->
             <div id="tab-details" class="hidden">
                 <h1 class="form-header">The details</h1>
                 <div class="sub-header-line">Times, locations, and schedules for our big celebration.</div>
@@ -487,6 +630,7 @@
                 </div>
             </div>
 
+            <!-- TAB C: RSVP SYSTEM -->
             <div id="tab-rsvp" class="hidden">
                 <h1 class="form-header" id="rsvp-title">Let's chat about</h1>
                 <div class="sub-header-line" id="rsvp-subtitle">You and anyone with you.</div>
@@ -509,6 +653,7 @@
                 </div>
             </div>
     
+            <!-- TAB D: FAQ -->
             <div id="tab-faq" class="hidden">
                 <h1 class="form-header">Frequently asked questions</h1>
                 <div class="sub-header-line">Answers to help you coordinate your plans.</div>
@@ -587,14 +732,12 @@
                     switchTab('about');
         
                     if (foundGuest.hasRSVPd) {
-                        // Scenario A: User already responded -> Alter text headers and hide form
                         document.getElementById('rsvp-title').innerText = "Thanks! Your response is logged.";
                         document.getElementById('rsvp-subtitle').innerText = "We have received your details on the master spreadsheet file.";
                         
                         document.getElementById('rsvp-form').classList.add('hidden');
                         document.getElementById('rsvp-locked-message').classList.remove('hidden');
                     } else {
-                        // Scenario B: Clean slate -> Setup interactive forms
                         document.getElementById('rsvp-title').innerText = "Let's chat about";
                         document.getElementById('rsvp-subtitle').innerText = "You and anyone with you.";
                         
@@ -688,7 +831,6 @@
                     }
                 });
         
-                // After submission completes successfully, instantly trigger lock state view styles
                 document.getElementById('rsvp-title').innerText = "Thanks! Your response is logged.";
                 document.getElementById('rsvp-subtitle').innerText = "We have received your details on the master spreadsheet file.";
                 document.getElementById('rsvp-form').classList.add('hidden');
