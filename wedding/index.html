@@ -436,7 +436,6 @@
                 justify-content: center;
             }
 
-            /* Inbound (Sarah) Grey Bubbles */
             .bubble-left {
                 background-color: var(--hinge-grey-bubble);
                 color: #111111;
@@ -450,7 +449,6 @@
                 word-wrap: break-word;
             }
 
-            /* Outbound (Alex) Purple Bubbles */
             .bubble-right {
                 background-color: var(--hinge-purple);
                 color: #ffffff;
@@ -464,7 +462,6 @@
                 word-wrap: break-word;
             }
 
-            /* Center System Pill (Start the chat...) */
             .bubble-system {
                 background-color: var(--hinge-grey-bubble);
                 color: #111111;
@@ -477,7 +474,6 @@
                 text-align: center;
             }
 
-            /* Hinge Image/Prompt Container Card */
             .hinge-prompt-card {
                 background: #ffffff;
                 border: 1px solid #dddddd;
@@ -515,6 +511,91 @@
                 padding: 12px 20px;
                 border-radius: 0 0 16px 16px;
                 text-align: left;
+            }
+
+            /* --- INTERACTIVE CAROUSEL PIPELINES --- */
+            .carousel-wrapper {
+                position: relative;
+                width: 100%;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .carousel-slides {
+                display: flex;
+                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+                width: 100%;
+            }
+
+            .carousel-slide {
+                min-width: 100%;
+                box-sizing: border-box;
+            }
+
+            /* Side-Centered Nav Arrows matching image_6554e9.png styling */
+            .carousel-arrow {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(17, 17, 17, 0.45);
+                color: #ffffff;
+                border: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                font-size: 1.4rem;
+                font-weight: 400;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                user-select: none;
+                transition: background-color 0.15s ease;
+                z-index: 10;
+                font-family: Arial, sans-serif;
+            }
+
+            .carousel-arrow:hover {
+                background: rgba(17, 17, 17, 0.75);
+            }
+
+            .carousel-arrow.prev {
+                left: 15px;
+            }
+
+            .carousel-arrow.next {
+                right: 15px;
+            }
+
+            /* Center-Bottom Tracking Indicators matching image_6554e9.png layout */
+            .carousel-indicators {
+                position: absolute;
+                bottom: 15px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 8px;
+                z-index: 10;
+                background: rgba(0, 0, 0, 0.25);
+                padding: 6px 12px;
+                border-radius: 20px;
+            }
+
+            .indicator-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.45);
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                transition: background-color 0.2s ease, transform 0.2s ease;
+            }
+
+            .indicator-dot.active-dot {
+                background-color: #ffffff;
+                transform: scale(1.15);
             }
         </style>
     </head>
@@ -558,7 +639,7 @@
                 <div id="find-error" class="error-msg hidden">Error: Name not found. Please double-check spelling.</div>
             </div>
     
-            <!-- TAB A: ABOUT US (Hinge Chat System) -->
+            <!-- TAB A: ABOUT US (Hinge Chat System with Image Carousel Option) -->
             <div id="tab-about" class="hidden">
                 <h1 class="form-header">Our story</h1>
                 <div class="sub-header-line">How it went down in the DMs.</div>
@@ -567,13 +648,39 @@
                     <!-- Centered Date -->
                     <div class="chat-date">Fri 14, Jul 20:14</div>
                     
-                    <!-- Hinge Image / Like Prompt Card -->
+                    <!-- Hinge Card equipped with photo carousel -->
                     <div class="chat-row left">
                         <div class="hinge-prompt-card">
-                            <div class="prompt-header-text">As seen on my Mom's fridge</div>
-                            <!-- Verbatim image filename from reference -->
-                            <img src="images/20230718.jpg" alt="Alex and friend" class="prompt-main-image">
-                            <div class="prompt-pink-like-tag">Liked your photo</div>
+                            <div class="prompt-header-text">Some of our favorite memories</div>
+                            
+                            <!-- INTERACTIVE CAROUSEL FRAMEWORK -->
+                            <div class="carousel-wrapper" id="story-carousel">
+                                <!-- Navigation Chevrons (Center Side Aligned) -->
+                                <button type="button" class="carousel-arrow prev" onclick="moveCarousel(-1)">&#10094;</button>
+                                <button type="button" class="carousel-arrow next" onclick="moveCarousel(1)">&#10095;</button>
+                                
+                                <!-- Track Container containing Images -->
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="../image_daaf68.jpg" alt="Memory Photo 1" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="../story-match.jpg" alt="Memory Photo 2" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="../favicon.png" alt="Memory Photo 3" class="prompt-main-image">
+                                    </div>
+                                </div>
+                                
+                                <!-- Circle Dot Navigation Indicators (Center Bottom Aligned) -->
+                                <div class="carousel-indicators">
+                                    <button type="button" class="indicator-dot active-dot" onclick="jumpToSlide(0)"></button>
+                                    <button type="button" class="indicator-dot" onclick="jumpToSlide(1)"></button>
+                                    <button type="button" class="indicator-dot" onclick="jumpToSlide(2)"></button>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Liked your photos</div>
                         </div>
                     </div>
 
@@ -600,8 +707,6 @@
                     <div class="chat-row left">
                         <div class="bubble-left">That's such a tough question omg</div>
                     </div>
-                    
-                    <!-- Feel free to stack additional chat blocks using this format! -->
                 </div>
             </div>
     
@@ -676,6 +781,7 @@
         
             let guestDatabase = [];
             let currentParty = [];
+            let currentSlideIndex = 0;
         
             async function loadGuestDatabase() {
                 try {
@@ -835,6 +941,42 @@
                 document.getElementById('rsvp-subtitle').innerText = "We have received your details on the master spreadsheet file.";
                 document.getElementById('rsvp-form').classList.add('hidden');
                 document.getElementById('rsvp-locked-message').classList.remove('hidden');
+            }
+
+            /* --- CAROUSEL LOCOMOTION ENGINE --- */
+            function updateCarouselUI() {
+                const container = document.querySelector('#story-carousel .carousel-slides');
+                const dots = document.querySelectorAll('#story-carousel .indicator-dot');
+                
+                // Slide Matrix translation shift
+                container.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+                
+                // Re-balance active tracker indicator states
+                dots.forEach((dot, index) => {
+                    if (index === currentSlideIndex) {
+                        dot.classList.add('active-dot');
+                    } else {
+                        dot.classList.remove('active-dot');
+                    }
+                });
+            }
+
+            function moveCarousel(direction) {
+                const totalSlides = document.querySelectorAll('#story-carousel .carousel-slide').length;
+                currentSlideIndex += direction;
+                
+                if (currentSlideIndex >= totalSlides) {
+                    currentSlideIndex = 0; // Infinite loop forward
+                } else if (currentSlideIndex < 0) {
+                    currentSlideIndex = totalSlides - 1; // Infinite loop backward
+                }
+                
+                updateCarouselUI();
+            }
+
+            function jumpToSlide(index) {
+                currentSlideIndex = index;
+                updateCarouselUI();
             }
         </script>
     </body>
