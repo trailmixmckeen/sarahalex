@@ -4,8 +4,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sarah & Alex — The Wedding</title>
-        
-        <!-- Pulls favicon from the main root folder -->
         <link rel="icon" type="image/png" href="../favicon.png">
     
         <style>
@@ -99,7 +97,6 @@
                 }
             }
 
-            /* --- WEDDING NAVIGATION MENU --- */
             .nav-menu {
                 display: flex;
                 justify-content: center;
@@ -199,6 +196,7 @@
                 flex-shrink: 0;
                 position: relative;
             }
+            
             .pin-drop-icon::after {
                 content: '';
                 width: 4px;
@@ -313,6 +311,7 @@
                 padding: 22px 0;
                 text-align: left;
             }
+            
             .guest-row:first-child {
                 border-top: var(--border-thick); 
             }
@@ -358,7 +357,6 @@
                 padding-top: 0;
             }
 
-            /* --- TIMELINE STYLING (For Details Page Only) --- */
             .timeline {
                 position: relative;
                 padding-left: 30px;
@@ -398,7 +396,6 @@
                 margin-bottom: 5px;
             }
 
-            /* --- HINGE CHAT UI STYLING (For About Us) --- */
             .chat-container {
                 display: flex;
                 flex-direction: column;
@@ -513,7 +510,6 @@
                 text-align: left;
             }
 
-            /* --- INTERACTIVE CAROUSEL PIPELINES --- */
             .carousel-wrapper {
                 position: relative;
                 width: 100%;
@@ -533,7 +529,6 @@
                 box-sizing: border-box;
             }
 
-            /* Side-Centered Nav Arrows matching image_6554e9.png styling */
             .carousel-arrow {
                 position: absolute;
                 top: 50%;
@@ -568,7 +563,6 @@
                 right: 15px;
             }
 
-            /* Center-Bottom Tracking Indicators matching image_6554e9.png layout */
             .carousel-indicators {
                 position: absolute;
                 bottom: 15px;
@@ -617,7 +611,6 @@
             </div>
         </div>
 
-        <!-- SITE NAVIGATION -->
         <nav id="wedding-nav" class="nav-menu hidden">
             <button class="nav-tab active-tab" onclick="switchTab('about')">about us</button>
             <button class="nav-tab" onclick="switchTab('details')">details</button>
@@ -626,10 +619,11 @@
         </nav>
     
         <div class="hinge-container">
+            
             <!-- ENTRY PAGE: GATEWAY -->
             <div id="step-find">
                 <h1 class="form-header">Your name is</h1>
-                <div class="sub-header-line">Please enter your name to view our wedding website.</div>
+                <div class="sub-header-line">Needed to find your invitation.</div>
                 <div class="input-group">
                     <input type="text" id="search-name" placeholder="First & Last Name" autocomplete="name" onkeypress="handleKeyPress(event)">
                 </div>
@@ -639,40 +633,131 @@
                 <div id="find-error" class="error-msg hidden">Error: Name not found. Please double-check spelling.</div>
             </div>
     
-            <!-- TAB A: ABOUT US (Hinge Chat System with Image Carousel Option) -->
+            <!-- TAB A: ABOUT US -->
             <div id="tab-about" class="hidden">
-                <h1 class="form-header">Our story</h1>
-                <div class="sub-header-line">How it went down in the DMs.</div>
                 
                 <div class="chat-container">
-                    <!-- Centered Date -->
-                    <div class="chat-date">Fri 14, Jul 20:14</div>
                     
-                    <!-- Hinge Card equipped with photo carousel -->
+                    <div class="chat-date">Apr 2022</div>
+
+                    <div class="chat-row center">
+                        <div class="bubble-system">Start the chat</div>
+                    </div>
+
+                    <div class="chat-row right">
+                        <div class="bubble-right">Sarah and Alex match and start talking, but due to their travel schedules... never end up meeting.</div>
+                    </div>
+
+                    <div class="chat-date">Jul 2023</div>
+
+                    <div class="chat-row center">
+                        <div class="bubble-system">Start the chat (again)</div>
+                    </div>
+                    
                     <div class="chat-row left">
                         <div class="hinge-prompt-card">
-                            <div class="prompt-header-text">Some of our favorite memories</div>
+                            <div class="prompt-header-text">Our first dates</div>
                             
-                            <!-- INTERACTIVE CAROUSEL FRAMEWORK -->
                             <div class="carousel-wrapper" id="story-carousel">
-                                <!-- Navigation Chevrons (Center Side Aligned) -->
                                 <button type="button" class="carousel-arrow prev" onclick="moveCarousel(-1)">&#10094;</button>
                                 <button type="button" class="carousel-arrow next" onclick="moveCarousel(1)">&#10095;</button>
                                 
-                                <!-- Track Container containing Images -->
                                 <div class="carousel-slides">
                                     <div class="carousel-slide">
-                                        <img src="../image_daaf68.jpg" alt="Memory Photo 1" class="prompt-main-image">
+                                        <img src="../images/20230718.jpg" alt="Memory Photo 1" class="prompt-main-image">
                                     </div>
                                     <div class="carousel-slide">
-                                        <img src="../story-match.jpg" alt="Memory Photo 2" class="prompt-main-image">
+                                        <img src="../images/20230803.jpg" alt="Memory Photo 2" class="prompt-main-image">
                                     </div>
                                     <div class="carousel-slide">
-                                        <img src="../favicon.png" alt="Memory Photo 3" class="prompt-main-image">
+                                        <img src="../images/20230905.jpg" alt="Memory Photo 3" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="../images/20231015.jpg" alt="Memory Photo 4" class="prompt-main-image">
                                     </div>
                                 </div>
                                 
-                                <!-- Circle Dot Navigation Indicators (Center Bottom Aligned) -->
+                                <div class="carousel-indicators">
+                                    <button type="button" class="indicator-dot active-dot" onclick="jumpToSlide(0)"></button>
+                                    <button type="button" class="indicator-dot" onclick="jumpToSlide(1)"></button>
+                                    <button type="button" class="indicator-dot" onclick="jumpToSlide(2)"></button>
+                                    <button type="button" class="indicator-dot" onclick="jumpToSlide(3)"></button>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Sarah and Alex match again, and thanks to a rain delayed flight, they finally meet. One stolen teddy bear glass, closed down bar, and 2AM bus ride home began their love story.</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-date">Aug 2023</div>
+                    
+                    <div class="chat-row right">
+                        <div class="bubble-right">Alex survives the "two-date rule" and gets his number saved in Sarah's phone.</div>
+                    </div>
+
+                    <div class="chat-date">Sept 2023</div>
+
+                    <div class="chat-row left">
+                        <div class="bubble-left">Sarah and Alex are officially together.</div>
+                    </div>
+
+                    <div class="chat-date">Apr 2024</div>
+                    
+                    <div class="chat-row right">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">I'm convinced that</div>
+                            
+                            <div class="carousel-wrapper" id="story-carousel">
+                                <button type="button" class="carousel-arrow prev" onclick="moveCarousel(-1)">&#10094;</button>
+                                <button type="button" class="carousel-arrow next" onclick="moveCarousel(1)">&#10095;</button>
+                                
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="../images/20230428-2.jpeg" alt="Memory Photo 1" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="../images/20230428-1.jpg" alt="Memory Photo 2" class="prompt-main-image">
+                                    </div>
+                                </div>
+                                
+                                <div class="carousel-indicators">
+                                    <button type="button" class="indicator-dot active-dot" onclick="jumpToSlide(0)"></button>
+                                    <button type="button" class="indicator-dot" onclick="jumpToSlide(1)"></button>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Ms. "I'm never getting married" saw her man as a Bridesmaid at an Ithaca College / Penn State wedding for Emma and Trevor Reed and switched to Ms. "Maybe I'd marry this man".</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-date">Sept 2024</div>
+
+                    <div class="chat-row left">
+                        <div class="bubble-left">Sarah moves back into the Upper East Side, five blocks from Alex.</div>
+                    </div>
+
+                    <div class="chat-date">Dec 2024</div>
+                    
+                    <div class="chat-row right">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">Best travel stories</div>
+                            
+                            <div class="carousel-wrapper" id="story-carousel">
+                                <button type="button" class="carousel-arrow prev" onclick="moveCarousel(-1)">&#10094;</button>
+                                <button type="button" class="carousel-arrow next" onclick="moveCarousel(1)">&#10095;</button>
+                                
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="../images/20241221.jpg" alt="Memory Photo 1" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="../images/20241006.jpg" alt="Memory Photo 2" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="../images/20241231.jpg" alt="Memory Photo 3" class="prompt-main-image">
+                                    </div>
+                                </div>
+                                
                                 <div class="carousel-indicators">
                                     <button type="button" class="indicator-dot active-dot" onclick="jumpToSlide(0)"></button>
                                     <button type="button" class="indicator-dot" onclick="jumpToSlide(1)"></button>
@@ -680,33 +765,127 @@
                                 </div>
                             </div>
                             
-                            <div class="prompt-pink-like-tag">Liked your photos</div>
+                            <div class="prompt-pink-like-tag">Sarah and Alex travel across the pond (and more) for Sarah's Groom's Gal responsibilities, later visiting Amsterdam and Portugal. In their first trip to London together, the Vikings beat the Jets so badly they fired their head coach.</div>
                         </div>
                     </div>
 
-                    <!-- Centered Date -->
-                    <div class="chat-date">Sat 15, Jul 00:09</div>
-
-                    <!-- Center System Invitation Pill -->
-                    <div class="chat-row center">
-                        <div class="bubble-system">Start the chat with Sarah</div>
-                    </div>
-
-                    <!-- Centered Date -->
-                    <div class="chat-date">Sat 15, Jul 00:09</div>
-
-                    <!-- Outbound (Alex) Purple Bubble -->
-                    <div class="chat-row right">
-                        <div class="bubble-right">So whats #1 on your want to go to list?</div>
-                    </div>
-
-                    <!-- Centered Date -->
-                    <div class="chat-date">Sat 15, Jul 09:17</div>
-
-                    <!-- Inbound (Sarah) Grey Bubble -->
+                    <div class="chat-date">Mar 2025</div>
+                    
                     <div class="chat-row left">
-                        <div class="bubble-left">That's such a tough question omg</div>
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">A random fact I love</div>
+                            
+                            <div class="carousel-wrapper" id="story-carousel">
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="../images/20250323.jpg" alt="Memory Photo 1" class="prompt-main-image">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Prior to dating, Sarah and Alex's only mutual friend was Kyle (and her husband Matt), seen celebrating Jamie and Josh DiJohn.</div>
+                        </div>
                     </div>
+
+                    <div class="chat-date">Aug 2025</div>
+                    
+                    <div class="chat-row right">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">Something that's special to us</div>
+                            
+                            <div class="carousel-wrapper" id="story-carousel">
+                                <button type="button" class="carousel-arrow prev" onclick="moveCarousel(-1)">&#10094;</button>
+                                <button type="button" class="carousel-arrow next" onclick="moveCarousel(1)">&#10095;</button>
+                                
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="../images/20250802.jpg" alt="Memory Photo 1" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="../images/20250801.jpg" alt="Memory Photo 2" class="prompt-main-image">
+                                    </div>
+                                </div>
+                                
+                                <div class="carousel-indicators">
+                                    <button type="button" class="indicator-dot active-dot" onclick="jumpToSlide(0)"></button>
+                                    <button type="button" class="indicator-dot" onclick="jumpToSlide(1)"></button>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Sarah joined Alex for the yearly McKeen pilgrimage to Montana.</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-row left">
+                        <div class="bubble-left">Sarah and Alex (and Loki) move in together.</div>
+                    </div>
+
+                    <div class="chat-date">Dec 2025</div>
+                    
+                    <div class="chat-row right">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">Green flags she looks for</div>
+                            
+                            <div class="carousel-wrapper" id="story-carousel">
+                                
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="../images/20251227.jpg" alt="Memory Photo 1" class="prompt-main-image">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Sarah brings Alex for his first Penn State football game... just not exactly at Beaver Stadium.</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-row left">
+                        <div class="bubble-left">Ms. "Maybe I'd marry this man" switched to Ms. "You may propose in Q4"</div>
+                    </div>
+
+                    <div class="chat-date">May 2026</div>
+
+                    <div class="chat-row right">
+                        <div class="bubble-right">Alex starts making the arrangements for the proposal, and they go ring shopping to help Sarah pick out her ring.</div>
+                    </div>
+
+                    <div class="chat-date">Aug 2026</div>
+                    
+                    <div class="chat-row left">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">As seen on our Mom's fridges</div>
+                            
+                            <div class="carousel-wrapper" id="story-carousel">
+                                <button type="button" class="carousel-arrow prev" onclick="moveCarousel(-1)">&#10094;</button>
+                                <button type="button" class="carousel-arrow next" onclick="moveCarousel(1)">&#10095;</button>
+                                
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="../images/20240824.jpg" alt="Memory Photo 1" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="../images/20240824.jpg" alt="Memory Photo 2" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="../images/20240824.jpg" alt="Memory Photo 3" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="../images/20240824.jpg" alt="Memory Photo 4" class="prompt-main-image">
+                                    </div>
+                                </div>
+                                
+                                <div class="carousel-indicators">
+                                    <button type="button" class="indicator-dot active-dot" onclick="jumpToSlide(0)"></button>
+                                    <button type="button" class="indicator-dot" onclick="jumpToSlide(1)"></button>
+                                    <button type="button" class="indicator-dot" onclick="jumpToSlide(2)"></button>
+                                    <button type="button" class="indicator-dot" onclick="jumpToSlide(3)"></button>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.</div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
     
@@ -735,7 +914,7 @@
                 </div>
             </div>
 
-            <!-- TAB C: RSVP SYSTEM -->
+            <!-- TAB C: RSVP -->
             <div id="tab-rsvp" class="hidden">
                 <h1 class="form-header" id="rsvp-title">Let's chat about</h1>
                 <div class="sub-header-line" id="rsvp-subtitle">You and anyone with you.</div>
@@ -753,7 +932,7 @@
                         If your plans change down the line or you need to adjust your immediate party details, please reach out to us directly.
                     </p>
                     <div class="btn-center-wrapper">
-                        <button type="button" class="not-me-btn" onclick="resetSearchForm()">lock system</button>
+                        <button type="button" class="not-me-btn" onclick="resetSearchForm()">close / lock site</button>
                     </div>
                 </div>
             </div>
@@ -943,15 +1122,12 @@
                 document.getElementById('rsvp-locked-message').classList.remove('hidden');
             }
 
-            /* --- CAROUSEL LOCOMOTION ENGINE --- */
             function updateCarouselUI() {
                 const container = document.querySelector('#story-carousel .carousel-slides');
                 const dots = document.querySelectorAll('#story-carousel .indicator-dot');
                 
-                // Slide Matrix translation shift
                 container.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
                 
-                // Re-balance active tracker indicator states
                 dots.forEach((dot, index) => {
                     if (index === currentSlideIndex) {
                         dot.classList.add('active-dot');
