@@ -916,6 +916,9 @@
                         <p style="margin-bottom: 0;">Followed immediately by drinks, dinner, and heavy dancing with everyone.</p>
                     </div>
                 </div>
+
+                <div id="conditional-family-section" class="hidden"></div>
+                <div id="conditional-kids-section" class="hidden"></div>
             </div>
 
             <div id="tab-rsvp" class="hidden">
@@ -969,6 +972,29 @@
             const PUBLIC_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSP1U6ncH7fCFo4UsSKyxDQWFiNollafgKLsjrbuCdbnSE4TImVt5kW8TuyNBK-GKiq13Lyd9YF2OO/pub?output=csv";
             const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxnfHhoPz67zfB5vBqG-St4dxAoc54-ofvEkqeccFfPGsSIvW5uBUgE-rP0MQBV29rA/exec";
         
+            // ==========================================
+            // EDIT YOUR CONDITIONAL TEXT HERE EASY
+            // ==========================================
+            const CONDITIONAL_SECTIONS_CONFIG = {
+                family: {
+                    htmlContent: `
+                        <div class="details-section">
+                            <h3 class="section-title">Family Events</h3>
+                            <p style="margin-bottom: 0;">This section only shows to immediate family members. We can't wait to see you at the rehearsal brunch! Details on tracking and arrivals will follow via email loops shortly.</p>
+                        </div>
+                    `
+                },
+                kids: {
+                    htmlContent: `
+                        <div class="details-section">
+                            <h3 class="section-title">Kids & Childcare Info</h3>
+                            <p style="margin-bottom: 0;">This section only shows to guests with children. We have arranged for professional child care inside the venue suites during dinner service so you can enjoy the evening!</p>
+                        </div>
+                    `
+                }
+            };
+            // ==========================================
+
             let guestDatabase = [];
             let currentParty = [];
             let currentSlideIndex = 0;
@@ -989,12 +1015,11 @@
                             const cleanStatus = columns[2].replace(/^"|"$/g, '').trim();
                             const cleanParty = columns[3].replace(/^"|"$/g, '').trim();
                             
-                            // Parse extra helper flags securely out of Column E & F
                             const rawFamily = columns[4] ? columns[4].replace(/^"|"$/g, '').trim().toLowerCase() : '';
                             const rawKid = columns[5] ? columns[5].replace(/^"|"$/g, '').trim().toLowerCase() : '';
 
-                            const isFamily = (rawFamily === 'true' || rawFamily === 'TRUE' || rawFamily === '1' || rawFamily === 'x');
-                            const hasKid = (rawKid === 'true' || rawKid === 'TRUE' || rawKid === '1' || rawKid === 'x');
+                            const isFamily = (rawFamily === 'true' || rawFamily === 'true' || rawFamily === '1' || rawFamily === 'x');
+                            const hasKid = (rawKid === 'true' || rawKid === 'true' || rawKid === '1' || rawKid === 'x');
         
                             if (cleanName) {
                                 parsedDatabase.push({
@@ -1032,6 +1057,30 @@
                     errorDiv.classList.add('hidden');
                     currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
         
+                    // Check if ANY member of the loaded group has the Family or Kid flag checked
+                    const groupIsFamily = currentParty.some(g => g.isFamily);
+                    const groupHasKid = currentParty.some(g => g.hasKid);
+
+                    // Build and show the conditional Family container
+                    const familyContainer = document.getElementById('conditional-family-section');
+                    if (groupIsFamily) {
+                        familyContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.family.htmlContent;
+                        familyContainer.classList.remove('hidden');
+                    } else {
+                        familyContainer.innerHTML = '';
+                        familyContainer.classList.add('hidden');
+                    }
+
+                    // Build and show the conditional Kids container
+                    const kidsContainer = document.getElementById('conditional-kids-section');
+                    if (groupHasKid) {
+                        kidsContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.kids.htmlContent;
+                        kidsContainer.classList.remove('hidden');
+                    } else {
+                        kidsContainer.innerHTML = '';
+                        kidsContainer.classList.add('hidden');
+                    }
+
                     document.getElementById('step-find').classList.add('hidden');
                     document.getElementById('wedding-nav').classList.remove('hidden');
                     switchTab('about');
@@ -1082,7 +1131,6 @@
                 const container = document.getElementById('guest-list-container');
                 container.innerHTML = ''; 
                 
-                // Clear the song input from previous lookups
                 document.getElementById('rsvp-song-recommendation').value = '';
         
                 party.forEach(guest => {
@@ -1116,6 +1164,10 @@
 
                 document.getElementById('step-find').classList.remove('hidden');
                 document.getElementById('find-error').classList.add('hidden');
+                
+                // Clear out the conditional content safely upon exit
+                document.getElementById('conditional-family-section').innerHTML = '';
+                document.getElementById('conditional-kids-section').innerHTML = '';
             }
         
             function submitRSVP(event) {
@@ -1128,11 +1180,10 @@
                     if (statusElement) {
                         const status = statusElement.value;
                         
-                        // Formulate submission data packet structure mapping precisely out to Apps Script endpoints
                         const submissionPayload = { 
                             name: guest.name, 
                             status: status,
-                            song: songInput // Transmission item maps toward Column G targets inside endpoint scripts
+                            song: songInput
                         };
         
                         fetch(APPS_SCRIPT_WEBAPP_URL, {
