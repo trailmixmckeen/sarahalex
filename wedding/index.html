@@ -598,6 +598,48 @@
                 background-color: #ffffff;
                 transform: scale(1.15);
             }
+
+            .search-results-dropdown {
+                background: #ffffff;
+                border: var(--border-thick);
+                border-top: none;
+                margin-top: -3px; /* Seamless fit against input box */
+                max-height: 220px;
+                overflow-y: auto;
+                position: relative;
+                z-index: 100;
+            }
+
+            .search-result-item {
+                padding: 12px 14px;
+                cursor: pointer;
+                font-family: var(--primary-font);
+                font-size: 0.95rem;
+                border-bottom: 1px dashed #dddddd;
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+            }
+
+            .search-result-item:last-child {
+                border-bottom: none;
+            }
+
+            .search-result-item:hover {
+                background-color: var(--hinge-pink-accent);
+            }
+
+            .search-result-title {
+                font-weight: 700;
+                color: var(--text-color);
+            }
+
+            .search-result-artist {
+                font-size: 0.8rem;
+                color: #555555;
+                margin-top: 2px;
+            }
+
         </style>
     </head>
     
@@ -931,8 +973,15 @@
                     <div class="additional-rsvp-fields">
                         <h3 class="section-title">Leave a song recommendation</h3>
                         <p style="margin-bottom: 12px; font-size: 0.95rem; color: #555555;">What track is guaranteed to get you out on the wedding dance floor?</p>
-                        <div class="input-group" style="margin: 10px 0 0 0;">
-                            <input type="text" id="rsvp-song-recommendation" placeholder="Song Title - Artist Name">
+    
+                        <div class="input-group" style="margin: 10px 0 0 0; position: relative;">
+                            <input type="text" id="rsvp-song-search" placeholder="Search for song title or artist..." autocomplete="off" oninput="searchAppleMusic()">
+        
+                            <div id="song-search-results" class="search-results-dropdown hidden"></div>
+        
+                            <input type="hidden" id="selected-song-title">
+                            <input type="hidden" id="selected-song-artist">
+                            <input type="hidden" id="selected-song-link">
                         </div>
                     </div>
 
@@ -1164,46 +1213,120 @@
 
                 document.getElementById('step-find').classList.remove('hidden');
                 document.getElementById('find-error').classList.add('hidden');
-                
-                // Clear out the conditional content safely upon exit
+
                 document.getElementById('conditional-family-section').innerHTML = '';
                 document.getElementById('conditional-kids-section').innerHTML = '';
+                document.getElementById('rsvp-song-search').value = '';
+                document.getElementById('selected-song-title').value = '';
+                document.getElementById('selected-song-artist').value = '';
+                document.getElementById('selected-song-link').value = '';
+
             }
-        
+            
+            let appleMusicDebounceTimeout;
+
+            function searchAppleMusic() {
+                const query = document.getElementById('rsvp-song-search').value.trim();
+                const resultsContainer = document.getElementById('song-search-results');
+
+                clearTimeout(appleMusicDebounceTimeout);
+    
+                if (query.length < 2) {
+                    resultsContainer.innerHTML = '';
+                    resultsContainer.classList.add('hidden');
+                    return;
+                }
+
+                appleMusicDebounceTimeout = setTimeout(async () => {
+                    try {
+                        const url = `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&limit=5`;
+                        const response = await fetch(url);
+                        const data = await response.json();
+            
+                        resultsContainer.innerHTML = '';
+            
+                        if (data.results && data.results.length > 0) {
+                            data.results.forEach(track => {
+                                const item = document.createElement('div');
+                                item.className = 'search-result-item';
+                                item.innerHTML = `
+                                    <div class="search-result-title">${track.trackName}</div>
+                                    <div class="search-result-artist">${track.artistName} • ${track.collectionName || 'Single'}</div>
+                                `;
+                    
+                                item.onclick = () => selectSong(track.trackName, track.artistName, track.trackViewUrl);
+                                resultsContainer.appendChild(item);
+                            });
+                            resultsContainer.classList.remove('hidden');
+                        } else {
+                            resultsContainer.innerHTML = '<div class="search-result-item" style="cursor:default;">No tracks found. Keep typing to custom request...</div>';
+                            resultsContainer.classList.remove('hidden');
+                        }
+                    } catch (error) {
+                        console.error("Apple Music connection error:", error);
+                    }
+                }, 300);
+            }
+
+            function selectSong(title, artist, url) {
+                document.getElementById('rsvp-song-search').value = `${title} — ${artist}`;
+    
+                document.getElementById('selected-song-title').value = title;
+                document.getElementById('selected-song-artist').value = artist;
+                document.getElementById('selected-song-link').value = url;
+
+            document.getElementById('song-search-results').classList.add('hidden');
+            }
+
+
             function submitRSVP(event) {
                 event.preventDefault();
-                
-                const songInput = document.getElementById('rsvp-song-recommendation').value.trim();
-                
+    
+                const searchBarVal = document.getElementById('rsvp-song-search').value.trim();
+                const title = document.getElementById('selected-song-title').value;
+                const artist = document.getElementById('selected-song-artist').value;
+                const songUrl = document.getElementById('selected-song-link').value;
+    
+                let formattedSongString = '';
+    
+                if (searchBarVal) {
+                    if (title && artist) {
+                        formattedSongString = `${title} — ${artist} (${songUrl})`;
+                    } else {
+                        formattedSongString = searchBarVal;
+                    }
+                }
+    
                 currentParty.forEach((guest) => {
                     const statusElement = document.querySelector(`input[name="guest-${guest.id}"]:checked`);
                     if (statusElement) {
                         const status = statusElement.value;
-                        
+            
                         const submissionPayload = { 
                             name: guest.name, 
                             status: status,
-                            song: songInput
+                            songRecommendation: formattedSongString
                         };
-        
+            
                         fetch(APPS_SCRIPT_WEBAPP_URL, {
                             method: 'POST',
                             mode: 'no-cors',
                             headers: { 'Content-Type': 'text/plain' },
                             body: JSON.stringify(submissionPayload)
                         })
-                        .then(() => console.log(`Data recorded for ${guest.name}`))
-                        .catch(err => console.error(`Failed transmission:`, err));
-        
+                        .then(() => console.log(`Data successfully transmitted for: ${guest.name}`))
+                        .catch(err => console.error(`Network transmission failure:`, err));
+            
                         guest.hasRSVPd = true;
                     }
                 });
-        
+
                 document.getElementById('rsvp-title').innerText = "Thanks! Your response is logged.";
                 document.getElementById('rsvp-subtitle').innerText = "We have received your details on the master spreadsheet file.";
                 document.getElementById('rsvp-form').classList.add('hidden');
                 document.getElementById('rsvp-locked-message').classList.remove('hidden');
             }
+
 
             document.addEventListener("DOMContentLoaded", () => {
                 const carousels = document.querySelectorAll('.carousel-wrapper');
