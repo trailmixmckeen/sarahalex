@@ -344,6 +344,13 @@
                 accent-color: var(--hinge-purple);
                 transform: scale(1.1);
             }
+
+            .additional-rsvp-fields {
+                margin-top: 20px;
+                padding-top: 20px;
+                border-top: 1px dashed #111111;
+                text-align: left;
+            }
     
             .details-section {
                 text-align: left;
@@ -620,7 +627,6 @@
     
         <div class="hinge-container">
             
-            <!-- ENTRY PAGE: GATEWAY -->
             <div id="step-find">
                 <h1 class="form-header">Your name is</h1>
                 <div class="sub-header-line">Needed to find your invitation.</div>
@@ -633,7 +639,6 @@
                 <div id="find-error" class="error-msg hidden">Error: Name not found. Please double-check spelling.</div>
             </div>
     
-            <!-- TAB A: ABOUT US -->
             <div id="tab-about" class="hidden">
                 
                 <div class="chat-container">
@@ -889,7 +894,6 @@
                 </div>
             </div>
     
-            <!-- TAB B: DETAILS -->
             <div id="tab-details" class="hidden">
                 <h1 class="form-header">The details</h1>
                 <div class="sub-header-line">Times, locations, and schedules for our big celebration.</div>
@@ -914,13 +918,21 @@
                 </div>
             </div>
 
-            <!-- TAB C: RSVP -->
             <div id="tab-rsvp" class="hidden">
                 <h1 class="form-header" id="rsvp-title">Let's chat about</h1>
                 <div class="sub-header-line" id="rsvp-subtitle">You and anyone with you.</div>
                 
                 <form id="rsvp-form" onsubmit="submitRSVP(event)">
                     <div id="guest-list-container"></div>
+                    
+                    <div class="additional-rsvp-fields">
+                        <h3 class="section-title">Leave a song recommendation</h3>
+                        <p style="margin-bottom: 12px; font-size: 0.95rem; color: #555555;">What track is guaranteed to get you out on the wedding dance floor?</p>
+                        <div class="input-group" style="margin: 10px 0 0 0;">
+                            <input type="text" id="rsvp-song-recommendation" placeholder="Song Title - Artist Name">
+                        </div>
+                    </div>
+
                     <div class="btn-center-wrapper" style="flex-direction: column; align-items: center;">
                         <button type="submit" class="action-btn lowercase">submit</button>
                         <button type="button" class="not-me-btn" onclick="resetSearchForm()">that's not me / lock site</button>
@@ -937,7 +949,6 @@
                 </div>
             </div>
     
-            <!-- TAB D: FAQ -->
             <div id="tab-faq" class="hidden">
                 <h1 class="form-header">Frequently asked questions</h1>
                 <div class="sub-header-line">Answers to help you coordinate your plans.</div>
@@ -977,13 +988,22 @@
                             const cleanName = columns[1].replace(/^"|"$/g, '').trim();
                             const cleanStatus = columns[2].replace(/^"|"$/g, '').trim();
                             const cleanParty = columns[3].replace(/^"|"$/g, '').trim();
+                            
+                            // Parse extra helper flags securely out of Column E & F
+                            const rawFamily = columns[4] ? columns[4].replace(/^"|"$/g, '').trim().toLowerCase() : '';
+                            const rawKid = columns[5] ? columns[5].replace(/^"|"$/g, '').trim().toLowerCase() : '';
+
+                            const isFamily = (rawFamily === 'true' || rawFamily === 'TRUE' || rawFamily === '1' || rawFamily === 'x');
+                            const hasKid = (rawKid === 'true' || rawKid === 'TRUE' || rawKid === '1' || rawKid === 'x');
         
                             if (cleanName) {
                                 parsedDatabase.push({
                                     id: i, 
                                     name: cleanName,
                                     partyID: cleanParty || `row-${i}`,
-                                    hasRSVPd: cleanStatus.length > 0
+                                    hasRSVPd: cleanStatus.length > 0,
+                                    isFamily: isFamily,
+                                    hasKid: hasKid
                                 });
                             }
                         }
@@ -1061,6 +1081,9 @@
             function setupRSVPForm(party) {
                 const container = document.getElementById('guest-list-container');
                 container.innerHTML = ''; 
+                
+                // Clear the song input from previous lookups
+                document.getElementById('rsvp-song-recommendation').value = '';
         
                 party.forEach(guest => {
                     const row = document.createElement('div');
@@ -1098,16 +1121,25 @@
             function submitRSVP(event) {
                 event.preventDefault();
                 
+                const songInput = document.getElementById('rsvp-song-recommendation').value.trim();
+                
                 currentParty.forEach((guest) => {
                     const statusElement = document.querySelector(`input[name="guest-${guest.id}"]:checked`);
                     if (statusElement) {
                         const status = statusElement.value;
+                        
+                        // Formulate submission data packet structure mapping precisely out to Apps Script endpoints
+                        const submissionPayload = { 
+                            name: guest.name, 
+                            status: status,
+                            song: songInput // Transmission item maps toward Column G targets inside endpoint scripts
+                        };
         
                         fetch(APPS_SCRIPT_WEBAPP_URL, {
                             method: 'POST',
                             mode: 'no-cors',
                             headers: { 'Content-Type': 'text/plain' },
-                            body: JSON.stringify({ name: guest.name, status: status })
+                            body: JSON.stringify(submissionPayload)
                         })
                         .then(() => console.log(`Data recorded for ${guest.name}`))
                         .catch(err => console.error(`Failed transmission:`, err));
@@ -1130,7 +1162,6 @@
                     const slides = carousel.querySelectorAll('.carousel-slide');
                     const totalSlides = slides.length;
                     
-                    // If it's a single image card, no navigation is needed
                     if (totalSlides <= 1) return;
             
                     const prevBtn = carousel.querySelector('.carousel-arrow.prev');
@@ -1140,10 +1171,8 @@
                     let currentIndex = 0;
             
                     function updateCarousel() {
-                        // Move slides
                         slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
                         
-                        // Update dots active state if dots exist
                         dots.forEach((dot, index) => {
                             if (index === currentIndex) {
                                 dot.classList.add('active-dot');
@@ -1154,16 +1183,15 @@
                     }
             
                     function nextSlide() {
-                        currentIndex = (currentIndex + 1) % totalSlides; // Seamless forward loop
+                        currentIndex = (currentIndex + 1) % totalSlides;
                         updateCarousel();
                     }
             
                     function prevSlide() {
-                        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; // Seamless backward loop
+                        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
                         updateCarousel();
                     }
             
-                    // Attach event listeners dynamically to this carousel's elements
                     if (nextBtn) nextBtn.addEventListener('click', nextSlide);
                     if (prevBtn) prevBtn.addEventListener('click', prevSlide);
             
