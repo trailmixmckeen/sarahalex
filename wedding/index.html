@@ -603,11 +603,13 @@
                 background: #ffffff;
                 border: var(--border-thick);
                 border-top: none;
-                margin-top: -3px; /* Seamless fit against input box */
+                margin-top: -3px;
                 max-height: 220px;
                 overflow-y: auto;
-                position: relative;
+                position: absolute;
+                width: 100%;
                 z-index: 100;
+                box-sizing: border-box;
             }
 
             .search-result-item {
@@ -1021,9 +1023,6 @@
             const PUBLIC_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSP1U6ncH7fCFo4UsSKyxDQWFiNollafgKLsjrbuCdbnSE4TImVt5kW8TuyNBK-GKiq13Lyd9YF2OO/pub?output=csv";
             const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxnfHhoPz67zfB5vBqG-St4dxAoc54-ofvEkqeccFfPGsSIvW5uBUgE-rP0MQBV29rA/exec";
         
-            // ==========================================
-            // EDIT YOUR CONDITIONAL TEXT HERE EASY
-            // ==========================================
             const CONDITIONAL_SECTIONS_CONFIG = {
                 family: {
                     htmlContent: `
@@ -1042,11 +1041,10 @@
                     `
                 }
             };
-            // ==========================================
 
             let guestDatabase = [];
             let currentParty = [];
-            let currentSlideIndex = 0;
+            let appleMusicDebounceTimeout;
         
             async function loadGuestDatabase() {
                 try {
@@ -1067,8 +1065,8 @@
                             const rawFamily = columns[4] ? columns[4].replace(/^"|"$/g, '').trim().toLowerCase() : '';
                             const rawKid = columns[5] ? columns[5].replace(/^"|"$/g, '').trim().toLowerCase() : '';
 
-                            const isFamily = (rawFamily === 'true' || rawFamily === 'true' || rawFamily === '1' || rawFamily === 'x');
-                            const hasKid = (rawKid === 'true' || rawKid === 'true' || rawKid === '1' || rawKid === 'x');
+                            const isFamily = (rawFamily === 'true' || rawFamily === '1' || rawFamily === 'x');
+                            const hasKid = (rawKid === 'true' || rawKid === '1' || rawKid === 'x');
         
                             if (cleanName) {
                                 parsedDatabase.push({
@@ -1106,11 +1104,9 @@
                     errorDiv.classList.add('hidden');
                     currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
         
-                    // Check if ANY member of the loaded group has the Family or Kid flag checked
                     const groupIsFamily = currentParty.some(g => g.isFamily);
                     const groupHasKid = currentParty.some(g => g.hasKid);
 
-                    // Build and show the conditional Family container
                     const familyContainer = document.getElementById('conditional-family-section');
                     if (groupIsFamily) {
                         familyContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.family.htmlContent;
@@ -1120,7 +1116,6 @@
                         familyContainer.classList.add('hidden');
                     }
 
-                    // Build and show the conditional Kids container
                     const kidsContainer = document.getElementById('conditional-kids-section');
                     if (groupHasKid) {
                         kidsContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.kids.htmlContent;
@@ -1179,8 +1174,6 @@
             function setupRSVPForm(party) {
                 const container = document.getElementById('guest-list-container');
                 container.innerHTML = ''; 
-                
-                document.getElementById('rsvp-song-recommendation').value = '';
         
                 party.forEach(guest => {
                     const row = document.createElement('div');
@@ -1216,14 +1209,15 @@
 
                 document.getElementById('conditional-family-section').innerHTML = '';
                 document.getElementById('conditional-kids-section').innerHTML = '';
+                
+                // Clear song searches cleanly
                 document.getElementById('rsvp-song-search').value = '';
                 document.getElementById('selected-song-title').value = '';
                 document.getElementById('selected-song-artist').value = '';
                 document.getElementById('selected-song-link').value = '';
-
+                document.getElementById('song-search-results').innerHTML = '';
+                document.getElementById('song-search-results').classList.add('hidden');
             }
-            
-            let appleMusicDebounceTimeout;
 
             function searchAppleMusic() {
                 const query = document.getElementById('rsvp-song-search').value.trim();
@@ -1275,9 +1269,8 @@
                 document.getElementById('selected-song-artist').value = artist;
                 document.getElementById('selected-song-link').value = url;
 
-            document.getElementById('song-search-results').classList.add('hidden');
+                document.getElementById('song-search-results').classList.add('hidden');
             }
-
 
             function submitRSVP(event) {
                 event.preventDefault();
@@ -1326,7 +1319,6 @@
                 document.getElementById('rsvp-form').classList.add('hidden');
                 document.getElementById('rsvp-locked-message').classList.remove('hidden');
             }
-
 
             document.addEventListener("DOMContentLoaded", () => {
                 const carousels = document.querySelectorAll('.carousel-wrapper');
@@ -1377,7 +1369,6 @@
                     });
                 });
             });
-            
         </script>
     </body>
 </html>
