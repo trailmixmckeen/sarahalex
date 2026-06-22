@@ -419,14 +419,14 @@
     
         <script>
 
-            // --- DATA INGESTION ---
+            // --- DATA INGESTION LINKS ---
             const PUBLIC_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSP1U6ncH7fCFo4UsSKyxDQWFiNollafgKLsjrbuCdbnSE4TImVt5kW8TuyNBK-GKiq13Lyd9YF2OO/pub?output=csv";
             const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxnfHhoPz67zfB5vBqG-St4dxAoc54-ofvEkqeccFfPGsSIvW5uBUgE-rP0MQBV29rA/exec";
         
             let guestDatabase = [];
             let currentParty = [];
         
-            // LOAD GUEST DATABASE
+            // --- LOAD GUEST DATABASE ---
             async function loadGuestDatabase() {
                 try {
                     const response = await fetch(PUBLIC_SHEET_CSV_URL);
@@ -467,7 +467,8 @@
                     findInvitation();
                 }
             }
-        
+
+            // --- INVITATION SEARCH ---        
             function findInvitation() {
                 const searchInput = document.getElementById('search-name').value.trim().toLowerCase();
                 const errorDiv = document.getElementById('find-error');
@@ -479,7 +480,6 @@
                     currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
         
                     if (foundGuest.hasRSVPd) {
-                        // IF GUEST FOUND TEXT
                         document.getElementById('details-title').innerText = "Two truths and please (keep the) lie";
                         document.getElementById('confirmation-subtitle').innerText = "Looks like you have already submitted your response! If your plans changed, contact Alex directly. Please continue to keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.";
                         document.getElementById('step-find').classList.add('hidden');
@@ -492,6 +492,7 @@
                 }
             }
         
+            // --- RSVP PAGE ---
             function setupRSVPForm(party) {
                 const container = document.getElementById('guest-list-container');
                 container.innerHTML = ''; 
@@ -520,6 +521,7 @@
                 document.getElementById('step-rsvp').classList.remove('hidden');
             }
         
+            // --- RSVP ENGINE ---
             function resetSearchForm() {
                 document.getElementById('search-name').value = '';
                 document.getElementById('step-rsvp').classList.add('hidden');
@@ -527,6 +529,7 @@
                 document.getElementById('find-error').classList.add('hidden');
             }
         
+            // --- RSVP SUBMISSION ---
             function submitRSVP(event) {
                 event.preventDefault();
                 
@@ -534,8 +537,7 @@
                     const statusElement = document.querySelector(`input[name="guest-${guest.id}"]:checked`);
                     if (statusElement) {
                         const status = statusElement.value;
-        
-                        // Send clean text package to prevent layout adjustments from being broken across environments
+
                         fetch(APPS_SCRIPT_WEBAPP_URL, {
                             method: 'POST',
                             mode: 'no-cors',
@@ -553,8 +555,7 @@
                         guest.hasRSVPd = true;
                     }
                 });
-        
-                // RESET OF FILLER TEXT AFTER SUBMISSION
+
                 document.getElementById('details-title').innerText = "Thanks! Two truths and please lie";
                 document.getElementById('confirmation-subtitle').innerText = "Your details have been saved. Please keep these plans a complete secret from Sarah. It will help if you come up with an excuse for what your plans are that evening so she doesn't get suspicious.";
                 
@@ -562,7 +563,7 @@
                 document.getElementById('step-details').classList.remove('hidden');
             }
     
-            // ADD TO CALENDAR FUNCTIONS
+            // --- ADD TO CALENDAR - CONSTANT ---
             const eventConfig = {
                 title: "The Proposal Afters (Surprise!)",
                 location: "Haswell Green's, 240 W 52nd St, New York, NY 10019",
@@ -575,11 +576,13 @@
                          "We have a space on the 2nd floor with drinks and food!"
             };
         
+            // --- ADD TO CALENDAR - GOOGLE ---
             function addGoogleCalendar() {
                 const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventConfig.title)}&dates=${eventConfig.start}/${eventConfig.end}&details=${encodeURIComponent(eventConfig.details)}&location=${encodeURIComponent(eventConfig.location)}&sf=true&output=xml`;
                 window.open(googleCalendarUrl, '_blank');
             }
-        
+
+            // --- ADD TO CALENDAR - iCAL ---        
             function buildIcsDownload() {
                 const icsData = [
                     "BEGIN:VCALENDAR",
