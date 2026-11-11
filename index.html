@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Sarah & Alex — The Wedding</title>
+        <link rel="icon" type="image/png" href="../favicon.png">
+    
+        <style>
+            @font-face {
+                font-family: 'Modern Era';
+                src: local('Modern Era'), local('ModernEra'), sans-serif;
+            }
+            @font-face {
+                font-family: 'Tiempos';
+                src: local('Tiempos Text'), local('TiemposHeadline'), serif;
+            }
+    
+            :root {
+                --primary-font: 'Modern Era', 'Helvetica Neue', sans-serif;
+                --secondary-font: 'Tiempos', 'Georgia', serif;
+                --bg-color: #ededed; 
+                --text-color: #111111;
+                --border-thick: 3px solid #111111; 
+                --hinge-purple: #54345c; 
+                --hinge-grey-bubble: #e8e8e8;
+                --hinge-pink-accent: #f2e3e1;
+            }
+    
+            body {
+                font-family: var(--secondary-font);
+                background-color: var(--bg-color);
+                color: var(--text-color);
+                margin: 0;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                min-height: 100vh;
+                box-sizing: border-box;
+            }
+    
+            .header-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+                max-width: 650px; 
+                margin: 50px 0 30px 0;
+            }
+    
+            .header-side {
+                font-family: var(--primary-font);
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                flex: 1;
+            }
+    
+            .header-side-left {
+                text-align: center; 
+                padding-right: 10px;
+            }
+    
+            .header-side-right {
+                text-align: center; 
+                padding-left: 10px;
+            }
+    
+            .header-side .main-txt {
+                font-size: 0.9rem;
+                font-weight: 700;
+                margin-bottom: 2px;
+            }
+    
+            .header-side .sub-txt {
+                font-size: 0.7rem;
+                font-weight: 400;
+                color: #555;
+            }
+    
+            .logo-center {
+                text-align: center;
+                padding: 0 10px;
+            }
+    
+            .logo-center img {
+                max-height: 155px; 
+                width: auto;
+                display: block;
+            }
+    
+            @media (max-width: 650px) {
+                .header-container {
+                    flex-direction: column;
+                    gap: 15px;
+                    margin: 20px 0;
+                }
+            }
+
+            .nav-menu {
+                display: flex;
+                justify-content: center;
+                gap: 12px;
+                width: 100%;
+                max-width: 650px;
+                margin-bottom: 30px;
+                flex-wrap: wrap;
+            }
+
+            .nav-tab {
+                font-family: var(--primary-font);
+                font-size: 0.9rem;
+                font-weight: 700;
+                text-transform: lowercase;
+                background: none;
+                border: none;
+                color: #777777;
+                padding: 6px 14px;
+                cursor: pointer;
+                border-bottom: 2px solid transparent;
+                transition: color 0.15s, border-color 0.15s;
+            }
+
+            .nav-tab:hover {
+                color: var(--text-color);
+            }
+
+            .nav-tab.active-tab {
+                color: var(--hinge-purple);
+                border-bottom: 2px solid var(--hinge-purple);
+            }
+    
+            .hinge-container {
+                background: #ffffff;
+                padding: 50px; 
+                border: var(--border-thick);
+                border-radius: 0px; 
+                box-shadow: 6px 6px 0px #111111; 
+                max-width: 650px; 
+                width: 100%;
+                box-sizing: border-box;
+                margin-bottom: 50px;
+            }
+            
+            @media (max-width: 500px) {
+                .hinge-container {
+                    padding: 25px 20px;
+                }
+            }
+    
+            h1.form-header, h2.form-header { 
+                font-family: var(--primary-font);
+                font-weight: 700;
+                font-size: 1.5rem; 
+                margin-bottom: 10px; 
+                text-align: left;
+                text-transform: none; 
+                letter-spacing: 0;
+                margin-top: 0;
+            }
+    
+            .sub-header-line {
+                font-family: var(--secondary-font);
+                font-size: 1.1rem;
+                color: #222;
+                text-align: left;
+                margin-bottom: 35px; 
+                margin-top: 0;
+                line-height: 1.6;
+            }
+    
+            h3.section-title {
+                font-family: var(--primary-font);
+                font-weight: 700;
+                font-size: 1.1rem;
+                text-transform: none; 
+                margin-top: 0;
+                margin-bottom: 8px;
+            }
+    
+            .address-row-wrapper {
+                display: flex;
+                align-items: flex-start;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+    
+            .pin-drop-icon {
+                width: 12px;
+                height: 12px;
+                border: 2px solid #111111;
+                border-radius: 50% 50% 50% 0;
+                transform: rotate(-45deg);
+                display: inline-block;
+                margin-top: 5px; 
+                flex-shrink: 0;
+                position: relative;
+            }
+            
+            .pin-drop-icon::after {
+                content: '';
+                width: 4px;
+                height: 4px;
+                background: #111111;
+                position: absolute;
+                border-radius: 50%;
+                top: 4px;
+                left: 4px;
+            }
+    
+            p {
+                font-family: var(--secondary-font);
+                font-size: 1.05rem;
+                line-height: 1.6;
+                color: #222;
+                margin-bottom: 25px;
+            }
+    
+            .input-group {
+                margin: 25px 0;
+                text-align: left;
+            }
+    
+            input[type="text"] {
+                width: 100%;
+                padding: 14px;
+                border: var(--border-thick);
+                border-radius: 0px;
+                font-size: 1rem;
+                box-sizing: border-box;
+                font-family: var(--primary-font);
+                text-transform: none; 
+                letter-spacing: 0em;
+            }
+    
+            input[type="text"]:focus {
+                outline: none;
+                background-color: #fdfdfd;
+            }
+    
+            .btn-center-wrapper {
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin-top: 20px;
+            }
+    
+            button.action-btn {
+                background-color: var(--hinge-purple);
+                color: #ffffff;
+                border: none;
+                border-radius: 30px;
+                padding: 14px 45px; 
+                font-size: 0.95rem;
+                font-weight: 700;
+                font-family: var(--primary-font);
+                cursor: pointer;
+                width: auto; 
+                text-align: center;
+                transition: background-color 0.15s ease, transform 0.1s ease;
+                box-sizing: border-box;
+            }
+    
+            button.action-btn.lowercase {
+                text-transform: lowercase;
+            }
+    
+            button.action-btn:hover {
+                background-color: #402647;
+            }
+    
+            button.action-btn:active {
+                transform: scale(0.98);
+            }
+    
+            .not-me-btn {
+                background: none;
+                border: none;
+                color: #555555;
+                font-family: var(--primary-font);
+                font-size: 0.85rem;
+                font-weight: 700;
+                text-transform: lowercase;
+                text-decoration: underline;
+                margin-top: 15px;
+                cursor: pointer;
+                width: auto;
+            }
+            .not-me-btn:hover {
+                color: #111111;
+                background: none;
+            }
+    
+            .hidden {
+                display: none !important;
+            }
+    
+            .error-msg {
+                font-family: var(--primary-font);
+                text-transform: uppercase;
+                font-size: 0.8rem;
+                font-weight: 700;
+                color: #d93025; 
+                padding: 0;
+                margin-top: 20px;
+                letter-spacing: 0.05em;
+                text-align: center;
+            }
+    
+            .guest-row {
+                padding: 22px 0;
+                text-align: left;
+            }
+            
+            .guest-row:first-child {
+                border-top: var(--border-thick); 
+            }
+    
+            .guest-name {
+                font-family: var(--primary-font);
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 1.05rem;
+                margin-bottom: 12px;
+                letter-spacing: 0.03em;
+            }
+    
+            .radio-group {
+                display: flex;
+                flex-direction: column; 
+                gap: 12px;
+            }
+    
+            .radio-group label {
+                font-family: var(--secondary-font);
+                font-size: 1rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+    
+            .radio-group input[type="radio"] {
+                accent-color: var(--hinge-purple);
+                transform: scale(1.1);
+            }
+
+            .additional-rsvp-fields {
+                margin-top: 20px;
+                padding-top: 20px;
+                border-top: 1px dashed #111111;
+                text-align: left;
+            }
+    
+            .details-section {
+                text-align: left;
+                margin-top: 30px;
+                padding-top: 25px;
+                border-top: 1px dashed #111111;
+            }
+    
+            .details-section:first-of-type {
+                border-top: none;
+                padding-top: 0;
+            }
+
+            .timeline {
+                position: relative;
+                padding-left: 30px;
+                margin: 25px 0 10px 0;
+                border-left: 2px solid #111111;
+                text-align: left;
+            }
+
+            .timeline-event {
+                position: relative;
+                margin-bottom: 40px;
+            }
+
+            .timeline-event:last-child {
+                margin-bottom: 0;
+            }
+
+            .timeline-dot {
+                position: absolute;
+                left: -37px; 
+                top: 5px;
+                width: 12px;
+                height: 12px;
+                background: var(--bg-color);
+                border: 2px solid #111111;
+                border-radius: 50%;
+                box-sizing: border-box;
+            }
+
+            .timeline-time {
+                font-family: var(--primary-font);
+                font-weight: 700;
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: var(--hinge-purple);
+                margin-bottom: 5px;
+            }
+
+            .chat-container {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
+                margin: 20px 0;
+                box-sizing: border-box;
+            }
+
+            .chat-date {
+                font-family: var(--primary-font);
+                font-size: 0.85rem;
+                color: #666666;
+                text-align: center;
+                width: 100%;
+                margin: 10px 0;
+                font-weight: 500;
+            }
+
+            .chat-row {
+                display: flex;
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .chat-row.left {
+                justify-content: flex-start;
+            }
+
+            .chat-row.right {
+                justify-content: flex-end;
+            }
+
+            .chat-row.center {
+                justify-content: center;
+            }
+
+            .bubble-left {
+                background-color: var(--hinge-grey-bubble);
+                color: #111111;
+                font-family: var(--primary-font);
+                font-size: 1.05rem;
+                padding: 14px 20px;
+                border-radius: 18px 18px 18px 4px;
+                max-width: 75%;
+                line-height: 1.4;
+                text-align: left;
+                word-wrap: break-word;
+            }
+
+            .bubble-right {
+                background-color: var(--hinge-purple);
+                color: #ffffff;
+                font-family: var(--primary-font);
+                font-size: 1.05rem;
+                padding: 14px 20px;
+                border-radius: 18px 18px 4px 18px;
+                max-width: 75%;
+                line-height: 1.4;
+                text-align: left;
+                word-wrap: break-word;
+            }
+
+            .bubble-system {
+                background-color: var(--hinge-grey-bubble);
+                color: #111111;
+                font-family: var(--primary-font);
+                font-size: 1rem;
+                font-style: italic;
+                padding: 10px 24px;
+                border-radius: 25px;
+                max-width: 85%;
+                text-align: center;
+            }
+
+            .hinge-prompt-card {
+                background: #ffffff;
+                border: 1px solid #dddddd;
+                border-radius: 16px;
+                max-width: 80%;
+                width: 100%;
+                overflow: hidden;
+                box-shadow: 0px 2px 8px rgba(0,0,0,0.04);
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+            }
+
+            .prompt-header-text {
+                font-family: var(--primary-font);
+                font-weight: 700;
+                font-size: 1.1rem;
+                padding: 20px 20px 15px 20px;
+                line-height: 1.3;
+                color: #111111;
+            }
+
+            .prompt-main-image {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+
+            .prompt-pink-like-tag {
+                background-color: var(--hinge-pink-accent);
+                color: #111111;
+                font-family: var(--primary-font);
+                font-size: 1rem;
+                font-style: italic;
+                padding: 12px 20px;
+                border-radius: 0 0 16px 16px;
+                text-align: left;
+            }
+
+            .carousel-wrapper {
+                position: relative;
+                width: 100%;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .carousel-slides {
+                display: flex;
+                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+                width: 100%;
+            }
+
+            .carousel-slide {
+                min-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .carousel-arrow {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(17, 17, 17, 0.45);
+                color: #ffffff;
+                border: none;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                font-size: 1.4rem;
+                font-weight: 400;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                user-select: none;
+                transition: background-color 0.15s ease;
+                z-index: 10;
+                font-family: Arial, sans-serif;
+            }
+
+            .carousel-arrow:hover {
+                background: rgba(17, 17, 17, 0.75);
+            }
+
+            .carousel-arrow.prev {
+                left: 15px;
+            }
+
+            .carousel-arrow.next {
+                right: 15px;
+            }
+
+            .carousel-indicators {
+                position: absolute;
+                bottom: 15px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 8px;
+                z-index: 10;
+                background: rgba(0, 0, 0, 0.25);
+                padding: 6px 12px;
+                border-radius: 20px;
+            }
+
+            .indicator-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, 0.45);
+                border: none;
+                padding: 0;
+                cursor: pointer;
+                transition: background-color 0.2s ease, transform 0.2s ease;
+            }
+
+            .indicator-dot.active-dot {
+                background-color: #ffffff;
+                transform: scale(1.15);
+            }
+
+            .search-results-dropdown {
+                background: #ffffff;
+                border: var(--border-thick);
+                border-top: none;
+                margin-top: -3px;
+                max-height: 220px;
+                overflow-y: auto;
+                position: absolute;
+                width: 100%;
+                z-index: 100;
+                box-sizing: border-box;
+            }
+
+            .search-result-item {
+                padding: 12px 14px;
+                cursor: pointer;
+                font-family: var(--primary-font);
+                font-size: 0.95rem;
+                border-bottom: 1px dashed #dddddd;
+                display: flex;
+                flex-direction: column;
+                text-align: left;
+            }
+
+            .search-result-item:last-child {
+                border-bottom: none;
+            }
+
+            .search-result-item:hover {
+                background-color: var(--hinge-pink-accent);
+            }
+
+            .search-result-title {
+                font-weight: 700;
+                color: var(--text-color);
+            }
+
+            .search-result-artist {
+                font-size: 0.8rem;
+                color: #555555;
+                margin-top: 2px;
+            }
+
+        </style>
+    </head>
+    
+    <body>
+        <div class="header-container">
+            <div class="header-side header-side-left">
+                <div class="main-txt">The Wedding</div>
+                <div class="sub-txt">Weekend</div>
+            </div>
+        
+            <div class="logo-center">
+                <img src="../SF-AM_Vert_Transparent.png" alt="SF-AM Logo">
+            </div>
+        
+            <div class="header-side header-side-right">
+                <div class="main-txt">Saturday</div>
+                <div class="sub-txt">Aug 8th, 2026</div>
+            </div>
+        </div>
+
+        <nav id="wedding-nav" class="nav-menu hidden">
+            <button class="nav-tab active-tab" onclick="switchTab('about')">about us</button>
+            <button class="nav-tab" onclick="switchTab('details')">details</button>
+            <button class="nav-tab" onclick="switchTab('rsvp')">rsvp</button>
+            <button class="nav-tab" onclick="switchTab('faq')">faq</button>
+        </nav>
+    
+        <div class="hinge-container">
+            
+            <div id="step-find">
+                <h1 class="form-header">Your name is</h1>
+                <div class="sub-header-line">How we'll find your invitation.</div>
+                <div class="input-group">
+                    <input type="text" id="search-name" placeholder="First & Last Name" autocomplete="name" onkeypress="handleKeyPress(event)">
+                </div>
+                <div class="btn-center-wrapper">
+                    <button class="action-btn lowercase" onclick="findInvitation()">search</button>
+                </div>
+                <div id="find-error" class="error-msg hidden">Error: Invitation not found. Please double-check spelling.</div>
+            </div>
+    
+            <div id="tab-about" class="hidden">
+                
+                <div class="chat-container">
+                    
+                    <div class="chat-date">Apr 2022</div>
+
+                    <div class="chat-row center">
+                        <div class="bubble-system">Started the chat</div>
+                    </div>
+
+                    <div class="chat-row right">
+                        <div class="bubble-right">Sarah and Alex match on the dating app Hinge and start talking. Due to their conflicting travel schedules... their conversation ends without meeting.</div>
+                    </div>
+
+                    <div class="chat-date">Jul 2023</div>
+
+                    <div class="chat-row center">
+                        <div class="bubble-system">Started the chat (again)</div>
+                    </div>
+                    
+                    <div class="chat-row left">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">Our first dates</div>
+                            
+                            <div class="carousel-wrapper">
+                                <button type="button" class="carousel-arrow prev">&#10094;</button>
+                                <button type="button" class="carousel-arrow next">&#10095;</button>
+                                
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="images/20230718.jpg" alt="First Date" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="images/20230803.jpg" alt="Second Date" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="images/20230905.jpg" alt="Goodbye Party" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="images/20231015.jpg" alt="Pumpkin Picking" class="prompt-main-image">
+                                    </div>
+                                </div>
+                                
+                                <div class="carousel-indicators">
+                                    <button type="button" class="indicator-dot active-dot"></button>
+                                    <button type="button" class="indicator-dot"></button>
+                                    <button type="button" class="indicator-dot"></button>
+                                    <button type="button" class="indicator-dot"></button>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Sarah and Alex match again. As it starts to unfold they still won't meet due to Alex's travel schedule... a 30-minute rain delay causes him to miss his connecting flight. That leads to their spontaneous first date where the two of them closed the bar down, kept their teddy bear shaped cocktail glass, and began their love story.</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-date">Aug 2023</div>
+                    
+                    <div class="chat-row right">
+                        <div class="bubble-right">Alex survives the "two-date rule" and gets his number saved in Sarah's phone.</div>
+                    </div>
+
+                    <div class="chat-date">Sept 2023</div>
+
+                    <div class="chat-row left">
+                        <div class="bubble-left">Sarah and Alex are officially together.</div>
+                    </div>
+
+                    <div class="chat-date">Apr 2024</div>
+                    
+                    <div class="chat-row right">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">I'm convinced that</div>
+                            
+                            <div class="carousel-wrapper">
+                                <button type="button" class="carousel-arrow prev">&#10094;</button>
+                                <button type="button" class="carousel-arrow next">&#10095;</button>
+                                
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="images/20240428-2.jpeg" alt="Emma 1" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="images/20240428-1.jpg" alt="Emma 2" class="prompt-main-image">
+                                    </div>
+                                </div>
+                                
+                                <div class="carousel-indicators">
+                                    <button type="button" class="indicator-dot active-dot"></button>
+                                    <button type="button" class="indicator-dot"></button>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Ms. "I'm never getting married" saw her man as a Bridesmaid at the Ithaca College / Penn State wedding of Emma and Trevor Reed and became to Ms. "Maybe I'd marry him".</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-date">Sept 2024</div>
+
+                    <div class="chat-row left">
+                        <div class="bubble-left">Sarah moves back into the Upper East Side, coincidentally five blocks from Alex.</div>
+                    </div>
+
+                    <div class="chat-date">Dec 2024</div>
+                    
+                    <div class="chat-row right">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">Best travel stories</div>
+                            
+                            <div class="carousel-wrapper">
+                                <button type="button" class="carousel-arrow prev">&#10094;</button>
+                                <button type="button" class="carousel-arrow next">&#10095;</button>
+                                
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="images/20241221.jpg" alt="Simon Wedding" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="images/20241006.jpg" alt="Vikings Jets" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="images/20241231.jpg" alt="Portugal" class="prompt-main-image">
+                                    </div>
+                                </div>
+                                
+                                <div class="carousel-indicators">
+                                    <button type="button" class="indicator-dot active-dot"></button>
+                                    <button type="button" class="indicator-dot"></button>
+                                    <button type="button" class="indicator-dot"></button>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Sarah and Alex travel across the pond (and more) for Sarah's Groom's Gal responsibilities, later visiting London, Amsterdam, and Portugal. In their first trip to London together, they attended the international NFL game where the Minnesota Vikings beat the New York Jets so badly they fired their head coach shortly after the game.</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-date">Mar 2025</div>
+                    
+                    <div class="chat-row left">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">A random fact we love</div>
+                            
+                            <div class="carousel-wrapper">
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="images/20250323.jpg" alt="Kyle and Matt" class="prompt-main-image">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Sarah and Alex's only mutual friend prior to dating was Kyle Lefkowitz (and her husband Matt), The four are seen here celebrating the wedding of Jamie and Josh DiJohn.</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-date">Aug 2025</div>
+                    
+                    <div class="chat-row right">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">Something that's special to us</div>
+                            
+                            <div class="carousel-wrapper">
+                                <button type="button" class="carousel-arrow prev">&#10094;</button>
+                                <button type="button" class="carousel-arrow next">&#10095;</button>
+                                
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="images/20250802.jpg" alt="Montana 1" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="images/20250801.jpg" alt="Montana 2" class="prompt-main-image">
+                                    </div>
+                                </div>
+                                
+                                <div class="carousel-indicators">
+                                    <button type="button" class="indicator-dot active-dot"></button>
+                                    <button type="button" class="indicator-dot"></button>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Sarah joined Alex for the yearly McKeen pilgrimage to Montana. This is a full circle moment as the flight Alex missed on their first date was for this trip.</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-row left">
+                        <div class="bubble-left">Sarah and Alex (and Loki, Alex's cat) move in together.</div>
+                    </div>
+
+                    <div class="chat-date">Dec 2025</div>
+                    
+                    <div class="chat-row right">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">Green flags she looks for</div>
+                            
+                            <div class="carousel-wrapper">
+                                
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="images/20251227.jpg" alt="Penn State" class="prompt-main-image">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Sarah brings Alex for his first Penn State football game... just not one at Beaver Stadium.</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-row left">
+                        <div class="bubble-left">Ms. "Maybe I'd marry him" becomes Ms. "You may propose in Q4"</div>
+                    </div>
+
+                    <div class="chat-date">May 2026</div>
+
+                    <div class="chat-row right">
+                        <div class="bubble-right">Alex starts making the arrangements for the proposal, and they go ring shopping to help Sarah pick out the styles and sizes she wants for her ring.</div>
+                    </div>
+
+                    <div class="chat-date">Aug 2026</div>
+                    
+                    <div class="chat-row left">
+                        <div class="hinge-prompt-card">
+                            <div class="prompt-header-text">As seen on our Mom's fridges</div>
+                            
+                            <div class="carousel-wrapper">
+                                <button type="button" class="carousel-arrow prev">&#10094;</button>
+                                <button type="button" class="carousel-arrow next">&#10095;</button>
+                                
+                                <div class="carousel-slides">
+                                    <div class="carousel-slide">
+                                        <img src="images/20250824.jpg" alt="Engagement 1" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="images/20250824.jpg" alt="Engagement 2" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="images/20250824.jpg" alt="Engagement 3" class="prompt-main-image">
+                                    </div>
+                                    <div class="carousel-slide">
+                                        <img src="images/20250824.jpg" alt="Engagement 4" class="prompt-main-image">
+                                    </div>
+                                </div>
+                                
+                                <div class="carousel-indicators">
+                                    <button type="button" class="indicator-dot active-dot"></button>
+                                    <button type="button" class="indicator-dot"></button>
+                                    <button type="button" class="indicator-dot"></button>
+                                    <button type="button" class="indicator-dot"></button>
+                                </div>
+                            </div>
+                            
+                            <div class="prompt-pink-like-tag">Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.</div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+    
+            <div id="tab-details" class="hidden">
+                <h1 class="form-header">The details</h1>
+                <div class="sub-header-line">Times, locations, and schedules for our big celebration.</div>
+                
+                <div class="timeline">
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">4:30 PM</div>
+                        <h3 class="section-title">The Ceremony</h3>
+                        <p style="margin-bottom: 15px;">Venue layout & location coordinates coming soon.</p>
+                        <div class="address-row-wrapper">
+                            <span class="pin-drop-icon"></span>
+                            <p style="margin: 0;"><strong>TBD Venue Location</strong><br>New York, NY</p>
+                        </div>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">5:30 PM</div>
+                        <h3 class="section-title">Cocktail Hour & Reception</h3>
+                        <p style="margin-bottom: 0;">Followed immediately by drinks, dinner, and heavy dancing with everyone.</p>
+                    </div>
+                </div>
+
+                <div id="conditional-family-section" class="hidden"></div>
+                <div id="conditional-kids-section" class="hidden"></div>
+            </div>
+
+            <div id="tab-rsvp" class="hidden">
+                <h1 class="form-header" id="rsvp-title">Let's chat about</h1>
+                <div class="sub-header-line" id="rsvp-subtitle">You and anyone with you.</div>
+                
+                <form id="rsvp-form" onsubmit="submitRSVP(event)">
+                    <div id="guest-list-container"></div>
+                    
+                    <div class="additional-rsvp-fields">
+                        <h3 class="section-title">Give us your song request (optional)</h3>
+                        <p style="margin-bottom: 12px; font-size: 0.95rem; color: #555555;">What track is guaranteed to get you out on the dance floor?</p>
+    
+                        <div class="input-group" style="margin: 10px 0 0 0; position: relative;">
+                            <input type="text" id="rsvp-song-search" placeholder="Search for song title or artist..." autocomplete="off" oninput="searchAppleMusic()">
+        
+                            <div id="song-search-results" class="search-results-dropdown hidden"></div>
+        
+                            <input type="hidden" id="selected-song-title">
+                            <input type="hidden" id="selected-song-artist">
+                            <input type="hidden" id="selected-song-link">
+                        </div>
+                    </div>
+
+                    <div class="btn-center-wrapper" style="flex-direction: column; align-items: center;">
+                        <button type="submit" class="action-btn lowercase">submit</button>
+                        <button type="button" class="not-me-btn" onclick="resetSearchForm()">that's not me / lock site</button>
+                    </div>
+                </form>
+
+                <div id="rsvp-locked-message" class="hidden">
+                    <p style="margin-bottom: 0; font-family: var(--secondary-font); font-size: 1.1rem;">
+                        If your plans change down the line or you need to adjust your immediate party details, please reach out to us directly.
+                    </p>
+                    <div class="btn-center-wrapper">
+                        <button type="button" class="not-me-btn" onclick="resetSearchForm()">close / lock site</button>
+                    </div>
+                </div>
+            </div>
+    
+            <div id="tab-faq" class="hidden">
+                <h1 class="form-header">Frequently asked questions</h1>
+                <div class="sub-header-line">Answers to help you coordinate your plans.</div>
+                
+                <div class="details-section">
+                    <h3 class="section-title">Can I bring a plus one?</h3>
+                    <p style="margin-bottom: 0;">Due to capacity caps at our venue space, we are only able to host guests explicitly listed when you submit your search name.</p>
+                </div>
+        
+                <div class="details-section">
+                    <h3 class="section-title">What is the dress code?</h3>
+                    <p style="margin-bottom: 0;">We would love to see our favorite people dress up with us! The dress code is Semi-Formal / Cocktail attire.</p>
+                </div>
+            </div>
+        </div>
+    
+        <script>
+
+            // --- DATA INGESTION LINKS ---
+            const PUBLIC_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSP1U6ncH7fCFo4UsSKyxDQWFiNollafgKLsjrbuCdbnSE4TImVt5kW8TuyNBK-GKiq13Lyd9YF2OO/pub?output=csv";
+            const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxnfHhoPz67zfB5vBqG-St4dxAoc54-ofvEkqeccFfPGsSIvW5uBUgE-rP0MQBV29rA/exec";
+
+            // --- CONDITIONAL SECTIONS ---        
+            const CONDITIONAL_SECTIONS_CONFIG = {
+                family: {
+                    htmlContent: `
+                        <div class="details-section">
+                            <h3 class="section-title">Family Events</h3>
+                            <p style="margin-bottom: 0;">This section only shows to immediate family members. We can't wait to see you at the rehearsal brunch! Details on tracking and arrivals will follow via email loops shortly.</p>
+                        </div>
+                    `
+                },
+                kids: {
+                    htmlContent: `
+                        <div class="details-section">
+                            <h3 class="section-title">Kids & Childcare Info</h3>
+                            <p style="margin-bottom: 0;">This section only shows to guests with children. We have arranged for professional child care inside the venue suites during dinner service so you can enjoy the evening!</p>
+                        </div>
+                    `
+                }
+            };
+
+            let guestDatabase = [];
+            let currentParty = [];
+            let appleMusicDebounceTimeout;
+
+            // --- LOAD GUEST DATABASE ---        
+            async function loadGuestDatabase() {
+                try {
+                    const response = await fetch(PUBLIC_SHEET_CSV_URL);
+                    const dataText = await response.text();
+                    const lines = dataText.split(/\r?\n/);
+                    const parsedDatabase = [];
+        
+                    for (let i = 1; i < lines.length; i++) {
+                        if (!lines[i].trim()) continue;
+                        
+                        const columns = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+                        if (columns.length >= 4) {
+                            const cleanName = columns[1].replace(/^"|"$/g, '').trim();
+                            const cleanStatus = columns[2].replace(/^"|"$/g, '').trim();
+                            const cleanParty = columns[3].replace(/^"|"$/g, '').trim();
+                            
+                            const rawFamily = columns[4] ? columns[4].replace(/^"|"$/g, '').trim().toLowerCase() : '';
+                            const rawKid = columns[5] ? columns[5].replace(/^"|"$/g, '').trim().toLowerCase() : '';
+
+                            const isFamily = (rawFamily === 'true' || rawFamily === '1' || rawFamily === 'x');
+                            const hasKid = (rawKid === 'true' || rawKid === '1' || rawKid === 'x');
+        
+                            if (cleanName) {
+                                parsedDatabase.push({
+                                    id: i, 
+                                    name: cleanName,
+                                    partyID: cleanParty || `row-${i}`,
+                                    hasRSVPd: cleanStatus.length > 0,
+                                    isFamily: isFamily,
+                                    hasKid: hasKid
+                                });
+                            }
+                        }
+                    }
+                    guestDatabase = parsedDatabase;
+                } catch (error) {
+                    console.error("Could not load data from Google Sheet:", error);
+                }
+            }
+            
+            loadGuestDatabase();
+        
+            function handleKeyPress(event) {
+                if (event.key === 'Enter') {
+                    findInvitation();
+                }
+            }
+        
+            // --- INVITATION SEARCH ---
+            function findInvitation() {
+                const searchInput = document.getElementById('search-name').value.trim().toLowerCase();
+                const errorDiv = document.getElementById('find-error');
+                
+                const foundGuest = guestDatabase.find(g => g.name.toLowerCase() === searchInput);
+        
+                if (foundGuest) {
+                    errorDiv.classList.add('hidden');
+                    currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
+        
+                    const groupIsFamily = currentParty.some(g => g.isFamily);
+                    const groupHasKid = currentParty.some(g => g.hasKid);
+
+                    const familyContainer = document.getElementById('conditional-family-section');
+                    if (groupIsFamily) {
+                        familyContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.family.htmlContent;
+                        familyContainer.classList.remove('hidden');
+                    } else {
+                        familyContainer.innerHTML = '';
+                        familyContainer.classList.add('hidden');
+                    }
+
+                    const kidsContainer = document.getElementById('conditional-kids-section');
+                    if (groupHasKid) {
+                        kidsContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.kids.htmlContent;
+                        kidsContainer.classList.remove('hidden');
+                    } else {
+                        kidsContainer.innerHTML = '';
+                        kidsContainer.classList.add('hidden');
+                    }
+
+                    document.getElementById('step-find').classList.add('hidden');
+                    document.getElementById('wedding-nav').classList.remove('hidden');
+                    switchTab('about');
+        
+                    if (foundGuest.hasRSVPd) {
+                        document.getElementById('rsvp-title').innerText = "Looks like your RSVP has already been submitted.";
+                        document.getElementById('rsvp-subtitle').innerText = "We have the details from your previous submission. If your plans change, or you feel this is incorrect, please reach out to Sarah or Alex directly.";
+                        
+                        document.getElementById('rsvp-form').classList.add('hidden');
+                        document.getElementById('rsvp-locked-message').classList.remove('hidden');
+                    } else {
+                        document.getElementById('rsvp-title').innerText = "Let's chat about";
+                        document.getElementById('rsvp-subtitle').innerText = "You and anyone with you. Deadline to RSVP is Aug 8th, 2026.";
+                        
+                        setupRSVPForm(currentParty);
+                        document.getElementById('rsvp-form').classList.remove('hidden');
+                        document.getElementById('rsvp-locked-message').classList.add('hidden');
+                    }
+                } else {
+                    errorDiv.classList.remove('hidden');
+                }
+            }
+
+            // --- NAVIGATION ----
+            function switchTab(targetTab) {
+                const tabs = ['about', 'details', 'rsvp', 'faq'];
+                
+                tabs.forEach(tab => {
+                    const viewBlock = document.getElementById(`tab-${tab}`);
+                    if (tab === targetTab) {
+                        viewBlock.classList.remove('hidden');
+                    } else {
+                        viewBlock.classList.add('hidden');
+                    }
+                });
+
+                const navButtons = document.querySelectorAll('.nav-tab');
+                const activeIndex = tabs.indexOf(targetTab);
+                navButtons.forEach((btn, index) => {
+                    if (index === activeIndex) {
+                        btn.classList.add('active-tab');
+                    } else {
+                        btn.classList.remove('active-tab');
+                    }
+                });
+            }
+        
+            // --- RSVP PAGE ---
+            function setupRSVPForm(party) {
+                const container = document.getElementById('guest-list-container');
+                container.innerHTML = ''; 
+        
+                party.forEach(guest => {
+                    const row = document.createElement('div');
+                    row.className = 'guest-row';
+                    row.innerHTML = `
+                        <div class="guest-name">${guest.name}</div>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="guest-${guest.id}" value="I will be attending" required> I will be attending
+                            </label>
+                            <label>
+                                <input type="radio" name="guest-${guest.id}" value="I won't be able to attend" required> I won't be able to attend
+                            </label>
+                        </div>
+                    `;
+                    container.appendChild(row);
+                });
+            }
+        
+            // --- RSVP ENGINE ---
+            function resetSearchForm() {
+                document.getElementById('search-name').value = '';
+                document.getElementById('wedding-nav').classList.add('hidden');
+                
+                ['about', 'details', 'rsvp', 'faq'].forEach(tab => {
+                    document.getElementById(`tab-${tab}`).classList.add('hidden');
+                });
+
+                document.getElementById('step-find').classList.remove('hidden');
+                document.getElementById('find-error').classList.add('hidden');
+
+                document.getElementById('conditional-family-section').innerHTML = '';
+                document.getElementById('conditional-kids-section').innerHTML = '';
+
+                document.getElementById('rsvp-song-search').value = '';
+                document.getElementById('selected-song-title').value = '';
+                document.getElementById('selected-song-artist').value = '';
+                document.getElementById('selected-song-link').value = '';
+                document.getElementById('song-search-results').innerHTML = '';
+                document.getElementById('song-search-results').classList.add('hidden');
+            }
+
+            // --- APPLE MUSIC SEARCH ENGINE ---
+            function searchAppleMusic() {
+                const query = document.getElementById('rsvp-song-search').value.trim();
+                const resultsContainer = document.getElementById('song-search-results');
+
+                clearTimeout(appleMusicDebounceTimeout);
+    
+                if (query.length < 2) {
+                    resultsContainer.innerHTML = '';
+                    resultsContainer.classList.add('hidden');
+                    return;
+                }
+
+                appleMusicDebounceTimeout = setTimeout(async () => {
+                    try {
+                        const url = `https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&limit=5`;
+                        const response = await fetch(url);
+                        const data = await response.json();
+            
+                        resultsContainer.innerHTML = '';
+            
+                        if (data.results && data.results.length > 0) {
+                            data.results.forEach(track => {
+                                const item = document.createElement('div');
+                                item.className = 'search-result-item';
+                                item.innerHTML = `
+                                    <div class="search-result-title">${track.trackName}</div>
+                                    <div class="search-result-artist">${track.artistName} • ${track.collectionName || 'Single'}</div>
+                                `;
+                    
+                                item.onclick = () => selectSong(track.trackName, track.artistName, track.trackViewUrl);
+                                resultsContainer.appendChild(item);
+                            });
+                            resultsContainer.classList.remove('hidden');
+                        } else {
+                            resultsContainer.innerHTML = '<div class="search-result-item" style="cursor:default;">No tracks found. Keep searching for your request...</div>';
+                            resultsContainer.classList.remove('hidden');
+                        }
+                    } catch (error) {
+                        console.error("Apple Music connection error:", error);
+                    }
+                }, 300);
+            }
+
+            // --- APPLE MUSIC SELECTION ENGINE ---
+            function selectSong(title, artist, url) {
+                document.getElementById('rsvp-song-search').value = `${title} — ${artist}`;
+    
+                document.getElementById('selected-song-title').value = title;
+                document.getElementById('selected-song-artist').value = artist;
+                document.getElementById('selected-song-link').value = url;
+
+                document.getElementById('song-search-results').classList.add('hidden');
+            }
+
+            // --- RSVP SUBMISSION ---
+            function submitRSVP(event) {
+                event.preventDefault();
+    
+                const searchBarVal = document.getElementById('rsvp-song-search').value.trim();
+                const title = document.getElementById('selected-song-title').value;
+                const artist = document.getElementById('selected-song-artist').value;
+                const songUrl = document.getElementById('selected-song-link').value;
+    
+                let formattedSongString = '';
+    
+                if (searchBarVal) {
+                    if (title && artist) {
+                        formattedSongString = `${title} — ${artist} (${songUrl})`;
+                    } else {
+                        formattedSongString = searchBarVal;
+                    }
+                }
+    
+                currentParty.forEach((guest) => {
+                    const statusElement = document.querySelector(`input[name="guest-${guest.id}"]:checked`);
+                    if (statusElement) {
+                        const status = statusElement.value;
+            
+                        const submissionPayload = { 
+                            name: guest.name, 
+                            status: status,
+                            songRecommendation: formattedSongString
+                        };
+            
+                        fetch(APPS_SCRIPT_WEBAPP_URL, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: { 'Content-Type': 'text/plain' },
+                            body: JSON.stringify(submissionPayload)
+                        })
+                        .then(() => console.log(`Data successfully transmitted for: ${guest.name}`))
+                        .catch(err => console.error(`Network transmission failure:`, err));
+            
+                        guest.hasRSVPd = true;
+                    }
+                });
+
+                document.getElementById('rsvp-title').innerText = "Thanks! Your RSVP has been submitted.";
+                document.getElementById('rsvp-subtitle').innerText = "We have received the details from your submission. If your plans change, please reach out to Sarah or Alex directly.";
+                document.getElementById('rsvp-form').classList.add('hidden');
+                document.getElementById('rsvp-locked-message').classList.remove('hidden');
+            }
+
+            // --- PHOTO CAROUSEL ---
+            document.addEventListener("DOMContentLoaded", () => {
+                const carousels = document.querySelectorAll('.carousel-wrapper');
+                
+                carousels.forEach(carousel => {
+                    const slidesContainer = carousel.querySelector('.carousel-slides');
+                    const slides = carousel.querySelectorAll('.carousel-slide');
+                    const totalSlides = slides.length;
+                    
+                    if (totalSlides <= 1) return;
+            
+                    const prevBtn = carousel.querySelector('.carousel-arrow.prev');
+                    const nextBtn = carousel.querySelector('.carousel-arrow.next');
+                    const dots = carousel.querySelectorAll('.indicator-dot');
+                    
+                    let currentIndex = 0;
+            
+                    function updateCarousel() {
+                        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                        
+                        dots.forEach((dot, index) => {
+                            if (index === currentIndex) {
+                                dot.classList.add('active-dot');
+                            } else {
+                                dot.classList.remove('active-dot');
+                            }
+                        });
+                    }
+            
+                    function nextSlide() {
+                        currentIndex = (currentIndex + 1) % totalSlides;
+                        updateCarousel();
+                    }
+            
+                    function prevSlide() {
+                        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                        updateCarousel();
+                    }
+            
+                    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+                    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+            
+                    dots.forEach((dot, index) => {
+                        dot.addEventListener('click', () => {
+                            currentIndex = index;
+                            updateCarousel();
+                        });
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
