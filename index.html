@@ -685,6 +685,8 @@
             </div>
     
             <div id="tab-about" class="hidden">
+                <h1 class="form-header" id="about-title">Our Story</h1>
+                <div class="sub-header-line" id="about-title">Sarah and Alex's journey to finding each other</div>
                 
                 <div class="chat-container">
                     
@@ -940,31 +942,68 @@
             </div>
     
             <div id="tab-details" class="hidden">
-                <h1 class="form-header">The details</h1>
-                <div class="sub-header-line">Times, locations, and schedules for our big celebration.</div>
+                <h1 class="form-header" id="details-title">The details</h1>
+                <div class="sub-header-line" id="details-subtitle">Times, locations, and schedules for our big celebration.</div>
 
                 <div id="conditional-rehearsal-section" class="hidden"></div>
+                
+                <div class="details-section">
+                    <h3 class="section-title">Saturday, December 11th, 2027</h3>
+                </div>
+
                 <div id="conditional-photos-section" class="hidden"></div>
+
                 <div id="conditional-ketubah-section" class="hidden"></div>
                 
-                <div class="timeline">
+                <div id="conditional-nophotosketubah-section" class="hidden"></div>
+                
                     <div class="timeline-event">
                         <div class="timeline-dot"></div>
-                        <div class="timeline-time">4:30 PM</div>
+                        <div class="timeline-time">5:30 PM</div>
                         <h3 class="section-title">The Ceremony</h3>
-                        <p style="margin-bottom: 15px;">Venue layout & location coordinates coming soon.</p>
+                        <p style="margin-bottom: 15px;">Cocktail Party Attire. Starting promptly at 5:30 PM.</p>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">6:00 PM</div>
+                        <h3 class="section-title">Cocktail Hour</h3>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">7:00 PM</div>
+                        <h3 class="section-title">Reception</h3>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">10:00 PM</div>
+                        <h3 class="section-title">Return Shuttles Begin</h3>
+                        <p style="margin-bottom: 15px;">Shuttles every 15 minutes to [INSERT HOTEL]</p>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">11:00 PM</div>
+                        <h3 class="section-title">After Party</h3>
                         <div class="address-row-wrapper">
                             <span class="pin-drop-icon"></span>
-                            <p style="margin: 0;"><strong>The Grove</strong><br>Cedar Grove, NJ</p>
+                            <p style="margin: 0;"><strong>Hamilton Room - The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
                         </div>
                     </div>
                     <div class="timeline-event">
                         <div class="timeline-dot"></div>
-                        <div class="timeline-time">5:30 PM</div>
-                        <h3 class="section-title">Cocktail Hour & Reception</h3>
-                        <p style="margin-bottom: 0;">Followed immediately by drinks, dinner, and heavy dancing with everyone.</p>
+                        <div class="timeline-time">12:00 AM</div>
+                        <h3 class="section-title">Last Return Shuttle</h3>
+                        <p style="margin-bottom: 15px;">Final shuttles heading back to [INSERT HOTEL]</p>
                     </div>
-                </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">12:30 AM</div>
+                        <h3 class="section-title">After After Party</h3>
+                        <div class="address-row-wrapper">
+                            <span class="pin-drop-icon"></span>
+                            <p style="margin: 0;"><strong>Location TBD</strong><br>Address<br>City, State</p>
+                        </div>
+                    </div>
+                </div> <!-- Extra Close Div - timeline events -->
 
                 <div id="conditional-kids-section" class="hidden"></div>
             </div>
@@ -1009,21 +1048,64 @@
 
             <div id="tab-registry" class="hidden">
                 <h1 class="form-header" id="registry-title">Check out our Registry!</h1>
-                <div class="sub-header-line" id="registry-subtitle">A new tab should have opened, redirecting you to https://withjoy.com/sarah-and-alex-ecmua46as/registry</div>
+                <div class="sub-header-line" id="registry-title">A new tab should have opened, redirecting you to https://withjoy.com/sarah-and-alex-ecmua46as/registry</div>
             </div>
             
             <div id="tab-faq" class="hidden">
-                <h1 class="form-header">Frequently asked questions</h1>
-                <div class="sub-header-line">Answers to help you coordinate your plans.</div>
+                <h1 class="form-header" id="faq-title">Frequently asked questions</h1>
+                <div class="sub-header-line" id="faq-subtitle">Answers to the basics, reach out for advanced.</div>
+
+                <div class="details-section">
+                    <h3 class="section-title">When should I arrive?</h3>
+                    <p style="margin-bottom: 0;">Please check the details tab of this website or the physical invitation as your arrival time may vary depending on your inclusion of the day's activities.</p>
+                </div>
+
+                <div class="details-section">
+                    <h3 class="section-title">Where should I stay?</h3>
+                    <p style="margin-bottom: 0;">Sarah and Alex will be staying at [INSERT HOTEL], which is where the shuttles will pickup from. The room block code is [INSERT CODE].</p>
+                    <div class="address-row-wrapper">
+                        <span class="pin-drop-icon"></span>
+                        <p style="margin: 0;"><strong>Hotel TBD</strong><br>Address<br>City, State</p>
+                    </div>
+                    <p style="margin-bottom: 0;">Other hotel options in the area.</p>
+                    <div class="address-row-wrapper">
+                        <span class="pin-drop-icon"></span>
+                        <p style="margin: 0;"><strong>Hotel TBD</strong><br>Address<br>City, State</p>
+                    </div>
+                    <div class="address-row-wrapper">
+                        <span class="pin-drop-icon"></span>
+                        <p style="margin: 0;"><strong>Hotel TBD</strong><br>Address<br>City, State</p>
+                    </div>
+                </div>
                 
                 <div class="details-section">
-                    <h3 class="section-title">Can I bring a plus one?</h3>
-                    <p style="margin-bottom: 0;">Due to capacity caps at our venue space, we are only able to host guests explicitly listed when you submit your search name.</p>
+                    <h3 class="section-title">Can I bring a plus one? or a member of my family?</h3>
+                    <p style="margin-bottom: 0;">Unfortunately, we are only able to host guests explicitly listed on your invitation.</p>
                 </div>
         
                 <div class="details-section">
                     <h3 class="section-title">What is the dress code?</h3>
-                    <p style="margin-bottom: 0;">We would love to see our favorite people dress up with us! The dress code is Semi-Formal / Cocktail attire.</p>
+                    <p style="margin-bottom: 0;">We would love to see our favorite people dress up with us! The dress code is Semi-Formal / Cocktail Party attire.</p>
+                </div>
+                
+                <div class="details-section">
+                    <h3 class="section-title">Is there transportation available?</h3>
+                    <p style="margin-bottom: 0;">We will be providing a shuttle between [INSERT HOTEL] and The Grove. Running every 15 minutes between 4:00 PM - 6:00 PM and 10:00 PM - 12:00 AM.</p>
+                </div>
+
+                <div class="details-section">
+                    <h3 class="section-title">Is there parking available?</h3>
+                    <p style="margin-bottom: 0;">Yes! In fact, there will be complimentary valet services available starting at 4:30 PM.</p>
+                </div>
+
+                <div class="details-section">
+                    <h3 class="section-title">Is there public transportation available?</h3>
+                    <p style="margin-bottom: 0;">I mean... if you really wanted, there are several bus options available from Port Authority as the venue is in "bus" Jersey.</p>
+                </div>
+
+                <div class="details-section">
+                    <h3 class="section-title">Is there public transportation available?</h3>
+                    <p style="margin-bottom: 0;">I mean... if you wanted, there are several bus options available from Port Authority as the venue is in "bus" Jersey.</p>
                 </div>
             </div>
         </div>
@@ -1039,25 +1121,96 @@
                 rehearsal: {
                     htmlContent: `
                         <div class="details-section">
-                            <h3 class="section-title">Rehearsal Section</h3>
-                            <p style="margin-bottom: 0;">This section only shows to immediate family members. We can't wait to see you at the rehearsal brunch! Details on tracking and arrivals will follow via email loops shortly.</p>
+                            <h3 class="section-title">Friday, December 10th, 2027</h3>
+                        </div>
+                        <div class="timeline">
+                            <div class="timeline-event">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-time">TIME TBD</div>
+                                <h3 class="section-title">Erev Wedding</h3>
+                                <p style="margin-bottom: 15px;">As someone who plays a huge part in our lives, please join us for our night before celebrations.</p>
+                            
+                                <div class="address-row-wrapper">
+                                    <span class="pin-drop-icon"></span>
+                                    <p style="margin: 0;"><strong>Location TBD</strong><br>Address<br>City, State</p>
+                                </div>
+                            </div>
                         </div>
                     `
                 },
                 photos: {
                     htmlContent: `
-                        <div class="details-section">
-                            <h3 class="section-title">Photos Section</h3>
-                            <p style="margin-bottom: 0;">This section only shows to immediate family members. We can't wait to see you at the rehearsal brunch! Details on tracking and arrivals will follow via email loops shortly.</p>
-                        </div>
+                        <div class="timeline">
+                            <div class="timeline-event">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-time">9:00 AM</div>
+                                <h3 class="section-title">Presidential Suite Access</h3>
+                                <p style="margin-bottom: 15px;">Breakfast will be provided. Sarah will coordinate all Hair and Make-Up accommodations.</p>
+                                <div class="address-row-wrapper">
+                                    <span class="pin-drop-icon"></span>
+                                    <p style="margin: 0;"><strong>The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-time">2:00 PM</div>
+                                <h3 class="section-title">First Look / Bridal Party Photos</h3>
+                            </div>
                     `
                 },
                 ketubah: {
                     htmlContent: `
-                        <div class="details-section">
-                            <h3 class="section-title">Ketubah Section</h3>
-                            <p style="margin-bottom: 0;">This section only shows to immediate family members. We can't wait to see you at the rehearsal brunch! Details on tracking and arrivals will follow via email loops shortly.</p>
-                        </div>
+                            <div class="timeline-event">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-time">5:00 PM</div>
+                                <h3 class="section-title">Ketubah Signing</h3>
+                                <p style="margin-bottom: 15px;">Ceremony is for invited family/friends only, held in the Presidential Suite.</p>
+                            </div>
+                    `
+                },
+                ketubahNo: {
+                    htmlContent: `
+                            <div class="timeline-event">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-time">5:00 PM</div>
+                                <h3 class="section-title">Guest Arrival & Welcome Drinks</h3>
+                            </div>
+                    `
+                },
+                ketubahOnly: {
+                    htmlContent: `
+                        <div class="timeline">
+                            <div class="timeline-event">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-time">4:30 PM</div>
+                                <h3 class="section-title">Ketubah Signing Guest Arrival</h3>
+                                <p style="margin-bottom: 15px;">Valet service available. Shuttles every 15 minutes from [INSERT HOTEL].</p>
+                                <div class="address-row-wrapper">
+                                    <span class="pin-drop-icon"></span>
+                                    <p style="margin: 0;"><strong>Presidential Suite - The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
+                                </div>
+                            </div>
+                            <div class="timeline-event">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-time">5:00 PM</div>
+                                <h3 class="section-title">Ketubah Signing</h3>
+                                <p style="margin-bottom: 15px;">Ceremony is for invited family/friends only, and starting promptly at 5:00 PM.</p>
+                            </div>
+                    `
+                },
+                nophotosketubah: {
+                    htmlContent: `
+                        <div class="timeline">
+                            <div class="timeline-event">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-time"5:00 PM</div>
+                                <h3 class="section-title">Guest Arrival & Welcome Drinks</h3>
+                                <p style="margin-bottom: 15px;">Valet service available. Shuttles every 15 minutes from [INSERT HOTEL].</p>
+                                <div class="address-row-wrapper">
+                                    <span class="pin-drop-icon"></span>
+                                    <p style="margin: 0;"><strong>The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
+                                </div>
+                            </div>
                     `
                 },
                 kids: {
@@ -1143,6 +1296,7 @@
                     const groupAtRehearsal = currentParty.some(g => g.atRehearsal);
                     const groupAtPhotos = currentParty.some(g => g.atPhotos);
                     const groupAtKetubah = currentParty.some(g => g.atKetubah);
+                    const groupAtNoPhotosKetubah = currentParty.some(g => !g.atPhotos && !g.atKetubah);
                     const groupHasKid = currentParty.some(g => g.hasKid);
 
                     const rehearsalContainer = document.getElementById('conditional-rehearsal-section');
@@ -1155,21 +1309,36 @@
                     }
 
                     const photosContainer = document.getElementById('conditional-photos-section');
-                    if (groupAtPhotos) {
+                    const ketubahContainer = document.getElementById('conditional-ketubah-section');
+                    if (groupAtPhotos && groupAtKetubah) {
                         photosContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.photos.htmlContent;
                         photosContainer.classList.remove('hidden');
+                        ketubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.ketubah.htmlContent;
+                        ketubahContainer.classList.remove('hidden');
+                    } else if (groupAtPhotos && !groupAtKetubah) {
+                        photosContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.photos.htmlContent;
+                        photosContainer.classList.remove('hidden');
+                        ketubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.ketubahNo.htmlContent;
+                        ketubahContainer.classList.remove('hidden');
+                    } else if (!groupAtPhotos && groupAtKetubah) {
+                        photosContainer.innerHTML = '';
+                        photosContainer.classList.add('hidden');
+                        ketubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.ketubahOnly.htmlContent;
+                        ketubahContainer.classList.remove('hidden');
                     } else {
                         photosContainer.innerHTML = '';
                         photosContainer.classList.add('hidden');
-                    }
-
-                    const ketubahContainer = document.getElementById('conditional-ketubah-section');
-                    if (groupAtKetubah) {
-                        ketubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.ketubah.htmlContent;
-                        ketubahContainer.classList.remove('hidden');
-                    } else {
                         ketubahContainer.innerHTML = '';
                         ketubahContainer.classList.add('hidden');
+                    }
+
+                    const noPhotosKetubahContainer = document.getElementById('conditional-nophotosketubah-section');
+                    if (groupAtNoPhotosKetubah) {
+                        noPhotosKetubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.nophotosketubah.htmlContent;
+                        noPhotosKetubahContainer.classList.remove('hidden');
+                    } else {
+                        noPhotosKetubahContainer.innerHTML = '';
+                        noPhotosKetubahContainer.classList.add('hidden');
                     }
 
                     const kidsContainer = document.getElementById('conditional-kids-section');
@@ -1266,6 +1435,7 @@
                 document.getElementById('conditional-rehearsal-section').innerHTML = '';
                 document.getElementById('conditional-photos-section').innerHTML = '';
                 document.getElementById('conditional-ketubah-section').innerHTML = '';
+                document.getElementById('conditional-nophotosketubah-section').innerHTML = '';
                 document.getElementById('conditional-kids-section').innerHTML = '';
 
                 document.getElementById('rsvp-song-search').value = '';
