@@ -663,9 +663,9 @@
         </div>
 
         <nav id="wedding-nav" class="nav-menu hidden">
-            <button class="nav-tab active-tab" onclick="switchTab('about')">about us</button>
+            <button class="nav-tab" onclick="switchTab('about')">about us</button>
             <button class="nav-tab" onclick="switchTab('details')">details</button>
-            <button class="nav-tab" onclick="switchTab('rsvp')">rsvp</button>
+            <button class="nav-tab active-tab" onclick="switchTab('rsvp')">rsvp</button>
             <button class="nav-tab" onclick="window.open('https://withjoy.com/sarah-and-alex-ecmua46as/registry', '_blank', 'noopener,noreferrer')">registry</button>
             <button class="nav-tab" onclick="switchTab('faq')">faq</button>
         </nav>
@@ -681,7 +681,7 @@
                 <div class="btn-center-wrapper">
                     <button class="action-btn lowercase" onclick="findInvitation()">search</button>
                 </div>
-                <div id="find-error" class="error-msg hidden">Error: Invitation not found under that name. Please double-check spelling.</div>
+                <div id="find-error" class="error-msg hidden">Error: Invitation not found. Please re-check spelling or contact us.</div>
             </div>
     
             <div id="tab-about" class="hidden">
@@ -942,6 +942,10 @@
             <div id="tab-details" class="hidden">
                 <h1 class="form-header">The details</h1>
                 <div class="sub-header-line">Times, locations, and schedules for our big celebration.</div>
+
+                <div id="conditional-rehearsal-section" class="hidden"></div>
+                <div id="conditional-photos-section" class="hidden"></div>
+                <div id="conditional-ketubah-section" class="hidden"></div>
                 
                 <div class="timeline">
                     <div class="timeline-event">
@@ -962,7 +966,6 @@
                     </div>
                 </div>
 
-                <div id="conditional-family-section" class="hidden"></div>
                 <div id="conditional-kids-section" class="hidden"></div>
             </div>
 
@@ -1028,10 +1031,26 @@
 
             // --- CONDITIONAL SECTIONS ---        
             const CONDITIONAL_SECTIONS_CONFIG = {
-                family: {
+                rehearsal: {
                     htmlContent: `
                         <div class="details-section">
-                            <h3 class="section-title">Family Events</h3>
+                            <h3 class="section-title">Rehearsal Section</h3>
+                            <p style="margin-bottom: 0;">This section only shows to immediate family members. We can't wait to see you at the rehearsal brunch! Details on tracking and arrivals will follow via email loops shortly.</p>
+                        </div>
+                    `
+                },
+                photos: {
+                    htmlContent: `
+                        <div class="details-section">
+                            <h3 class="section-title">Photos Section</h3>
+                            <p style="margin-bottom: 0;">This section only shows to immediate family members. We can't wait to see you at the rehearsal brunch! Details on tracking and arrivals will follow via email loops shortly.</p>
+                        </div>
+                    `
+                },
+                ketubah: {
+                    htmlContent: `
+                        <div class="details-section">
+                            <h3 class="section-title">Ketubah Section</h3>
                             <p style="margin-bottom: 0;">This section only shows to immediate family members. We can't wait to see you at the rehearsal brunch! Details on tracking and arrivals will follow via email loops shortly.</p>
                         </div>
                     `
@@ -1067,10 +1086,14 @@
                             const cleanStatus = columns[2].replace(/^"|"$/g, '').trim();
                             const cleanParty = columns[3].replace(/^"|"$/g, '').trim();
                             
-                            const rawFamily = columns[4] ? columns[4].replace(/^"|"$/g, '').trim().toLowerCase() : '';
-                            const rawKid = columns[5] ? columns[5].replace(/^"|"$/g, '').trim().toLowerCase() : '';
+                            const rawRehearsal = columns[4] ? columns[4].replace(/^"|"$/g, '').trim().toLowerCase() : '';
+                            const rawPhotos = columns[5] ? columns[5].replace(/^"|"$/g, '').trim().toLowerCase() : '';
+                            const rawKetubah = columns[6] ? columns[6].replace(/^"|"$/g, '').trim().toLowerCase() : '';
+                            const rawKid = columns[7] ? columns[7].replace(/^"|"$/g, '').trim().toLowerCase() : '';
 
-                            const isFamily = (rawFamily === 'true' || rawFamily === '1' || rawFamily === 'x');
+                            const atRehearsal = (rawRehearsal === 'true' || rawRehearsal === '1' || rawRehearsal === 'x');
+                            const atPhotos = (rawPhotos === 'true' || rawPhotos === '1' || rawPhotos === 'x');
+                            const atKetubah = (rawKetubah === 'true' || rawKetubah === '1' || rawKetubah === 'x');
                             const hasKid = (rawKid === 'true' || rawKid === '1' || rawKid === 'x');
         
                             if (cleanName) {
@@ -1079,7 +1102,9 @@
                                     name: cleanName,
                                     partyID: cleanParty || `row-${i}`,
                                     hasRSVPd: cleanStatus.length > 0,
-                                    isFamily: isFamily,
+                                    atRehearsal: atRehearsal,
+                                    atPhotos: atPhotos,
+                                    atKetubah: atKetubah,
                                     hasKid: hasKid
                                 });
                             }
@@ -1110,16 +1135,36 @@
                     errorDiv.classList.add('hidden');
                     currentParty = guestDatabase.filter(g => g.partyID === foundGuest.partyID);
         
-                    const groupIsFamily = currentParty.some(g => g.isFamily);
+                    const groupAtRehearsal = currentParty.some(g => g.atRehearsal);
+                    const groupAtPhotos = currentParty.some(g => g.atPhotos);
+                    const groupAtKetubah = currentParty.some(g => g.atKetubah);
                     const groupHasKid = currentParty.some(g => g.hasKid);
 
-                    const familyContainer = document.getElementById('conditional-family-section');
-                    if (groupIsFamily) {
-                        familyContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.family.htmlContent;
-                        familyContainer.classList.remove('hidden');
+                    const rehearsalContainer = document.getElementById('conditional-rehearsal-section');
+                    if (groupAtRehearsal) {
+                        rehearsalContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.rehearsal.htmlContent;
+                        rehearsalContainer.classList.remove('hidden');
                     } else {
-                        familyContainer.innerHTML = '';
-                        familyContainer.classList.add('hidden');
+                        rehearsalContainer.innerHTML = '';
+                        rehearsalContainer.classList.add('hidden');
+                    }
+
+                    const photosContainer = document.getElementById('conditional-photos-section');
+                    if (groupAtPhotos) {
+                        photosContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.photos.htmlContent;
+                        photosContainer.classList.remove('hidden');
+                    } else {
+                        photosContainer.innerHTML = '';
+                        photosContainer.classList.add('hidden');
+                    }
+
+                    const ketubahContainer = document.getElementById('conditional-ketubah-section');
+                    if (groupAtKetubah) {
+                        ketubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.ketubah.htmlContent;
+                        ketubahContainer.classList.remove('hidden');
+                    } else {
+                        ketubahContainer.innerHTML = '';
+                        ketubahContainer.classList.add('hidden');
                     }
 
                     const kidsContainer = document.getElementById('conditional-kids-section');
@@ -1156,7 +1201,7 @@
 
             // --- NAVIGATION ----
             function switchTab(targetTab) {
-                const tabs = ['about', 'details', 'rsvp', 'faq'];
+                const tabs = ['about', 'details', 'rsvp', 'registry', 'faq'];
                 
                 tabs.forEach(tab => {
                     const viewBlock = document.getElementById(`tab-${tab}`);
@@ -1206,14 +1251,16 @@
                 document.getElementById('search-name').value = '';
                 document.getElementById('wedding-nav').classList.add('hidden');
                 
-                ['about', 'details', 'rsvp', 'faq'].forEach(tab => {
+                ['about', 'details', 'rsvp', 'registry', 'faq'].forEach(tab => {
                     document.getElementById(`tab-${tab}`).classList.add('hidden');
                 });
 
                 document.getElementById('step-find').classList.remove('hidden');
                 document.getElementById('find-error').classList.add('hidden');
 
-                document.getElementById('conditional-family-section').innerHTML = '';
+                document.getElementById('conditional-rehearsal-section').innerHTML = '';
+                document.getElementById('conditional-photos-section').innerHTML = '';
+                document.getElementById('conditional-ketubah-section').innerHTML = '';
                 document.getElementById('conditional-kids-section').innerHTML = '';
 
                 document.getElementById('rsvp-song-search').value = '';
