@@ -686,7 +686,7 @@
     
             <div id="tab-about" class="hidden">
                 <h1 class="form-header" id="about-title">Our Story</h1>
-                <div class="sub-header-line" id="about-title">Sarah and Alex's journey to finding each other</div>
+                <div class="sub-header-line" id="about-title">Sarah and Alex's journey to finding each other, in the style of their first chats on the dating app, Hinge.</div>
                 
                 <div class="chat-container">
                     
@@ -1316,6 +1316,7 @@
 
                     const photosContainer = document.getElementById('conditional-photos-section');
                     const ketubahContainer = document.getElementById('conditional-ketubah-section');
+                    const endContainer = document.getElementById('conditional-end-section');
                     if (groupAtPhotos && groupAtKetubah) {
                         photosContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.photos.htmlContent;
                         photosContainer.classList.remove('hidden');
