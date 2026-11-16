@@ -951,58 +951,58 @@
                     <h3 class="section-title">Saturday, December 11th, 2027</h3>
                 </div>
             
-                <div id="conditional-photos-section" class="hidden"></div>
-                <div id="conditional-ketubah-section" class="hidden"></div>
-                <div id="conditional-nophotosketubah-section" class="hidden"></div>
-                
-                <div class="timeline-event">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-time">5:30 PM</div>
-                    <h3 class="section-title">The Ceremony</h3>
-                    <p style="margin-bottom: 15px;">Cocktail Party Attire. Starting promptly at 5:30 PM.</p>
-                </div>
-                <div class="timeline-event">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-time">6:00 PM</div>
-                    <h3 class="section-title">Cocktail Hour</h3>
-                </div>
-                <div class="timeline-event">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-time">7:00 PM</div>
-                    <h3 class="section-title">Reception</h3>
-                </div>
-                <div class="timeline-event">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-time">10:00 PM</div>
-                    <h3 class="section-title">Return Shuttles Begin</h3>
-                    <p style="margin-bottom: 15px;">Shuttles every 15 minutes to [INSERT HOTEL]</p>
-                </div>
-                <div class="timeline-event">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-time">11:00 PM</div>
-                    <h3 class="section-title">After Party</h3>
-                    <div class="address-row-wrapper">
-                        <span class="pin-drop-icon"></span>
-                        <p style="margin: 0;"><strong>Hamilton Room - The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
+                <div class="timeline">
+                    <div id="conditional-photos-section"></div>
+                    <div id="conditional-ketubah-section"></div>
+                    <div id="conditional-nophotosketubah-section"></div>
+                    
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">5:30 PM</div>
+                        <h3 class="section-title">The Ceremony</h3>
+                        <p style="margin-bottom: 15px;">Cocktail Party Attire. Starting promptly at 5:30 PM.</p>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">6:00 PM</div>
+                        <h3 class="section-title">Cocktail Hour</h3>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">7:00 PM</div>
+                        <h3 class="section-title">Reception</h3>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">10:00 PM</div>
+                        <h3 class="section-title">Return Shuttles Begin</h3>
+                        <p style="margin-bottom: 15px;">Shuttles every 15 minutes to [INSERT HOTEL]</p>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">11:00 PM</div>
+                        <h3 class="section-title">After Party</h3>
+                        <div class="address-row-wrapper">
+                            <span class="pin-drop-icon"></span>
+                            <p style="margin: 0;"><strong>Hamilton Room - The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
+                        </div>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">12:00 AM</div>
+                        <h3 class="section-title">Last Return Shuttle</h3>
+                        <p style="margin-bottom: 15px;">Final shuttles heading back to [INSERT HOTEL]</p>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">12:30 AM</div>
+                        <h3 class="section-title">After After Party</h3>
+                        <div class="address-row-wrapper">
+                            <span class="pin-drop-icon"></span>
+                            <p style="margin: 0;"><strong>Location TBD</strong><br>Address<br>City, State</p>
+                        </div>
                     </div>
                 </div>
-                <div class="timeline-event">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-time">12:00 AM</div>
-                    <h3 class="section-title">Last Return Shuttle</h3>
-                    <p style="margin-bottom: 15px;">Final shuttles heading back to [INSERT HOTEL]</p>
-                </div>
-                <div class="timeline-event">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-time">12:30 AM</div>
-                    <h3 class="section-title">After After Party</h3>
-                    <div class="address-row-wrapper">
-                        <span class="pin-drop-icon"></span>
-                        <p style="margin: 0;"><strong>Location TBD</strong><br>Address<br>City, State</p>
-                    </div>
-                </div>
-            
-                <div id="conditional-end-section" class="hidden"></div>
             
                 <div id="conditional-kids-section" class="hidden"></div>
             </div>
@@ -1114,7 +1114,6 @@
             const PUBLIC_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSSP1U6ncH7fCFo4UsSKyxDQWFiNollafgKLsjrbuCdbnSE4TImVt5kW8TuyNBK-GKiq13Lyd9YF2OO/pub?output=csv";
             const APPS_SCRIPT_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbxnfHhoPz67zfB5vBqG-St4dxAoc54-ofvEkqeccFfPGsSIvW5uBUgE-rP0MQBV29rA/exec";
 
-            // --- CONDITIONAL SECTIONS ---        
             const CONDITIONAL_SECTIONS_CONFIG = {
                 rehearsal: {
                     htmlContent: `
@@ -1138,81 +1137,73 @@
                 },
                 photos: {
                     htmlContent: `
-                        <div class="timeline">
-                            <div class="timeline-event">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">9:00 AM</div>
-                                <h3 class="section-title">Presidential Suite Access</h3>
-                                <p style="margin-bottom: 15px;">Breakfast will be provided. Sarah will coordinate all Hair and Make-Up accommodations.</p>
-                                <div class="address-row-wrapper">
-                                    <span class="pin-drop-icon"></span>
-                                    <p style="margin: 0;"><strong>The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
-                                </div>
+                        <div class="timeline-event">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-time">9:00 AM</div>
+                            <h3 class="section-title">Presidential Suite Access</h3>
+                            <p style="margin-bottom: 15px;">Breakfast will be provided. Sarah will coordinate all Hair and Make-Up accommodations.</p>
+                            <div class="address-row-wrapper">
+                                <span class="pin-drop-icon"></span>
+                                <p style="margin: 0;"><strong>The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
                             </div>
-                            <div class="timeline-event">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">2:00 PM</div>
-                                <h3 class="section-title">First Look / Bridal Party Photos</h3>
-                            </div>
+                        </div>
+                        <div class="timeline-event">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-time">2:00 PM</div>
+                            <h3 class="section-title">First Look / Bridal Party Photos</h3>
+                        </div>
                     `
                 },
                 ketubah: {
                     htmlContent: `
-                            <div class="timeline-event">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">5:00 PM</div>
-                                <h3 class="section-title">Ketubah Signing</h3>
-                                <p style="margin-bottom: 15px;">Ceremony is for invited family/friends only, held in the Presidential Suite.</p>
-                            </div>
+                        <div class="timeline-event">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-time">5:00 PM</div>
+                            <h3 class="section-title">Ketubah Signing</h3>
+                            <p style="margin-bottom: 15px;">Ceremony is for invited family/friends only, held in the Presidential Suite.</p>
+                        </div>
                     `
                 },
                 ketubahNo: {
                     htmlContent: `
-                            <div class="timeline-event">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">5:00 PM</div>
-                                <h3 class="section-title">Guest Arrival & Welcome Drinks</h3>
-                            </div>
+                        <div class="timeline-event">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-time">5:00 PM</div>
+                            <h3 class="section-title">Guest Arrival & Welcome Drinks</h3>
+                        </div>
                     `
                 },
                 ketubahOnly: {
                     htmlContent: `
-                        <div class="timeline">
-                            <div class="timeline-event">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">4:30 PM</div>
-                                <h3 class="section-title">Ketubah Signing Guest Arrival</h3>
-                                <p style="margin-bottom: 15px;">Valet service available. Shuttles every 15 minutes from [INSERT HOTEL].</p>
-                                <div class="address-row-wrapper">
-                                    <span class="pin-drop-icon"></span>
-                                    <p style="margin: 0;"><strong>Presidential Suite - The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
-                                </div>
+                        <div class="timeline-event">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-time">4:30 PM</div>
+                            <h3 class="section-title">Ketubah Signing Guest Arrival</h3>
+                            <p style="margin-bottom: 15px;">Valet service available. Shuttles every 15 minutes from [INSERT HOTEL].</p>
+                            <div class="address-row-wrapper">
+                                <span class="pin-drop-icon"></span>
+                                <p style="margin: 0;"><strong>Presidential Suite - The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
                             </div>
-                            <div class="timeline-event">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time">5:00 PM</div>
-                                <h3 class="section-title">Ketubah Signing</h3>
-                                <p style="margin-bottom: 15px;">Ceremony is for invited family/friends only, and starting promptly at 5:00 PM.</p>
-                            </div>
+                        </div>
+                        <div class="timeline-event">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-time">5:00 PM</div>
+                            <h3 class="section-title">Ketubah Signing</h3>
+                            <p style="margin-bottom: 15px;">Ceremony is for invited family/friends only, and starting promptly at 5:00 PM.</p>
+                        </div>
                     `
                 },
                 nophotosketubah: {
                     htmlContent: `
-                        <div class="timeline">
-                            <div class="timeline-event">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-time"5:00 PM</div>
-                                <h3 class="section-title">Guest Arrival & Welcome Drinks</h3>
-                                <p style="margin-bottom: 15px;">Valet service available. Shuttles every 15 minutes from [INSERT HOTEL].</p>
-                                <div class="address-row-wrapper">
-                                    <span class="pin-drop-icon"></span>
-                                    <p style="margin: 0;"><strong>The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
-                                </div>
+                        <div class="timeline-event">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-time">5:00 PM</div>
+                            <h3 class="section-title">Guest Arrival & Welcome Drinks</h3>
+                            <p style="margin-bottom: 15px;">Valet service available. Shuttles every 15 minutes from [INSERT HOTEL].</p>
+                            <div class="address-row-wrapper">
+                                <span class="pin-drop-icon"></span>
+                                <p style="margin: 0;"><strong>The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
                             </div>
-                    `
-                },
-                end: {
-                    htmlContent: `
                         </div>
                     `
                 },
@@ -1313,35 +1304,27 @@
 
                     const photosContainer = document.getElementById('conditional-photos-section');
                     const ketubahContainer = document.getElementById('conditional-ketubah-section');
-                    const endContainer = document.getElementById('conditional-end-section');
+                    
                     if (groupAtPhotos && groupAtKetubah) {
                         photosContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.photos.htmlContent;
                         photosContainer.classList.remove('hidden');
                         ketubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.ketubah.htmlContent;
                         ketubahContainer.classList.remove('hidden');
-                        endContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.end.htmlContent;
-                        endContainer.classList.remove('hidden');
                     } else if (groupAtPhotos && !groupAtKetubah) {
                         photosContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.photos.htmlContent;
                         photosContainer.classList.remove('hidden');
                         ketubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.ketubahNo.htmlContent;
                         ketubahContainer.classList.remove('hidden');
-                        endContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.end.htmlContent;
-                        endContainer.classList.remove('hidden');
                     } else if (!groupAtPhotos && groupAtKetubah) {
                         photosContainer.innerHTML = '';
                         photosContainer.classList.add('hidden');
                         ketubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.ketubahOnly.htmlContent;
                         ketubahContainer.classList.remove('hidden');
-                        endContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.end.htmlContent;
-                        endContainer.classList.remove('hidden');
                     } else {
                         photosContainer.innerHTML = '';
                         photosContainer.classList.add('hidden');
                         ketubahContainer.innerHTML = '';
                         ketubahContainer.classList.add('hidden');
-                        endContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.end.htmlContent;
-                        endContainer.classList.remove('hidden');
                     }
 
                     const noPhotosKetubahContainer = document.getElementById('conditional-nophotosketubah-section');
