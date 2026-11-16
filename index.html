@@ -1003,7 +1003,8 @@
                             <p style="margin: 0;"><strong>Location TBD</strong><br>Address<br>City, State</p>
                         </div>
                     </div>
-                </div> <!-- Extra Close Div - timeline events -->
+                
+                <div id="conditional-end-section" class="hidden"></div>
 
                 <div id="conditional-kids-section" class="hidden"></div>
             </div>
@@ -1213,6 +1214,11 @@
                             </div>
                     `
                 },
+                end: {
+                    htmlContent: `
+                        </div>
+                    `
+                },
                 kids: {
                     htmlContent: `
                         <div class="details-section">
@@ -1315,21 +1321,29 @@
                         photosContainer.classList.remove('hidden');
                         ketubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.ketubah.htmlContent;
                         ketubahContainer.classList.remove('hidden');
+                        endContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.end.htmlContent;
+                        endContainer.classList.remove('hidden');
                     } else if (groupAtPhotos && !groupAtKetubah) {
                         photosContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.photos.htmlContent;
                         photosContainer.classList.remove('hidden');
                         ketubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.ketubahNo.htmlContent;
                         ketubahContainer.classList.remove('hidden');
+                        endContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.end.htmlContent;
+                        endContainer.classList.remove('hidden');
                     } else if (!groupAtPhotos && groupAtKetubah) {
                         photosContainer.innerHTML = '';
                         photosContainer.classList.add('hidden');
                         ketubahContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.ketubahOnly.htmlContent;
                         ketubahContainer.classList.remove('hidden');
+                        endContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.end.htmlContent;
+                        endContainer.classList.remove('hidden');
                     } else {
                         photosContainer.innerHTML = '';
                         photosContainer.classList.add('hidden');
                         ketubahContainer.innerHTML = '';
                         ketubahContainer.classList.add('hidden');
+                        endContainer.innerHTML = CONDITIONAL_SECTIONS_CONFIG.end.htmlContent;
+                        endContainer.classList.remove('hidden');
                     }
 
                     const noPhotosKetubahContainer = document.getElementById('conditional-nophotosketubah-section');
