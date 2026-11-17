@@ -374,11 +374,15 @@
 
             .timeline-event {
                 position: relative;
-                margin-bottom: 40px;
+                margin-bottom: 40px !important;
+            }
+
+            .timeline-event + .timeline-event {
+                margin-top: 0px; 
             }
 
             .timeline-event:last-child {
-                margin-bottom: 0;
+                margin-bottom: 0 !important;
             }
 
             .timeline-dot {
@@ -974,24 +978,12 @@
                     </div>
                     <div class="timeline-event">
                         <div class="timeline-dot"></div>
-                        <div class="timeline-time">10:00 PM</div>
-                        <h3 class="section-title">Return Shuttles Begin</h3>
-                        <p style="margin-bottom: 15px;">Shuttles every 15 minutes to [INSERT HOTEL]</p>
-                    </div>
-                    <div class="timeline-event">
-                        <div class="timeline-dot"></div>
                         <div class="timeline-time">11:00 PM</div>
                         <h3 class="section-title">After Party</h3>
                         <div class="address-row-wrapper">
                             <span class="pin-drop-icon"></span>
                             <p style="margin: 0;"><strong>Hamilton Room - The Grove</strong><br>691 Pompton Avenue<br>Cedar Grove, NJ</p>
                         </div>
-                    </div>
-                    <div class="timeline-event">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-time">12:00 AM</div>
-                        <h3 class="section-title">Last Return Shuttle</h3>
-                        <p style="margin-bottom: 15px;">Final shuttles heading back to [INSERT HOTEL]</p>
                     </div>
                     <div class="timeline-event">
                         <div class="timeline-dot"></div>
